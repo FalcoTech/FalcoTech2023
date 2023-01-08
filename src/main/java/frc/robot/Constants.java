@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -17,5 +19,11 @@ public final class Constants {
     // Creates port numbers for controllers
     public static final int PilotControllerPort = 0;
     public static final int CoPilotControllerPort = 1;
+  }
+  public static class DriveTrainConstants {
+    public static final int leftFrontMotor_ID = 41;
+    public static final int leftBackMotor_ID = 43;
+    public static final int rightFrontMotor_ID = 40;
+    public static final int rightBackMotor_ID = 42;
   }
 }
