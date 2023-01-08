@@ -30,7 +30,6 @@ public class DriveTrainSub extends SubsystemBase {
   public DriveTrainSub() {
     m_rightdrive.setInverted(true);
 
-
     leftFrontMotor.setIdleMode(IdleMode.kCoast);
     leftBackMotor.setIdleMode(IdleMode.kCoast);
     rightFrontMotor.setIdleMode(IdleMode.kCoast);
@@ -38,11 +37,11 @@ public class DriveTrainSub extends SubsystemBase {
 
   }
 
-  public void arcadeDrive(double leftY, double rightX){
+  public static void arcadeDrive(double leftY, double rightX){
     m_drive.arcadeDrive(leftY, rightX, false);
   } 
 
-  public void arcadeDrive(double leftY, double rightX, boolean isSquareInputs){
+  public static void arcadeDrive(double leftY, double rightX, boolean isSquareInputs){
     m_drive.arcadeDrive(leftY, rightX, isSquareInputs);
   } 
 

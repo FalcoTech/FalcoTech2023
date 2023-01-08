@@ -9,6 +9,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrainSub;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -25,10 +26,17 @@ public class RobotContainer {
   private final DriveTrainSub drivetrainSub = new DriveTrainSub();
 
   //Setup Controllers
-  private final CommandXboxController Pilot = new CommandXboxController(OperatorConstants.PilotControllerPort);
-  private final CommandXboxController CoPilot = new CommandXboxController(OperatorConstants.CoPilotControllerPort);
-
+  // private final CommandXboxController Pilot = new CommandXboxController(OperatorConstants.PilotControllerPort);
+  // private final CommandXboxController CoPilot = new CommandXboxController(OperatorConstants.CoPilotControllerPort);
+  static XboxController Pilot = new XboxController(OperatorConstants.PilotControllerPort);
   
+  public static double GetPilotLeftY(){
+    return Pilot.getLeftY();
+  }
+
+  public static double GetPilotRightX(){
+    return Pilot.getRightX();
+  }
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -43,7 +51,7 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    Pilot.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    // Pilot.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
   }
 
