@@ -12,12 +12,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.DriveTrainConstants;
 
-public class DriveTrain extends SubsystemBase {
-  private static final CANSparkMax leftFrontMotor = new CANSparkMax(Constants.DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
-  private static final CANSparkMax leftBackMotor = new CANSparkMax(Constants.DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
-  private static final CANSparkMax rightFrontMotor = new CANSparkMax(Constants.DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
-  private static final CANSparkMax rightBackMotor = new CANSparkMax(Constants.DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless);  
+public class DriveTrainSub extends SubsystemBase {
+  private static final CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
+  private static final CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
+  private static final CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
+  private static final CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless);  
 
   public static final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
   public static final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
@@ -26,7 +27,7 @@ public class DriveTrain extends SubsystemBase {
 
 
   /** Creates a new DriveTrain. */
-  public DriveTrain() {
+  public DriveTrainSub() {
     m_rightdrive.setInverted(true);
 
 
@@ -38,11 +39,11 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double leftY, double rightX){
-    m_drive.arcadeDrive(leftY, rightX, true);
+    m_drive.arcadeDrive(leftY, rightX, false);
   } 
 
-  public void arcadeDrive(double leftY, double rightX, boolean squareinputs){
-    m_drive.arcadeDrive(leftY, rightX, squareinputs);
+  public void arcadeDrive(double leftY, double rightX, boolean isSquareInputs){
+    m_drive.arcadeDrive(leftY, rightX, isSquareInputs);
   } 
 
 
