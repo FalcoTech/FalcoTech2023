@@ -14,6 +14,7 @@ package frc.robot;
  */
 public final class Constants {
   public static class OperatorConstants {
+    // Creates port numbers for controllers
     public static final int PilotControllerPort = 0;
     public static final int CoPilotControllerPort = 1;
   }
