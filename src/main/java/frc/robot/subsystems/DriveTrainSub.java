@@ -15,10 +15,10 @@ import frc.robot.Constants;
 import frc.robot.Constants.DriveTrainConstants;
 
 public class DriveTrainSub extends SubsystemBase {
-  private static final CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
-  private static final CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
-  private static final CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
-  private static final CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless);  
+  private static CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
+  private static CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
+  private static CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
+  private static CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless);  
 
   public static final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
   public static final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
@@ -35,19 +35,21 @@ public class DriveTrainSub extends SubsystemBase {
     rightFrontMotor.setIdleMode(IdleMode.kCoast);
     rightBackMotor.setIdleMode(IdleMode.kCoast);
 
+    leftBackMotor.follow(leftFrontMotor);
+    rightBackMotor.follow(rightFrontMotor);
   }
-
-  public static void arcadeDrive(double leftY, double rightX){
-    m_drive.arcadeDrive(leftY, rightX, false);
-  } 
-
-  public static void arcadeDrive(double leftY, double rightX, boolean isSquareInputs){
-    m_drive.arcadeDrive(leftY, rightX, isSquareInputs);
-  } 
 
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  
+  public void arcadeDrive(double leftY, double rightX){
+    m_drive.arcadeDrive(leftY, rightX, false);
+  } 
+  public void arcadeDrive(double leftY, double rightX, boolean isSquaredInputs){
+    m_drive.arcadeDrive(leftY, rightX, isSquaredInputs);
+  } 
 }

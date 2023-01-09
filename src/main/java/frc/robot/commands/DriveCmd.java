@@ -6,14 +6,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrainSub;
 
 public class DriveCmd extends CommandBase {
   /** Creates a new DriveCmd. */
   public DriveCmd() {
-    addRequirements(Robot.driveTrainSub);
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(Robot.m_drivetrainsub);
   }
 
   // Called when the command is initially scheduled.
@@ -23,17 +22,15 @@ public class DriveCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double PilotLeftY = RobotContainer.GetPilotLeftY();
-    double PilotRightX = RobotContainer.GetPilotRightX();
+    double PilotLeftY = Robot.m_robotContainer.PilotGetLeftY();
+    double PilotRightX = Robot.m_robotContainer.PilotGetRightX();
 
-    DriveTrainSub.arcadeDrive(PilotLeftY, PilotRightX);
+    Robot.m_drivetrainsub.arcadeDrive(PilotLeftY, PilotRightX, true);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

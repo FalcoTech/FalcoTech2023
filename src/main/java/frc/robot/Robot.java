@@ -16,9 +16,10 @@ import frc.robot.subsystems.DriveTrainSub;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
-  private RobotContainer m_robotContainer;
-  public static DriveTrainSub driveTrainSub = new DriveTrainSub();
+  public static Command m_autonomousCommand;
+  public static DriveTrainSub m_drivetrainsub = new DriveTrainSub();
+  public static RobotContainer m_robotContainer;
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
