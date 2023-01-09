@@ -12,11 +12,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
   // The robot's SUBSYSTEMS and ???commands??? are defined here...
-  private final DriveTrain m_drivetrainsub = new DriveTrain();
+  private final DriveTrain m_drivetrain = new DriveTrain();
 
 
   private final XboxController Pilot = new XboxController(OperatorConstants.PilotControllerPort);

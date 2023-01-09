@@ -4,8 +4,11 @@
 
 package frc.robot.subsystems;
 
+import java.beans.Encoder;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -43,22 +46,19 @@ public class DriveTrain extends SubsystemBase {
 
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
-
-    //Not sure which one of these is correct. Or if it matters.
-
   }
 
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
-  
   public void arcadeDrive(double speed, double rotation){
     m_drive.arcadeDrive(speed, rotation, false);
   } 
   public void arcadeDrive(double speed, double rotation, boolean isSquaredInputs){
     m_drive.arcadeDrive(speed, rotation, isSquaredInputs);
   } 
+
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 }
