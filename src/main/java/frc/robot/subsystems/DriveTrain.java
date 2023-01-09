@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -15,21 +16,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Constants.DriveTrainConstants;
-import frc.robot.commands.DriveCmd;
 
-public class DriveTrainSub extends SubsystemBase {
+
+public class DriveTrain extends SubsystemBase {
   private CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
   private CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless);  
 
-  public MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
-  public MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
+  private final SparkMaxPIDController leftPID = leftFrontMotor.getPIDController();
+  private final SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
 
-  public DifferentialDrive m_drive = new DifferentialDrive(m_leftdrive, m_rightdrive);
+  private final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
+  private final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
 
+  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftdrive, m_rightdrive);
+  
   /** Creates a new DriveTrain. */
-  public DriveTrainSub() {
+  public DriveTrain() {
     m_rightdrive.setInverted(true);
 
     leftFrontMotor.setIdleMode(IdleMode.kCoast);
@@ -51,10 +55,10 @@ public class DriveTrainSub extends SubsystemBase {
   }
 
   
-  public void arcadeDrive(double leftY, double rightX){
-    m_drive.arcadeDrive(leftY, rightX, false);
+  public void arcadeDrive(double speed, double rotation){
+    m_drive.arcadeDrive(speed, rotation, false);
   } 
-  public void arcadeDrive(double leftY, double rightX, boolean isSquaredInputs){
-    m_drive.arcadeDrive(leftY, rightX, isSquaredInputs);
+  public void arcadeDrive(double speed, double rotation, boolean isSquaredInputs){
+    m_drive.arcadeDrive(speed, rotation, isSquaredInputs);
   } 
 }
