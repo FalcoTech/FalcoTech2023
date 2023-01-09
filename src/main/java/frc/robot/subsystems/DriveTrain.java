@@ -27,8 +27,8 @@ public class DriveTrain extends SubsystemBase {
   private CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless);  
 
-  private final SparkMaxPIDController leftPID = leftFrontMotor.getPIDController();
-  private final SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
+  private SparkMaxPIDController leftPID = leftFrontMotor.getPIDController();
+  private SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
 
   private final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
   private final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);

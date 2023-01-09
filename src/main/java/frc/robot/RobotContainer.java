@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Autos;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.XboxController;
@@ -19,17 +20,18 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DriveTrain m_drivetrain = new DriveTrain();
+  public static DriveTrain m_drivetrain = new DriveTrain();
 
 
-  private final XboxController Pilot = new XboxController(OperatorConstants.PilotControllerPort);
-  private final XboxController CoPilot = new XboxController(OperatorConstants.CoPilotControllerPort);
-
+  public static final XboxController Pilot = new XboxController(OperatorConstants.PilotControllerPort);
+  public static final XboxController CoPilot = new XboxController(OperatorConstants.CoPilotControllerPort);
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    m_drivetrain.setDefaultCommand(new ArcadeDrive());
     // SmartDashboard.putData();
   }
 
