@@ -10,9 +10,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.Constants.DriveTrainConstants;
+import frc.robot.commands.DriveCmd;
 
 public class DriveTrainSub extends SubsystemBase {
   private static CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
@@ -37,6 +40,10 @@ public class DriveTrainSub extends SubsystemBase {
 
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
+
+    //Not sure which one of these is correct. Or if it matters.
+    setDefaultCommand(new DriveCmd());
+    Robot.m_drivetrainsub.setDefaultCommand(new DriveCmd());
   }
 
 
