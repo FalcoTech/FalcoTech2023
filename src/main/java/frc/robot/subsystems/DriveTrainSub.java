@@ -18,16 +18,15 @@ import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.commands.DriveCmd;
 
 public class DriveTrainSub extends SubsystemBase {
-  private static CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
-  private static CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
-  private static CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
-  private static CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless);  
+  private CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
+  private CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
+  private CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
+  private CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless);  
 
-  public static final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
-  public static final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
+  public MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
+  public MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
 
-  public static final DifferentialDrive m_drive = new DifferentialDrive(m_leftdrive, m_rightdrive);
-
+  public DifferentialDrive m_drive = new DifferentialDrive(m_leftdrive, m_rightdrive);
 
   /** Creates a new DriveTrain. */
   public DriveTrainSub() {
@@ -42,8 +41,7 @@ public class DriveTrainSub extends SubsystemBase {
     rightBackMotor.follow(rightFrontMotor);
 
     //Not sure which one of these is correct. Or if it matters.
-    setDefaultCommand(new DriveCmd());
-    Robot.m_drivetrainsub.setDefaultCommand(new DriveCmd());
+
   }
 
 
