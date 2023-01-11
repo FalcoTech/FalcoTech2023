@@ -25,5 +25,8 @@ public final class Constants {
     public static final int leftBackMotor_ID = 43;
     public static final int rightFrontMotor_ID = 40;
     public static final int rightBackMotor_ID = 42;
+    public static final int shiftSolForward_ID = 0;
+    public static final int shiftSolReverse_ID = 1;
+
   }
 }

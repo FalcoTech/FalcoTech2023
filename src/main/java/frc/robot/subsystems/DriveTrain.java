@@ -12,6 +12,9 @@ import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -30,6 +33,7 @@ public class DriveTrain extends SubsystemBase {
   private SparkMaxPIDController leftPID = leftFrontMotor.getPIDController();
   private SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
 
+  private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
   private final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
   private final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
 
@@ -37,7 +41,7 @@ public class DriveTrain extends SubsystemBase {
   
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-    m_rightdrive.setInverted(true);
+    m_leftdrive.setInverted(true); //check this
 
     leftFrontMotor.setIdleMode(IdleMode.kCoast);
     leftBackMotor.setIdleMode(IdleMode.kCoast);
@@ -56,7 +60,13 @@ public class DriveTrain extends SubsystemBase {
     m_drive.arcadeDrive(speed, rotation, isSquaredInputs);
   } 
 
-
+  public void shiftLowGear(){
+    shiftSolenoid.set(Value.kForward);
+  }
+  
+  public void shiftHighGear(){
+    shiftSolenoid.set(Value.kReverse);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
