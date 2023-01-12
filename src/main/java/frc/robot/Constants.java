@@ -15,12 +15,11 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static class OperatorConstants {
-    // Creates port numbers for controllers
+  public static class OperatorConstants { //Constants for OI/Driver controls 
     public static final int PilotControllerPort = 0;
     public static final int CoPilotControllerPort = 1;
   }
-  public static class DriveTrainConstants {
+  public static class DriveTrainConstants { //Constants for drive train stuff like motors/pneumatics
     public static final int leftFrontMotor_ID = 41;
     public static final int leftBackMotor_ID = 43;
     public static final int rightFrontMotor_ID = 40;
