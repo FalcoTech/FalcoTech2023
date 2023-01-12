@@ -34,6 +34,9 @@ public class DriveTrain extends SubsystemBase {
   private SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
 
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
+  private boolean isLowGear = true;
+  private boolean isHighGear = false;
+  
   private final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
   private final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
 
@@ -50,6 +53,7 @@ public class DriveTrain extends SubsystemBase {
 
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
+
   }
 
 
@@ -62,11 +66,25 @@ public class DriveTrain extends SubsystemBase {
 
   public void shiftLowGear(){
     shiftSolenoid.set(Value.kForward);
+    boolean isLowGear = true;
+    boolean isHighGear = false;
   }
   
   public void shiftHighGear(){
     shiftSolenoid.set(Value.kReverse);
+    boolean isLowGear = false;
+    boolean isHighGear = true;
   }
+
+  public void toggleGear(){
+    if (isLowGear){
+      shiftHighGear();
+    } else if (isHighGear){
+      shiftLowGear();
+    }
+  }
+
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
