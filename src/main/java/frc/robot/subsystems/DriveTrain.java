@@ -29,8 +29,11 @@ public class DriveTrain extends SubsystemBase {
   private CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
   private CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
-  private CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless);  
-
+  private CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless); 
+  
+  private final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
+  private final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
+  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftdrive, m_rightdrive);
   private SparkMaxPIDController leftPID = leftFrontMotor.getPIDController();
   private SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
 
@@ -38,11 +41,6 @@ public class DriveTrain extends SubsystemBase {
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
   private boolean isLowGear = true;
   private boolean isHighGear = false;
-  
-  private final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
-  private final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
-
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftdrive, m_rightdrive);
   
   /** Creates a new DriveTrain. */
   public DriveTrain() {
@@ -58,10 +56,10 @@ public class DriveTrain extends SubsystemBase {
 
   }
 
-
   public void arcadeDrive(double speed, double rotation){
     m_drive.arcadeDrive(speed, rotation, false);
   } 
+  
   public void arcadeDrive(double speed, double rotation, boolean isSquaredInputs){
     m_drive.arcadeDrive(speed, rotation, isSquaredInputs);
   } 
@@ -86,7 +84,6 @@ public class DriveTrain extends SubsystemBase {
     }
   }
 
-  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
