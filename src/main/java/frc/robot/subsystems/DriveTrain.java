@@ -15,6 +15,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -33,6 +34,7 @@ public class DriveTrain extends SubsystemBase {
   private SparkMaxPIDController leftPID = leftFrontMotor.getPIDController();
   private SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
 
+  private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
   private boolean isLowGear = true;
   private boolean isHighGear = false;
@@ -88,5 +90,6 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    phCompressor.enableDigital();
   }
 }
