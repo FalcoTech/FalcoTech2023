@@ -26,21 +26,22 @@ import frc.robot.Constants.DriveTrainConstants;
 
 
 public class DriveTrain extends SubsystemBase {
+  //Motor Inits
   private CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
   private CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless); 
-  
+  private SparkMaxPIDController leftPID = leftFrontMotor.getPIDController();
+  private SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
+  //Differentialdrive Inits
   private final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
   private final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftdrive, m_rightdrive);
-  private SparkMaxPIDController leftPID = leftFrontMotor.getPIDController();
-  private SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
-
+  //Compressor
   private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
-  private boolean isLowGear = true;
-  private boolean isHighGear = false;
+  //Booleans/Strings
+  public String arcadeDriveSpeed = "default"; 
   
   /** Creates a new DriveTrain. */
   public DriveTrain() {
@@ -66,23 +67,24 @@ public class DriveTrain extends SubsystemBase {
 
   public void shiftLowGear(){
     shiftSolenoid.set(Value.kForward);
-    boolean isLowGear = true;
-    boolean isHighGear = false;
   }
   
   public void shiftHighGear(){
     shiftSolenoid.set(Value.kReverse);
-    boolean isLowGear = false;
-    boolean isHighGear = true;
   }
 
   public void toggleGear(){
-    if (isLowGear){
-      shiftHighGear();
-    } else if (isHighGear){
-      shiftLowGear();
+    shiftSolenoid.toggle();
+  }
+
+  public void toggleArcadeDriveSpeed(){
+    if (arcadeDriveSpeed == "default"){
+      arcadeDriveSpeed = "slow";
+    } else{
+      arcadeDriveSpeed = "default";
     }
   }
+
 
   @Override
   public void periodic() {
