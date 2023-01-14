@@ -26,6 +26,8 @@ public final class Constants {
     public static final int rightBackMotor_ID = 42;
     public static final int shiftSolForward_ID = 0;
     public static final int shiftSolReverse_ID = 1;
-
+  }
+  public static class VisionConstants {
+    public static final String tagFamily = "tag16h5";
   }
 }
