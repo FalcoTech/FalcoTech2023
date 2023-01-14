@@ -27,7 +27,7 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double PilotLeftY = RobotContainer.Pilot.getLeftY(); 
+    double PilotLeftY = (RobotContainer.Pilot.getLeftY() * -1); 
     double PilotRightX = RobotContainer.Pilot.getRightX();
     
     if (RobotContainer.m_drivetrain.arcadeDriveSpeed == "default"){
