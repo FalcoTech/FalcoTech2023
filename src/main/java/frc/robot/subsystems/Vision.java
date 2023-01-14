@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.apriltag.AprilTagDetector;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -20,12 +22,13 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+
 public class Vision extends SubsystemBase {
   //USB Camera(s)
-  private final UsbCamera camera;
+  private final UsbCamera USBcamera;
   //AprilTag stuff
   private final CvSink cvSink;
-  private final AprilTagDetector tagDetector;
+
   //Limelight values
   public static NetworkTable table;
   public static NetworkTableEntry tx;
@@ -34,11 +37,12 @@ public class Vision extends SubsystemBase {
   public static NetworkTableEntry tv;
   public static NetworkTableEntry camMode;
   public static NetworkTableEntry ledMode;
-  
-  public Vision() {
-    camera = CameraServer.startAutomaticCapture();
-    cvSink = CameraServer.getVideo(); 
 
+  public Vision() {
+    //USB CAM
+    USBcamera = CameraServer.startAutomaticCapture();
+    cvSink = CameraServer.getVideo(); 
+    //LIMELIGHT
     table = NetworkTableInstance.getDefault().getTable("limelight");
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
@@ -46,9 +50,6 @@ public class Vision extends SubsystemBase {
     tv = table.getEntry("tv");
     ledMode = table.getEntry("ledMode");
     camMode = table.getEntry("camMode");
-
-    tagDetector = new AprilTagDetector();
-    tagDetector.addFamily(Constants.VisionConstants.tagFamily);
   }
 
   public double getTargetOffsetX(){
@@ -68,6 +69,4 @@ public class Vision extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-
-
 }
