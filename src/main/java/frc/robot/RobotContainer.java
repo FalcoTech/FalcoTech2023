@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Autos;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -22,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static DriveTrain m_drivetrain = new DriveTrain();
-
+  public static Vision m_vision = new Vision();
 
   public static final XboxController Pilot = new XboxController(OperatorConstants.PilotControllerPort);
   public static final XboxController CoPilot = new XboxController(OperatorConstants.CoPilotControllerPort);

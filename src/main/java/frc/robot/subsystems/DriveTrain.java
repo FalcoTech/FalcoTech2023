@@ -51,6 +51,7 @@ public class DriveTrain extends SubsystemBase {
     leftBackMotor.setIdleMode(IdleMode.kCoast);
     rightFrontMotor.setIdleMode(IdleMode.kCoast);
     rightBackMotor.setIdleMode(IdleMode.kCoast);
+    arcadeDriveSpeed = "default";
 
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
@@ -81,8 +82,18 @@ public class DriveTrain extends SubsystemBase {
   public void toggleArcadeDriveSpeed(){
     if (arcadeDriveSpeed == "default"){
       arcadeDriveSpeed = "slow";
+      leftFrontMotor.setIdleMode(IdleMode.kBrake);
+      leftBackMotor.setIdleMode(IdleMode.kBrake);
+      rightFrontMotor.setIdleMode(IdleMode.kBrake);
+      rightBackMotor.setIdleMode(IdleMode.kBrake);
+
     } else{
       arcadeDriveSpeed = "default";
+      leftFrontMotor.setIdleMode(IdleMode.kCoast);
+      leftBackMotor.setIdleMode(IdleMode.kCoast);
+      rightFrontMotor.setIdleMode(IdleMode.kCoast);
+      rightBackMotor.setIdleMode(IdleMode.kCoast);
+      
     }
   }
 

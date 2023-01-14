@@ -4,12 +4,17 @@
 
 package frc.robot.subsystems;
 
+import java.io.ObjectInputStream.GetField;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTagDetector;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.CvSink;
@@ -17,6 +22,7 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.VisionConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -25,9 +31,14 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Vision extends SubsystemBase {
   //USB Camera(s)
-  private final UsbCamera USBcamera;
+  private final UsbCamera USBCamera;
+  
   //AprilTag stuff
+  private final PhotonCamera photonCamera; 
+  private static boolean photonHasTarget;
+  private static PhotonPipelineResult photonResult;
   private final CvSink cvSink;
+  private final AprilTagDetector detector;
 
   //Limelight values
   public static NetworkTable table;
@@ -40,38 +51,45 @@ public class Vision extends SubsystemBase {
 
   public Vision() {
     //USB CAM
-    USBcamera = CameraServer.startAutomaticCapture();
-    cvSink = CameraServer.getVideo(); 
-  }
+    USBCamera = CameraServer.startAutomaticCapture();
+    cvSink = CameraServer.getVideo();
 
-  public double getTargetOffsetX(){
-    return tx.getDouble(0.0);
+    //Apriltag detection
+    photonCamera = new PhotonCamera(USBCamera.getName());
+    detector = new AprilTagDetector();
+    detector.addFamily(VisionConstants.tagFamily);
   }
-  public double getTargetOffsetY(){
-    return ty.getDouble(0.0);
-  }
-  public double getTargetArea(){
-    return ta.getDouble(0.0);
-  }
-  public boolean getValidTarget(){
-    return (tv.getDouble(0.0) == 1);
-  }
-
-  public void updateLimelight(){
-      //LIMELIGHT
-      table = NetworkTableInstance.getDefault().getTable("limelight");
-      tx = table.getEntry("tx");
-      ty = table.getEntry("ty");
-      ta = table.getEntry("ta");
-      tv = table.getEntry("tv");
-      ledMode = table.getEntry("ledMode");
-      camMode = table.getEntry("camMode");
-  }
-
 
   @Override
   public void periodic() {
-    updateLimelight();
+    updateVision();
     // This method will be called once per scheduler run
   }
+
+  public void updateVision(){
+    //LIMELIGHT
+    table = NetworkTableInstance.getDefault().getTable("limelight");
+    tx = table.getEntry("tx");
+    ty = table.getEntry("ty");
+    ta = table.getEntry("ta");
+    tv = table.getEntry("tv");
+    ledMode = table.getEntry("ledMode");
+    camMode = table.getEntry("camMode");
+
+    //PHOTON
+    photonResult = photonCamera.getLatestResult();
+    photonHasTarget = photonResult.hasTargets();
+    if (photonHasTarget){
+      this.photonResult = photonResult;
+    }
+  }
+
+  public PhotonTrackedTarget getBestTarget(){
+    if (photonHasTarget){
+      return photonResult.getBestTarget();
+    } else {
+      return null;
+    }
+  }
+  
 }
