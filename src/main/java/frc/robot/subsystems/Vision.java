@@ -42,14 +42,6 @@ public class Vision extends SubsystemBase {
     //USB CAM
     USBcamera = CameraServer.startAutomaticCapture();
     cvSink = CameraServer.getVideo(); 
-    //LIMELIGHT
-    table = NetworkTableInstance.getDefault().getTable("limelight");
-    tx = table.getEntry("tx");
-    ty = table.getEntry("ty");
-    ta = table.getEntry("ta");
-    tv = table.getEntry("tv");
-    ledMode = table.getEntry("ledMode");
-    camMode = table.getEntry("camMode");
   }
 
   public double getTargetOffsetX(){
@@ -65,8 +57,21 @@ public class Vision extends SubsystemBase {
     return (tv.getDouble(0.0) == 1);
   }
 
+  public void updateLimelight(){
+      //LIMELIGHT
+      table = NetworkTableInstance.getDefault().getTable("limelight");
+      tx = table.getEntry("tx");
+      ty = table.getEntry("ty");
+      ta = table.getEntry("ta");
+      tv = table.getEntry("tv");
+      ledMode = table.getEntry("ledMode");
+      camMode = table.getEntry("camMode");
+  }
+
+
   @Override
   public void periodic() {
+    updateLimelight();
     // This method will be called once per scheduler run
   }
 }
