@@ -55,6 +55,7 @@ public class DriveTrain extends SubsystemBase {
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
 
+    shiftSolenoid.set(Value.kForward);
   }
 
   public void arcadeDrive(double speed, double rotation){
