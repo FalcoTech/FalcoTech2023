@@ -51,7 +51,7 @@ public class Vision extends SubsystemBase {
 
   public Vision() {
     //USB CAM
-    USBCamera = CameraServer.startAutomaticCapture();
+    USBCamera = CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
     cvSink = CameraServer.getVideo();
 
     //Apriltag detection
@@ -62,8 +62,8 @@ public class Vision extends SubsystemBase {
 
   @Override
   public void periodic() {
-    updateVision();
     // This method will be called once per scheduler run
+    updateVision(); //Update values of vision tracking
   }
 
   public void updateVision(){
