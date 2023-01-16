@@ -17,8 +17,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,17 +36,27 @@ public class DriveTrain extends SubsystemBase {
   private CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless); 
+
   //Differentialdrive Inits
   private final MotorControllerGroup m_leftDrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
   private final MotorControllerGroup m_rightDrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftDrive, m_rightDrive);
-  //Encoder Inits
+
+  //Encoder Inits (Check this, RelativeEncoder may not be the right statement)
   private final RelativeEncoder m_leftDriveEncoder = leftFrontMotor.getEncoder();
   private final RelativeEncoder m_rightDriveEncoder = rightFrontMotor.getEncoder();
+
   //PID Inits
   private final SparkMaxPIDController m_leftPID = leftFrontMotor.getPIDController();
   private final SparkMaxPIDController m_rightPID = rightFrontMotor.getPIDController();
   private final PIDController m_driveControlPID = new PIDController(DriveTrainConstants.drivekP, DriveTrainConstants.drivekI, DriveTrainConstants.drivekD);
+
+  //Gyro 
+  private final Gyro m_gyro = new ADXRS450_Gyro();
+
+  //Odometry Class
+  private final DifferentialDriveOdometry m_odometry;
+
   //Compressor/Solenoids Inits
   private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
@@ -53,7 +66,7 @@ public class DriveTrain extends SubsystemBase {
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     //Sets one drive train side to inverted
-    m_leftDrive.setInverted(true); //check this
+    m_rightDrive.setInverted(true); //check this
 
     //Coast motors and set default speed 
     leftFrontMotor.setIdleMode(IdleMode.kCoast);
@@ -68,6 +81,9 @@ public class DriveTrain extends SubsystemBase {
 
     //Shift solenoid defaults to low gear
     shiftSolenoid.set(Value.kForward);
+
+    //Odometry init
+    // m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
   }
 
   //Our main ArcadeDrive command. 
@@ -105,6 +121,11 @@ public class DriveTrain extends SubsystemBase {
       rightFrontMotor.setIdleMode(IdleMode.kCoast);
       rightBackMotor.setIdleMode(IdleMode.kCoast);
     }
+  }
+
+  public void resetEncoders() {
+    leftFrontMotor.getEncoder().setPosition(0);
+    rightFrontMotor.getEncoder().setPosition(0);
   }
 
   @Override
