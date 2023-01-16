@@ -92,14 +92,12 @@ public class DriveTrain extends SubsystemBase {
       leftBackMotor.setIdleMode(IdleMode.kBrake);
       rightFrontMotor.setIdleMode(IdleMode.kBrake);
       rightBackMotor.setIdleMode(IdleMode.kBrake);
-
     } else{
       arcadeDriveSpeed = "default";
       leftFrontMotor.setIdleMode(IdleMode.kCoast);
       leftBackMotor.setIdleMode(IdleMode.kCoast);
       rightFrontMotor.setIdleMode(IdleMode.kCoast);
       rightBackMotor.setIdleMode(IdleMode.kCoast);
-      
     }
   }
 

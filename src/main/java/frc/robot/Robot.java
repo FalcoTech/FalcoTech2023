@@ -15,16 +15,29 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
   
+<<<<<<< HEAD
   //FMS Match Timer
   Timer matchTimer;
 
 
+=======
+  Timer matchTimer;
+
+  /**
+   * This function is run when the robot is first started up and should be used for any
+   * initialization code.
+   */
+>>>>>>> master
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+<<<<<<< HEAD
 
     //Initialize and stop match timer
+=======
+    
+>>>>>>> master
     matchTimer = new Timer();
     matchTimer.reset();
     matchTimer.stop();
@@ -38,9 +51,15 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
   }
 
+<<<<<<< HEAD
   @Override
   public void autonomousInit() {
     //Reset and start the match timer when match starts (Autonomous is initialized)
+=======
+  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  @Override
+  public void autonomousInit() {
+>>>>>>> master
     matchTimer.reset();
     matchTimer.start();
     
@@ -66,6 +85,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {}
 
+<<<<<<< HEAD
 /**
  * 
  * 
@@ -78,6 +98,14 @@ public class Robot extends TimedRobot {
  * 
  */
 
+=======
+
+
+
+
+  
+  /** This function is called once each time the robot enters Disabled mode. */
+>>>>>>> master
   @Override
   public void disabledInit() {}
 
