@@ -31,13 +31,14 @@ public class DriveTrain extends SubsystemBase {
   private CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless); 
+  //PID Inits
   private SparkMaxPIDController leftPID = leftFrontMotor.getPIDController();
   private SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
   //Differentialdrive Inits
   private final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
   private final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftdrive, m_rightdrive);
-  //Compressor
+  //Compressor/Solenoids Inits
   private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
   //Booleans/Strings
@@ -45,24 +46,29 @@ public class DriveTrain extends SubsystemBase {
   
   /** Creates a new DriveTrain. */
   public DriveTrain() {
+    //Sets one drive train side to inverted
     m_leftdrive.setInverted(true); //check this
 
+    //Coast motors and set default speed 
     leftFrontMotor.setIdleMode(IdleMode.kCoast);
     leftBackMotor.setIdleMode(IdleMode.kCoast);
     rightFrontMotor.setIdleMode(IdleMode.kCoast);
     rightBackMotor.setIdleMode(IdleMode.kCoast);
     arcadeDriveSpeed = "default";
 
+    //Back motors will always follow the lead motors
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
 
+    //Shift solenoid defaults to low gear
     shiftSolenoid.set(Value.kForward);
   }
 
+  //Our main ArcadeDrive command. 
   public void arcadeDrive(double speed, double rotation){
     m_drive.arcadeDrive(speed, rotation, false);
   } 
-  
+  //Secondary ArcadeDrive command. Has additional bool for squared inputs to increase controlability at low speeds. 
   public void arcadeDrive(double speed, double rotation, boolean isSquaredInputs){
     m_drive.arcadeDrive(speed, rotation, isSquaredInputs);
   } 
@@ -97,10 +103,9 @@ public class DriveTrain extends SubsystemBase {
     }
   }
 
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    phCompressor.enableDigital();
+    phCompressor.enableDigital(); //Runs compressor
   }
 }

@@ -5,7 +5,6 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Autos;
 import frc.robot.subsystems.DriveTrain;
@@ -42,26 +41,20 @@ public class RobotContainer {
   public static DriveTrain m_drivetrain = new DriveTrain();
   public static Vision m_vision = new Vision();
 
+  //Initialize driver station controllers
   public static final XboxController Pilot = new XboxController(OperatorConstants.PilotControllerPort);
   public static final XboxController CoPilot = new XboxController(OperatorConstants.CoPilotControllerPort);
   
-  //PathPlanner
-  public static 
   //Smartdashboard
-  SendableChooser<CommandBase> autoChooser = new SendableChooser<>();
+  SendableChooser<CommandBase> autoChooser = new SendableChooser<>(); //Autonomous chooser
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
-    configureBindings();
-    PathPlannerServer.startServer(5811);
-    m_drivetrain.setDefaultCommand(new ArcadeDrive());
-    
-    //Smartdashboard
-    autoChooser.setDefaultOption("No Auto Selected", null);
-    // autoChooser.addOption("Left Side Cube Run", new );
-
-    SmartDashboard.putData("Auto Mode", autoChooser);
+    configureBindings(); // Configure the trigger bindings
+    configureSmartdashboard(); //Configures the smartdashboard settings/choosers
+    //Set Default Commands
+    m_drivetrain.setDefaultCommand(new ArcadeDrive()); //Defaults the pilot's drive command
+  
   }
 
   /** Use this method to define your trigger->command mappings. Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@lin CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}. */
@@ -72,19 +65,20 @@ public class RobotContainer {
     new Trigger(() -> Pilot.getYButton()).onTrue(new InstantCommand(() -> m_drivetrain.toggleGear())); //Pilot's "Y" button toggles gears
 
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.toggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
+
+    //Copilot Controls
   }
 
-  private void configureAutoCommands(){
-    PathPlannerTrajectory LeftSideCubeRunPath = PathPlanner.loadPath("Left Side Cube Run", 4, 3);
-    PathPlannerTrajectory RightSideCubeRunPath = PathPlanner.loadPath("Right Side Cube Run", 4, 3);
-  }
+  private void configureSmartdashboard(){
+    //Smartdashboard AutoChooser
+    autoChooser.setDefaultOption("No Auto Selected", null);
+    autoChooser.addOption("Left Side Cube Run", null);
+    autoChooser.addOption("Right Side Cube Run", null);
 
-  private void configureShuffleboard(){
-
+    SmartDashboard.putData("Auto Mode", autoChooser);
   }
 
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return autoChooser.getSelected();
+    return autoChooser.getSelected(); //Gets the autonomous mode selected on smartdashboard
   }
 }

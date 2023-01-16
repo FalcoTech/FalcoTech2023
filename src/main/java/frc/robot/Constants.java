@@ -36,7 +36,5 @@ public final class Constants {
     public static final String tagFamily = "tag16h5";
   }
 
-  public static class PathPlannerConstants{
-    public static final HashMap<String, Command> AutoEventMap = new HashMap<>();
-  }
+  
 }
