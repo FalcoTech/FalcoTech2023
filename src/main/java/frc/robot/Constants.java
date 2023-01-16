@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -19,6 +22,7 @@ public final class Constants {
     public static final int PilotControllerPort = 0;
     public static final int CoPilotControllerPort = 1;
   }
+  
   public static class DriveTrainConstants { //Constants for drive train stuff like motors/pneumatics
     public static final int leftFrontMotor_ID = 41;
     public static final int leftBackMotor_ID = 43;
@@ -27,7 +31,12 @@ public final class Constants {
     public static final int shiftSolForward_ID = 0;
     public static final int shiftSolReverse_ID = 1;
   }
+
   public static class VisionConstants {
     public static final String tagFamily = "tag16h5";
+  }
+
+  public static class PathPlannerConstants{
+    public static final HashMap<String, Command> AutoEventMap = new HashMap<>();
   }
 }

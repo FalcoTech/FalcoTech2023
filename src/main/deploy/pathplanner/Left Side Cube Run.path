@@ -42,7 +42,7 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "sasa"
+          "event1"
         ],
         "executionBehavior": "parallel",
         "waitBehavior": "after",
@@ -91,9 +91,11 @@
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "event2"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
