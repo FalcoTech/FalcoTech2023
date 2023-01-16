@@ -27,14 +27,7 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double PilotLeftY = (RobotContainer.Pilot.getLeftY() * -1); 
-    double PilotRightX = RobotContainer.Pilot.getRightX();
-    
-    if (RobotContainer.m_drivetrain.arcadeDriveSpeed == "default"){
-      RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY, PilotRightX);
-    } else {
-      RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY * .15, PilotRightX * .15);
-    }
+    runArcadeDrive();
   }
 
   // Called once the command ends or is interrupted.
@@ -45,5 +38,18 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
+  }
+
+  public void runArcadeDrive(){
+    double PilotLeftX = RobotContainer.Pilot.getLeftX();
+    double PilotLeftY = RobotContainer.Pilot.getLeftY() * -1;
+    double PilotRightX = RobotContainer.Pilot.getRightX();
+    double PilotRightY = RobotContainer.Pilot.getRightY() * -1;
+
+    if (RobotContainer.m_drivetrain.arcadeDriveSpeed == "default"){
+      RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY, PilotRightX);
+    } else{
+      RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY * .15, PilotRightX * .15);
+    }
   }
 }
