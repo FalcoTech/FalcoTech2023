@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -28,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Constants.DriveTrainConstants;
+import frc.robot.Constants.OperatorConstants;
 
 
 public class DriveTrain extends SubsystemBase {
@@ -52,10 +54,10 @@ public class DriveTrain extends SubsystemBase {
   private final PIDController m_driveControlPID = new PIDController(DriveTrainConstants.drivekP, DriveTrainConstants.drivekI, DriveTrainConstants.drivekD);
 
   //Gyro 
-  private final Gyro m_gyro = new ADXRS450_Gyro();
+  private final Gyro m_gyro = new AnalogGyro(OperatorConstants.gyroID);
 
   //Odometry Class
-  private final DifferentialDriveOdometry m_odometry;
+  // private final DifferentialDriveOdometry m_odometry;
 
   //Compressor/Solenoids Inits
   private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
@@ -83,7 +85,7 @@ public class DriveTrain extends SubsystemBase {
     shiftSolenoid.set(Value.kForward);
 
     //Odometry init
-    // m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+    // m_odometry = new DifferentialDriveOdometry(m_gyro.getAngle());
   }
 
   //Our main ArcadeDrive command. 

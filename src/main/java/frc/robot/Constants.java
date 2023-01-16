@@ -19,8 +19,12 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public final class Constants {
   public static class OperatorConstants { //Constants for OI/Driver controls 
+    //Controller Ports
     public static final int PilotControllerPort = 0;
     public static final int CoPilotControllerPort = 1;
+
+    //Gyro Stuff
+    public static final int gyroID = 0; //Idk what this will be but it's not this lol
   }
   
   public static class DriveTrainConstants { //Constants for drive train stuff like motors/pneumatics
