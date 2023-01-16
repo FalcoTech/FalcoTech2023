@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.beans.Encoder;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -15,6 +16,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -31,13 +33,17 @@ public class DriveTrain extends SubsystemBase {
   private CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
   private CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless); 
-  //PID Inits
-  private SparkMaxPIDController leftPID = leftFrontMotor.getPIDController();
-  private SparkMaxPIDController rightPID = rightFrontMotor.getPIDController();
   //Differentialdrive Inits
-  private final MotorControllerGroup m_leftdrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
-  private final MotorControllerGroup m_rightdrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftdrive, m_rightdrive);
+  private final MotorControllerGroup m_leftDrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
+  private final MotorControllerGroup m_rightDrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
+  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftDrive, m_rightDrive);
+  //Encoder Inits
+  private final RelativeEncoder m_leftDriveEncoder = leftFrontMotor.getEncoder();
+  private final RelativeEncoder m_rightDriveEncoder = rightFrontMotor.getEncoder();
+  //PID Inits
+  private final SparkMaxPIDController m_leftPID = leftFrontMotor.getPIDController();
+  private final SparkMaxPIDController m_rightPID = rightFrontMotor.getPIDController();
+  private final PIDController m_driveControlPID = new PIDController(DriveTrainConstants.drivekP, DriveTrainConstants.drivekI, DriveTrainConstants.drivekD);
   //Compressor/Solenoids Inits
   private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
@@ -47,7 +53,7 @@ public class DriveTrain extends SubsystemBase {
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     //Sets one drive train side to inverted
-    m_leftdrive.setInverted(true); //check this
+    m_leftDrive.setInverted(true); //check this
 
     //Coast motors and set default speed 
     leftFrontMotor.setIdleMode(IdleMode.kCoast);

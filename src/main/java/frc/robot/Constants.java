@@ -24,12 +24,28 @@ public final class Constants {
   }
   
   public static class DriveTrainConstants { //Constants for drive train stuff like motors/pneumatics
+    //Motor ID's
     public static final int leftFrontMotor_ID = 41;
     public static final int leftBackMotor_ID = 43;
     public static final int rightFrontMotor_ID = 40;
     public static final int rightBackMotor_ID = 42;
+    //PID Stuff
+    public static final double drivekP = 0.00006;
+    public static final double drivekI = 0.000001;
+    public static final double drivekD = 0;
+    public static final double driveIz = 0;
+    public static final double drivekFF = 0.000015;
+    //Max Outputs
+    public static final double driveMinOutput = -1.0;
+    public static final double driveMaxOutput = 1.0;
+    public static final double driveMaxRPM = 5108;
+    public static final double driveGearRatio = 8.68;
+  
+    //Shifter solenoid ID's
     public static final int shiftSolForward_ID = 0;
     public static final int shiftSolReverse_ID = 1;
+
+
   }
 
   public static class VisionConstants {
