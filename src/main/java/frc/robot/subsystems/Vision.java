@@ -30,11 +30,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 
 public class Vision extends SubsystemBase {
-  //USB Camera(s)
-  private final UsbCamera USBCamera;
-  
   //AprilTag stuff
-  private final PhotonCamera photonCamera; 
   private static boolean photonHasTarget;
   private static PhotonPipelineResult photonResult;
   private final CvSink cvSink;
@@ -50,13 +46,11 @@ public class Vision extends SubsystemBase {
   public static NetworkTableEntry ledMode;
 
   public Vision() {
-    //USB CAM
-    USBCamera = new UsbCamera(getName(), getName());
+    //Start USB camera on RoboRIO
     CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
     cvSink = CameraServer.getVideo();
 
-    //Apriltag detection
-    photonCamera = new PhotonCamera(USBCamera.getName());
+    //Apriltag stuff
     detector = new AprilTagDetector();
     detector.addFamily(VisionConstants.tagFamily);
   }

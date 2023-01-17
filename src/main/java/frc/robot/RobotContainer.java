@@ -7,9 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Autos;
-import frc.robot.commands.RunIntake;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 
 import java.util.ArrayList;
@@ -25,6 +23,7 @@ import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -42,22 +41,21 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static DriveTrain m_drivetrain = new DriveTrain();
   public static Vision m_vision = new Vision();
-  public static Intake m_intake = new Intake();
 
   //Initialize driver station controllers
   public static final XboxController Pilot = new XboxController(OperatorConstants.PilotControllerPort);
   public static final XboxController CoPilot = new XboxController(OperatorConstants.CoPilotControllerPort);
   
-  //Smartdashboard
+  //Smartdashboard choosers/data
   SendableChooser<CommandBase> autoChooser = new SendableChooser<>(); //Autonomous chooser
-
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings(); // Configure the trigger bindings
     configureSmartdashboard(); //Configures the smartdashboard settings/choosers
+    
     //Set Default Commands
     m_drivetrain.setDefaultCommand(new ArcadeDrive()); //Defaults the pilot's drive command
-    m_intake.setDefaultCommand(new RunIntake());
   }
 
   /** Use this method to define your trigger->command mappings. Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@lin CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}. */
@@ -65,10 +63,8 @@ public class RobotContainer {
     //Pilot Controls
     new Trigger(() -> Pilot.getAButton()).onTrue(new InstantCommand(() -> m_drivetrain.shiftLowGear())); //Pilot's "A" button shifts to low gear
     new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.shiftHighGear())); //Pilot's "B" button shifts to high gear
-    new Trigger(() -> Pilot.getYButton()).onTrue(new InstantCommand(() -> m_drivetrain.toggleGear())); //Pilot's "Y" button toggles gears
 
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.toggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
-
     //Copilot Controls
   }
 

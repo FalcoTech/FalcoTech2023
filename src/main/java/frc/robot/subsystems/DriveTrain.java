@@ -17,7 +17,10 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Compressor;
@@ -34,30 +37,19 @@ import frc.robot.Constants.OperatorConstants;
 
 public class DriveTrain extends SubsystemBase {
   //Motor Inits
-  private CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
-  private CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
-  private CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
-  private CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless); 
+  private CANSparkMax m_leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
+  private CANSparkMax m_leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
+  private CANSparkMax m_rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
+  private CANSparkMax m_rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless); 
 
   //Differentialdrive Inits
-  private final MotorControllerGroup m_leftDrive = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
-  private final MotorControllerGroup m_rightDrive = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
+  private final MotorControllerGroup m_leftDrive = new MotorControllerGroup(m_leftFrontMotor, m_leftBackMotor);
+  private final MotorControllerGroup m_rightDrive = new MotorControllerGroup(m_rightFrontMotor, m_rightBackMotor);
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftDrive, m_rightDrive);
 
   //Encoder Inits (Check this, RelativeEncoder may not be the right statement)
-  private final RelativeEncoder m_leftDriveEncoder = leftFrontMotor.getEncoder();
-  private final RelativeEncoder m_rightDriveEncoder = rightFrontMotor.getEncoder();
-
-  //PID Inits
-  private final SparkMaxPIDController m_leftPID = leftFrontMotor.getPIDController();
-  private final SparkMaxPIDController m_rightPID = rightFrontMotor.getPIDController();
-  private final PIDController m_driveControlPID = new PIDController(DriveTrainConstants.drivekP, DriveTrainConstants.drivekI, DriveTrainConstants.drivekD);
-
-  //Gyro 
-  private final Gyro m_gyro = new AnalogGyro(OperatorConstants.gyroID);
-
-  //Odometry Class
-  // private final DifferentialDriveOdometry m_odometry;
+  private final RelativeEncoder m_leftDriveEncoder = m_leftFrontMotor.getEncoder();
+  private final RelativeEncoder m_rightDriveEncoder = m_rightFrontMotor.getEncoder();
 
   //Compressor/Solenoids Inits
   private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
@@ -68,24 +60,24 @@ public class DriveTrain extends SubsystemBase {
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     //Sets one drive train side to inverted
-    m_rightDrive.setInverted(true); //check this
+    m_leftDrive.setInverted(true); //check this
+    //Resets encoder and gyro values
+    resetEncoders();
 
     //Coast motors and set default speed 
-    leftFrontMotor.setIdleMode(IdleMode.kCoast);
-    leftBackMotor.setIdleMode(IdleMode.kCoast);
-    rightFrontMotor.setIdleMode(IdleMode.kCoast);
-    rightBackMotor.setIdleMode(IdleMode.kCoast);
+    m_leftFrontMotor.setIdleMode(IdleMode.kCoast);
+    m_leftBackMotor.setIdleMode(IdleMode.kCoast);
+    m_rightFrontMotor.setIdleMode(IdleMode.kCoast);
+    m_rightBackMotor.setIdleMode(IdleMode.kCoast);
     arcadeDriveSpeed = "default";
 
     //Back motors will always follow the lead motors
-    leftBackMotor.follow(leftFrontMotor);
-    rightBackMotor.follow(rightFrontMotor);
+    m_leftBackMotor.follow(m_leftFrontMotor);
+    m_rightBackMotor.follow(m_rightFrontMotor);
 
     //Shift solenoid defaults to low gear
     shiftSolenoid.set(Value.kForward);
-
-    //Odometry init
-    // m_odometry = new DifferentialDriveOdometry(m_gyro.getAngle());
+    
   }
 
   //Our main ArcadeDrive command. 
@@ -105,29 +97,25 @@ public class DriveTrain extends SubsystemBase {
     shiftSolenoid.set(Value.kReverse);
   }
 
-  public void toggleGear(){
-    shiftSolenoid.toggle();
-  }
-
   public void toggleArcadeDriveSpeed(){
     if (arcadeDriveSpeed == "default"){
       arcadeDriveSpeed = "slow";
-      leftFrontMotor.setIdleMode(IdleMode.kBrake);
-      leftBackMotor.setIdleMode(IdleMode.kBrake);
-      rightFrontMotor.setIdleMode(IdleMode.kBrake);
-      rightBackMotor.setIdleMode(IdleMode.kBrake);
+      m_leftFrontMotor.setIdleMode(IdleMode.kBrake);
+      m_leftBackMotor.setIdleMode(IdleMode.kBrake);
+      m_rightFrontMotor.setIdleMode(IdleMode.kBrake);
+      m_rightBackMotor.setIdleMode(IdleMode.kBrake);
     } else{
       arcadeDriveSpeed = "default";
-      leftFrontMotor.setIdleMode(IdleMode.kCoast);
-      leftBackMotor.setIdleMode(IdleMode.kCoast);
-      rightFrontMotor.setIdleMode(IdleMode.kCoast);
-      rightBackMotor.setIdleMode(IdleMode.kCoast);
+      m_leftFrontMotor.setIdleMode(IdleMode.kCoast);
+      m_leftBackMotor.setIdleMode(IdleMode.kCoast);
+      m_rightFrontMotor.setIdleMode(IdleMode.kCoast);
+      m_rightBackMotor.setIdleMode(IdleMode.kCoast);
     }
   }
 
-  public void resetEncoders() {
-    leftFrontMotor.getEncoder().setPosition(0);
-    rightFrontMotor.getEncoder().setPosition(0);
+  public void resetEncoders(){
+    m_leftDriveEncoder.setPosition(0);
+    m_rightDriveEncoder.setPosition(0);
   }
 
   @Override
