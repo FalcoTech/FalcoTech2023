@@ -51,7 +51,8 @@ public class Vision extends SubsystemBase {
 
   public Vision() {
     //USB CAM
-    USBCamera = CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
+    USBCamera = new UsbCamera(getName(), getName());
+    CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
     cvSink = CameraServer.getVideo();
 
     //Apriltag detection
@@ -76,12 +77,12 @@ public class Vision extends SubsystemBase {
     ledMode = table.getEntry("ledMode");
     camMode = table.getEntry("camMode");
 
-    //PHOTON
-    photonResult = photonCamera.getLatestResult();
-    photonHasTarget = photonResult.hasTargets();
-    if (photonHasTarget){
-      this.photonResult = photonResult;
-    }
+    // //PHOTON
+    // photonResult = photonCamera.getLatestResult();
+    // photonHasTarget = photonResult.hasTargets();
+    // if (photonHasTarget){
+    //   this.photonResult = photonResult;
+    // }
   }
 
   public PhotonTrackedTarget getBestTarget(){

@@ -7,7 +7,9 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Autos;
+import frc.robot.commands.RunIntake;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static DriveTrain m_drivetrain = new DriveTrain();
   public static Vision m_vision = new Vision();
+  public static Intake m_intake = new Intake();
 
   //Initialize driver station controllers
   public static final XboxController Pilot = new XboxController(OperatorConstants.PilotControllerPort);
@@ -54,7 +57,7 @@ public class RobotContainer {
     configureSmartdashboard(); //Configures the smartdashboard settings/choosers
     //Set Default Commands
     m_drivetrain.setDefaultCommand(new ArcadeDrive()); //Defaults the pilot's drive command
-  
+    m_intake.setDefaultCommand(new RunIntake());
   }
 
   /** Use this method to define your trigger->command mappings. Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@lin CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}. */
