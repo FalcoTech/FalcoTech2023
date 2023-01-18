@@ -8,6 +8,7 @@ import java.beans.Encoder;
 
 import javax.swing.text.Position;
 
+import com.pathplanner.lib.auto.BaseAutoBuilder;
 import com.pathplanner.lib.auto.RamseteAutoBuilder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -23,6 +24,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -71,7 +73,7 @@ public class DriveTrain extends SubsystemBase {
     m_leftDrive.setInverted(true); //Sets one drive train side to inverted. (This is correct now)
   
     m_gyro.reset();
-    resetEncoders();//Resets encoder and gyro values
+    resetOdometry();//Resets encoder and gyro values
     m_odometry = new DifferentialDriveOdometry(getRotation2d(), 0, 0);
 
     //Coast motors and set default speed 
@@ -84,6 +86,7 @@ public class DriveTrain extends SubsystemBase {
 
     //Shift solenoid defaults to low gear
     shiftSolenoid.set(Value.kForward);
+    
     
   }
 
@@ -134,14 +137,32 @@ public class DriveTrain extends SubsystemBase {
     return Rotation2d.fromDegrees(gyroAngle);
   }
 
-  public void resetEncoders(){
+  public Pose2d getPose2d(){
+    return m_odometry.getPoseMeters();
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds(){
+    return new DifferentialDriveWheelSpeeds(
+      m_leftFrontMotor.getEncoder().getVelocity(), 
+      m_rightFrontMotor.getEncoder().getVelocity());
+  }
+
+  public void updateOdometry(){
+    m_odometry.update(getRotation2d(), 
+      m_leftFrontMotor.getEncoder().getPosition(), 
+      m_rightFrontMotor.getEncoder().getPosition());
+  }
+
+  public void resetOdometry(){
     m_leftDriveEncoder.setPosition(0);
     m_rightDriveEncoder.setPosition(0);
+    m_gyro.reset();
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     phCompressor.enableDigital(); //Runs compressor
+    updateOdometry(); //Updates odometry values
   }
 }
