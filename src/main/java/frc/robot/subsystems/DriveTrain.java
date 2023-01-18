@@ -6,6 +6,9 @@ package frc.robot.subsystems;
 
 import java.beans.Encoder;
 
+import javax.swing.text.Position;
+
+import com.pathplanner.lib.auto.RamseteAutoBuilder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -48,7 +51,8 @@ public class DriveTrain extends SubsystemBase {
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftDrive, m_rightDrive);
 
   //Gyro
-  
+  private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
+
   //Encoder Inits (Check this, RelativeEncoder may not be the right statement)
   private final RelativeEncoder m_leftDriveEncoder = m_leftFrontMotor.getEncoder();
   private final RelativeEncoder m_rightDriveEncoder = m_rightFrontMotor.getEncoder();
@@ -118,6 +122,16 @@ public class DriveTrain extends SubsystemBase {
     m_leftBackMotor.setIdleMode(IdleMode.kCoast);
     m_rightFrontMotor.setIdleMode(IdleMode.kCoast);
     m_rightBackMotor.setIdleMode(IdleMode.kCoast);
+  }
+
+  public Rotation2d getRotation2d(){
+    double gyroAngle = m_gyro.getAngle();
+    return Rotation2d.fromDegrees(gyroAngle);
+  }
+
+  public Pose2d getPose2d(){
+    double gyroAngle = m_gyro.getAngle();
+    return Pose2d(gyroAngle);
   }
 
   public void resetEncoders(){
