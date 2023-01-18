@@ -49,12 +49,14 @@ public class RobotContainer {
   //Smartdashboard choosers/data
   SendableChooser<CommandBase> autoChooser = new SendableChooser<>(); //Autonomous chooser
   
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   //Things that should happen when the robot first initializes
   public RobotContainer() {
     configureBindings(); // Configure the trigger bindings
     configureSmartdashboard(); //Configures the smartdashboard settings/choosers
-    
+    PathPlannerServer.startServer(5811); //Start PathPlanner server to run with the app
+
     //Set Default Commands
     m_drivetrain.setDefaultCommand(new ArcadeDrive()); //Defaults the pilot's drive command
   }

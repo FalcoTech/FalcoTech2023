@@ -59,16 +59,12 @@ public class DriveTrain extends SubsystemBase {
   
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-    //Sets one drive train side to inverted
-    m_leftDrive.setInverted(true); //check this
-    //Resets encoder and gyro values
-    resetEncoders();
+    m_leftDrive.setInverted(true); //Sets one drive train side to inverted. (This is correct now)
+  
+    resetEncoders();//Resets encoder and gyro values
 
     //Coast motors and set default speed 
-    m_leftFrontMotor.setIdleMode(IdleMode.kCoast);
-    m_leftBackMotor.setIdleMode(IdleMode.kCoast);
-    m_rightFrontMotor.setIdleMode(IdleMode.kCoast);
-    m_rightBackMotor.setIdleMode(IdleMode.kCoast);
+    coastDriveMotors();
     arcadeDriveSpeed = "default";
 
     //Back motors will always follow the lead motors
@@ -82,11 +78,11 @@ public class DriveTrain extends SubsystemBase {
 
   //Our main ArcadeDrive command. 
   public void arcadeDrive(double speed, double rotation){
-    m_drive.arcadeDrive(speed, rotation, false);
+    m_drive.arcadeDrive(speed, -rotation, false);
   } 
   //Secondary ArcadeDrive command. Has additional bool for squared inputs to increase controlability at low speeds. 
   public void arcadeDrive(double speed, double rotation, boolean isSquaredInputs){
-    m_drive.arcadeDrive(speed, rotation, isSquaredInputs);
+    m_drive.arcadeDrive(speed, -rotation, isSquaredInputs);
   } 
 
   public void shiftLowGear(){
@@ -100,17 +96,26 @@ public class DriveTrain extends SubsystemBase {
   public void toggleArcadeDriveSpeed(){
     if (arcadeDriveSpeed == "default"){
       arcadeDriveSpeed = "slow";
-      m_leftFrontMotor.setIdleMode(IdleMode.kBrake);
-      m_leftBackMotor.setIdleMode(IdleMode.kBrake);
-      m_rightFrontMotor.setIdleMode(IdleMode.kBrake);
-      m_rightBackMotor.setIdleMode(IdleMode.kBrake);
+      brakeDriveMotors();
+
     } else{
       arcadeDriveSpeed = "default";
-      m_leftFrontMotor.setIdleMode(IdleMode.kCoast);
-      m_leftBackMotor.setIdleMode(IdleMode.kCoast);
-      m_rightFrontMotor.setIdleMode(IdleMode.kCoast);
-      m_rightBackMotor.setIdleMode(IdleMode.kCoast);
+      coastDriveMotors();
     }
+  }
+
+  public void brakeDriveMotors(){
+    m_leftFrontMotor.setIdleMode(IdleMode.kBrake);
+    m_leftBackMotor.setIdleMode(IdleMode.kBrake);
+    m_rightFrontMotor.setIdleMode(IdleMode.kBrake);
+    m_rightBackMotor.setIdleMode(IdleMode.kBrake);
+  }
+
+  public void coastDriveMotors(){
+    m_leftFrontMotor.setIdleMode(IdleMode.kCoast);
+    m_leftBackMotor.setIdleMode(IdleMode.kCoast);
+    m_rightFrontMotor.setIdleMode(IdleMode.kCoast);
+    m_rightBackMotor.setIdleMode(IdleMode.kCoast);
   }
 
   public void resetEncoders(){
