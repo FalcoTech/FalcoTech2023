@@ -57,6 +57,9 @@ public class DriveTrain extends SubsystemBase {
   private final RelativeEncoder m_leftDriveEncoder = m_leftFrontMotor.getEncoder();
   private final RelativeEncoder m_rightDriveEncoder = m_rightFrontMotor.getEncoder();
 
+  //DifferentialDrive Odometry
+  private final DifferentialDriveOdometry m_odometry;
+
   //Compressor/Solenoids Inits
   private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
@@ -67,7 +70,9 @@ public class DriveTrain extends SubsystemBase {
   public DriveTrain() {
     m_leftDrive.setInverted(true); //Sets one drive train side to inverted. (This is correct now)
   
+    m_gyro.reset();
     resetEncoders();//Resets encoder and gyro values
+    m_odometry = new DifferentialDriveOdometry(getRotation2d(), 0, 0);
 
     //Coast motors and set default speed 
     coastDriveMotors();
@@ -127,11 +132,6 @@ public class DriveTrain extends SubsystemBase {
   public Rotation2d getRotation2d(){
     double gyroAngle = m_gyro.getAngle();
     return Rotation2d.fromDegrees(gyroAngle);
-  }
-
-  public Pose2d getPose2d(){
-    double gyroAngle = m_gyro.getAngle();
-    return Pose2d(gyroAngle);
   }
 
   public void resetEncoders(){
