@@ -47,6 +47,8 @@ public class DriveTrain extends SubsystemBase {
   private final MotorControllerGroup m_rightDrive = new MotorControllerGroup(m_rightFrontMotor, m_rightBackMotor);
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftDrive, m_rightDrive);
 
+  //Gyro
+  
   //Encoder Inits (Check this, RelativeEncoder may not be the right statement)
   private final RelativeEncoder m_leftDriveEncoder = m_leftFrontMotor.getEncoder();
   private final RelativeEncoder m_rightDriveEncoder = m_rightFrontMotor.getEncoder();
