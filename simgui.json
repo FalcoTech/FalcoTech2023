@@ -7,5 +7,11 @@
         }
       }
     }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Auto Mode": "String Chooser"
+    }
   }
 }

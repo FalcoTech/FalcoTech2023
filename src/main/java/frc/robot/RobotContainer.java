@@ -50,6 +50,7 @@ public class RobotContainer {
   SendableChooser<CommandBase> autoChooser = new SendableChooser<>(); //Autonomous chooser
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  //Things that should happen when the robot first initializes
   public RobotContainer() {
     configureBindings(); // Configure the trigger bindings
     configureSmartdashboard(); //Configures the smartdashboard settings/choosers

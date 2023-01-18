@@ -30,7 +30,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 
 public class Vision extends SubsystemBase {
+  //USB Camera(s)
+  // private final UsbCamera USBCamera;
   //AprilTag stuff
+  private final PhotonCamera photonCamera;
   private static boolean photonHasTarget;
   private static PhotonPipelineResult photonResult;
   private final CvSink cvSink;
@@ -51,6 +54,8 @@ public class Vision extends SubsystemBase {
     cvSink = CameraServer.getVideo();
 
     //Apriltag stuff
+    // photonCamera = new PhotonCamera("Microsoft® LifeCam HD-3000");
+    photonCamera = new PhotonCamera("photonvision");
     detector = new AprilTagDetector();
     detector.addFamily(VisionConstants.tagFamily);
   }
@@ -79,12 +84,6 @@ public class Vision extends SubsystemBase {
     // }
   }
 
-  public PhotonTrackedTarget getBestTarget(){
-    if (photonHasTarget){
-      return photonResult.getBestTarget();
-    } else {
-      return null;
-    }
-  }
+
   
 }
