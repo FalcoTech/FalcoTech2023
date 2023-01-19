@@ -46,8 +46,12 @@ public class ArcadeDrive extends CommandBase {
     double PilotRightX = RobotContainer.Pilot.getRightX();
     double PilotRightY = RobotContainer.Pilot.getRightY() * -1;
 
+    double PilotRightTrigger = RobotContainer.Pilot.getRightTriggerAxis();
+    double PilotLeftTrigger = RobotContainer.Pilot.getLeftTriggerAxis();
+    double slowTriggerTurn = PilotRightX + (PilotRightTrigger*.1) - (PilotLeftTrigger*.1);
+
     if (RobotContainer.m_drivetrain.arcadeDriveSpeed == "default"){
-      RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY, PilotRightX);
+      RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY, slowTriggerTurn);
     } else{
       RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY * .15, PilotRightX * .15);
     }

@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
@@ -54,6 +55,12 @@ public class DriveTrain extends SubsystemBase {
 
   //Gyro
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
+
+  //Odometry 
+  private DifferentialDriveOdometry m_odometry;
+  private double getLeftDist;
+  private double getRightDist;
+
 
   //Compressor/Solenoids Inits
   private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
@@ -89,7 +96,6 @@ public class DriveTrain extends SubsystemBase {
   public void shiftLowGear(){
     shiftSolenoid.set(Value.kForward);
   }
-  
   public void shiftHighGear(){
     shiftSolenoid.set(Value.kReverse);
   }
@@ -111,7 +117,6 @@ public class DriveTrain extends SubsystemBase {
     m_rightFrontMotor.setIdleMode(IdleMode.kBrake);
     m_rightBackMotor.setIdleMode(IdleMode.kBrake);
   }
-
   public void coastDriveMotors(){
     m_leftFrontMotor.setIdleMode(IdleMode.kCoast);
     m_leftBackMotor.setIdleMode(IdleMode.kCoast);
@@ -119,9 +124,17 @@ public class DriveTrain extends SubsystemBase {
     m_rightBackMotor.setIdleMode(IdleMode.kCoast);
   }
 
+  public Rotation2d getRotation2d(){
+    double gyroAngle = m_gyro.getAngle();
+    return Rotation2d.fromDegrees(-gyroAngle);
+  }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     phCompressor.enableDigital(); //Runs compressor
+    //Odometry Update
+    m_odometry.update(getRotation2d(), 0, 0);
   }
 }

@@ -17,3 +17,5 @@ public final class Autos {
     throw new UnsupportedOperationException("This is a utility class!");
   }
 }
+
+// RamseteAutoBuilder autoBuilder = new RamseteAutoBuilder(pose2d, resetpose, RamseteController controller, DifferentialDriveKinematics, outputMetersPersecond, eventmap, drivesubrequirements);
