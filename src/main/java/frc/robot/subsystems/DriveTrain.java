@@ -55,13 +55,6 @@ public class DriveTrain extends SubsystemBase {
   //Gyro
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
 
-  //Encoder Inits (Check this, RelativeEncoder may not be the right statement)
-  private final RelativeEncoder m_leftDriveEncoder = m_leftFrontMotor.getEncoder();
-  private final RelativeEncoder m_rightDriveEncoder = m_rightFrontMotor.getEncoder();
-
-  //DifferentialDrive Odometry
-  private final DifferentialDriveOdometry m_odometry;
-
   //Compressor/Solenoids Inits
   private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
@@ -71,10 +64,6 @@ public class DriveTrain extends SubsystemBase {
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     m_leftDrive.setInverted(true); //Sets one drive train side to inverted. (This is correct now)
-  
-    m_gyro.reset();
-    resetOdometry();//Resets encoder and gyro values
-    m_odometry = new DifferentialDriveOdometry(getRotation2d(), 0, 0);
 
     //Coast motors and set default speed 
     coastDriveMotors();
@@ -86,8 +75,6 @@ public class DriveTrain extends SubsystemBase {
 
     //Shift solenoid defaults to low gear
     shiftSolenoid.set(Value.kForward);
-    
-    
   }
 
   //Our main ArcadeDrive command. 
@@ -132,37 +119,9 @@ public class DriveTrain extends SubsystemBase {
     m_rightBackMotor.setIdleMode(IdleMode.kCoast);
   }
 
-  public Rotation2d getRotation2d(){
-    double gyroAngle = m_gyro.getAngle();
-    return Rotation2d.fromDegrees(gyroAngle);
-  }
-
-  public Pose2d getPose2d(){
-    return m_odometry.getPoseMeters();
-  }
-
-  public DifferentialDriveWheelSpeeds getWheelSpeeds(){
-    return new DifferentialDriveWheelSpeeds(
-      m_leftFrontMotor.getEncoder().getVelocity(), 
-      m_rightFrontMotor.getEncoder().getVelocity());
-  }
-
-  public void updateOdometry(){
-    m_odometry.update(getRotation2d(), 
-      m_leftFrontMotor.getEncoder().getPosition(), 
-      m_rightFrontMotor.getEncoder().getPosition());
-  }
-
-  public void resetOdometry(){
-    m_leftDriveEncoder.setPosition(0);
-    m_rightDriveEncoder.setPosition(0);
-    m_gyro.reset();
-  }
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     phCompressor.enableDigital(); //Runs compressor
-    updateOdometry(); //Updates odometry values
   }
 }
