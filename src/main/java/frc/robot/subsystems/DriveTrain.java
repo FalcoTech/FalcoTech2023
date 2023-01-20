@@ -136,8 +136,7 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     phCompressor.enableDigital(); //Runs compressor
-    //Odometry Update
-    // m_odometry.update(getRotation2d(), 0, 0);
-    SmartDashboard.putNumber("Gyro Angle", getGyroAngle());
+    
+    getGyroAngle();
   }
 }

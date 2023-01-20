@@ -80,6 +80,8 @@ public class RobotContainer {
     autoChooser.addOption("Right Side Cube Run", null);
 
     SmartDashboard.putData("Auto Mode", autoChooser);
+
+    SmartDashboard.putNumber("Gyro Angle", m_drivetrain.getGyroAngle()); 
   }
 
   public Command getAutonomousCommand() {
