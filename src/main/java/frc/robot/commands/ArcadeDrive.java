@@ -53,7 +53,7 @@ public class ArcadeDrive extends CommandBase {
     if (RobotContainer.m_drivetrain.arcadeDriveSpeed == "default"){
       RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY, slowTriggerTurn);
     } else{
-      RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY * .15, PilotRightX * .15);
+      RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY * .15, slowTriggerTurn * .15);
     }
   }
   

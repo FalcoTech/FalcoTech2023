@@ -67,6 +67,7 @@ public class RobotContainer {
     //Pilot Controls
     new Trigger(() -> Pilot.getAButton()).onTrue(new InstantCommand(() -> m_drivetrain.shiftLowGear())); //Pilot's "A" button shifts to low gear
     new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.shiftHighGear())); //Pilot's "B" button shifts to high gear
+    new Trigger(() -> Pilot.getYButton()).onTrue(new InstantCommand(() -> m_drivetrain.resetGyroAngle())); //Pilot Y button resets gyro angle
 
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.toggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
     //Copilot Controls

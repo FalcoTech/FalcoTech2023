@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -55,12 +56,6 @@ public class DriveTrain extends SubsystemBase {
 
   //Gyro
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
-
-  //Odometry 
-  private DifferentialDriveOdometry m_odometry;
-  private double getLeftDist;
-  private double getRightDist;
-
 
   //Compressor/Solenoids Inits
   private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
@@ -129,12 +124,20 @@ public class DriveTrain extends SubsystemBase {
     return Rotation2d.fromDegrees(-gyroAngle);
   }
 
+  public double getGyroAngle(){
+    return m_gyro.getAngle();
+  }
 
+  public void resetGyroAngle(){
+    m_gyro.reset();
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     phCompressor.enableDigital(); //Runs compressor
     //Odometry Update
-    m_odometry.update(getRotation2d(), 0, 0);
+    // m_odometry.update(getRotation2d(), 0, 0);
+    SmartDashboard.putNumber("Gyro Angle", getGyroAngle());
   }
 }
