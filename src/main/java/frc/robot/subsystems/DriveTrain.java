@@ -54,6 +54,10 @@ public class DriveTrain extends SubsystemBase {
   private final MotorControllerGroup m_rightDrive = new MotorControllerGroup(m_rightFrontMotor, m_rightBackMotor);
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftDrive, m_rightDrive);
 
+  ///Encoders 
+  private final RelativeEncoder m_leftDriveEncoder = m_leftFrontMotor.getEncoder();
+  private final RelativeEncoder m_rightDriveEncoder = m_rightFrontMotor.getEncoder();
+
   //Gyro
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
 
@@ -62,7 +66,8 @@ public class DriveTrain extends SubsystemBase {
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
   //Booleans/Strings
   public String arcadeDriveSpeed = "default"; 
-  
+
+
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     m_leftDrive.setInverted(true); //Sets one drive train side to inverted. (This is correct now)
@@ -70,13 +75,11 @@ public class DriveTrain extends SubsystemBase {
     //Coast motors and set default speed 
     coastDriveMotors();
     arcadeDriveSpeed = "default";
+    shiftSolenoid.set(Value.kForward); //Shift solenoid defaults to low gear
 
     //Back motors will always follow the lead motors
     m_leftBackMotor.follow(m_leftFrontMotor);
     m_rightBackMotor.follow(m_rightFrontMotor);
-
-    //Shift solenoid defaults to low gear
-    shiftSolenoid.set(Value.kForward);
   }
 
   //Our main ArcadeDrive command. 
@@ -95,11 +98,22 @@ public class DriveTrain extends SubsystemBase {
     shiftSolenoid.set(Value.kReverse);
   }
 
+  public double getLeftDriveEncoderDist(){
+    return m_leftDriveEncoder.getPosition() / DriveTrainConstants.driveTicksPerRevolution * DriveTrainConstants.driveGearRatio * DriveTrainConstants.driveDistPerRev;
+  }
+  public double getRightDriveEncoderDist(){
+    return m_rightDriveEncoder.getPosition() / DriveTrainConstants.driveTicksPerRevolution * DriveTrainConstants.driveGearRatio * DriveTrainConstants.driveDistPerRev;
+  }
+  public void resetDriveEncoders(){
+    m_leftDriveEncoder.setPosition(0);
+    m_rightDriveEncoder.setPosition(0);
+  }
+
+
   public void toggleArcadeDriveSpeed(){
     if (arcadeDriveSpeed == "default"){
       arcadeDriveSpeed = "slow";
       brakeDriveMotors();
-
     } else{
       arcadeDriveSpeed = "default";
       coastDriveMotors();
@@ -118,25 +132,11 @@ public class DriveTrain extends SubsystemBase {
     m_rightFrontMotor.setIdleMode(IdleMode.kCoast);
     m_rightBackMotor.setIdleMode(IdleMode.kCoast);
   }
-
-  public Rotation2d getRotation2d(){
-    double gyroAngle = m_gyro.getAngle();
-    return Rotation2d.fromDegrees(-gyroAngle);
-  }
-
-  public double getGyroAngle(){
-    return m_gyro.getAngle();
-  }
-
-  public void resetGyroAngle(){
-    m_gyro.reset();
-  }
   
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     phCompressor.enableDigital(); //Runs compressor
-    
-    getGyroAngle();
   }
 }

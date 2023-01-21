@@ -6,7 +6,6 @@ package frc.robot;
 
 import java.util.HashMap;
 
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -33,6 +32,10 @@ public final class Constants {
     public static final int leftBackMotor_ID = 43;
     public static final int rightFrontMotor_ID = 40;
     public static final int rightBackMotor_ID = 42;
+    //Encoder Values
+    public static final int driveTicksPerRevolution = 42;
+    public static final double driveGearRatio = 8.68;
+    public static final double driveDistPerRev = 2 * Math.PI * .0762; //in meters
     //PID Stuff
     public static final double drivekP = 0.00006;
     public static final double drivekI = 0.000001;
@@ -42,9 +45,7 @@ public final class Constants {
     //Max Outputs
     public static final double driveMinOutput = -1.0;
     public static final double driveMaxOutput = 1.0;
-    public static final double driveMaxRPM = 5108;
-    public static final double driveGearRatio = 8.68;
-  
+    public static final double driveMaxRPM = 5108;  
     //Shifter solenoid ID's
     public static final int shiftSolForward_ID = 0;
     public static final int shiftSolReverse_ID = 1;

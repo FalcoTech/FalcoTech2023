@@ -63,27 +63,5 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    updateVision(); //Update values of vision tracking
   }
-
-  public void updateVision(){
-    //LIMELIGHT
-    table = NetworkTableInstance.getDefault().getTable("limelight");
-    tx = table.getEntry("tx");
-    ty = table.getEntry("ty");
-    ta = table.getEntry("ta");
-    tv = table.getEntry("tv");
-    ledMode = table.getEntry("ledMode");
-    camMode = table.getEntry("camMode");
-
-    // //PHOTON
-    // photonResult = photonCamera.getLatestResult();
-    // photonHasTarget = photonResult.hasTargets();
-    // if (photonHasTarget){
-    //   this.photonResult = photonResult;
-    // }
-  }
-
-
-  
 }
