@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
@@ -46,7 +47,7 @@ public class RobotContainer {
   //Initialize driver station controllers
   public static final XboxController Pilot = new XboxController(OperatorConstants.PilotControllerPort);
   public static final XboxController CoPilot = new XboxController(OperatorConstants.CoPilotControllerPort);
-  
+
   //Smartdashboard choosers/data
   SendableChooser<CommandBase> autoChooser = new SendableChooser<>(); //Autonomous chooser
   
@@ -73,12 +74,11 @@ public class RobotContainer {
   }
 
   private void configureSmartdashboard(){
-    //Smartdashboard AutoChooser
+    //Smartdashboard AutoChooser options
     autoChooser.setDefaultOption("No Auto Selected", null);
     autoChooser.addOption("Left Side Cube Run", null);
     autoChooser.addOption("Right Side Cube Run", null);
-
-    SmartDashboard.putData("Auto Mode", autoChooser);
+    SmartDashboard.putData("Auto Mode", autoChooser); // Add chooser for auto
 
   }
 

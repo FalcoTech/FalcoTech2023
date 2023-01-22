@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -61,9 +62,16 @@ public class DriveTrain extends SubsystemBase {
   //Gyro
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
 
+  //Odometry
+  private final DifferentialDriveOdometry m_odometry;
+
   //Compressor/Solenoids Inits
-  private final Compressor phCompressor = new Compressor(PneumaticsModuleType.REVPH);
+  private final Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
+
+  //Field Map
+  private final Field2d m_field = new Field2d();
+
   //Booleans/Strings
   public String arcadeDriveSpeed = "default"; 
 
@@ -80,6 +88,13 @@ public class DriveTrain extends SubsystemBase {
     //Back motors will always follow the lead motors
     m_leftBackMotor.follow(m_leftFrontMotor);
     m_rightBackMotor.follow(m_rightFrontMotor);
+
+    //Define odometry
+    resetDriveEncoders();
+    m_odometry = new DifferentialDriveOdometry(getRotation2d(), getRightDriveEncoderDist(), getLeftDriveEncoderDist());
+
+    //Add map to smartdashboard
+    SmartDashboard.putData("Field", m_field);
   }
 
   //Our main ArcadeDrive command. 
@@ -109,6 +124,10 @@ public class DriveTrain extends SubsystemBase {
     m_rightDriveEncoder.setPosition(0);
   }
 
+  public Rotation2d getRotation2d(){
+    return Rotation2d.fromDegrees(m_gyro.getAngle());
+  }
+  
 
   public void toggleArcadeDriveSpeed(){
     if (arcadeDriveSpeed == "default"){
@@ -133,10 +152,14 @@ public class DriveTrain extends SubsystemBase {
     m_rightBackMotor.setIdleMode(IdleMode.kCoast);
   }
   
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    phCompressor.enableDigital(); //Runs compressor
+    m_compressor.enableDigital(); //Runs compressor
+    getRotation2d();
+    getLeftDriveEncoderDist();
+    getRightDriveEncoderDist();
+
+    m_odometry.update(getRotation2d(), getLeftDriveEncoderDist(), getRightDriveEncoderDist());
   }
 }
