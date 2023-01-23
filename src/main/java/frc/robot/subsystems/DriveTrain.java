@@ -62,15 +62,9 @@ public class DriveTrain extends SubsystemBase {
   //Gyro
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
 
-  //Odometry
-  private final DifferentialDriveOdometry m_odometry;
-
   //Compressor/Solenoids Inits
   private final Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
-  private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
-
-  //Field Map
-  private final Field2d m_field = new Field2d();
+  private final DoubleSolenoid m_shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
 
   //Booleans/Strings
   public String arcadeDriveSpeed = "default"; 
@@ -78,23 +72,16 @@ public class DriveTrain extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-    m_leftDrive.setInverted(true); //Sets one drive train side to inverted. (This is correct now)
+    m_leftDrive.setInverted(true); //Invert one side drive motors
 
-    //Coast motors and set default speed 
-    coastDriveMotors();
-    arcadeDriveSpeed = "default";
-    shiftSolenoid.set(Value.kForward); //Shift solenoid defaults to low gear
-
-    //Back motors will always follow the lead motors
+    m_shiftSolenoid.set(Value.kForward); //Start in low gear
+    coastDriveMotors(); //Start coasting drive motors
+    arcadeDriveSpeed = "default"; //regular speed
+    
+    //Motor follows
     m_leftBackMotor.follow(m_leftFrontMotor);
     m_rightBackMotor.follow(m_rightFrontMotor);
 
-    //Define odometry
-    resetDriveEncoders();
-    m_odometry = new DifferentialDriveOdometry(getRotation2d(), getRightDriveEncoderDist(), getLeftDriveEncoderDist());
-
-    //Add map to smartdashboard
-    SmartDashboard.putData("Field", m_field);
   }
 
   //Our main ArcadeDrive command. 
@@ -107,36 +94,10 @@ public class DriveTrain extends SubsystemBase {
   } 
 
   public void shiftLowGear(){
-    shiftSolenoid.set(Value.kForward);
+    m_shiftSolenoid.set(Value.kForward);
   }
   public void shiftHighGear(){
-    shiftSolenoid.set(Value.kReverse);
-  }
-
-  public double getLeftDriveEncoderDist(){
-    return m_leftDriveEncoder.getPosition() / DriveTrainConstants.driveTicksPerRevolution * DriveTrainConstants.driveGearRatio * DriveTrainConstants.driveDistPerRev;
-  }
-  public double getRightDriveEncoderDist(){
-    return m_rightDriveEncoder.getPosition() / DriveTrainConstants.driveTicksPerRevolution * DriveTrainConstants.driveGearRatio * DriveTrainConstants.driveDistPerRev;
-  }
-  public void resetDriveEncoders(){
-    m_leftDriveEncoder.setPosition(0);
-    m_rightDriveEncoder.setPosition(0);
-  }
-
-  public Rotation2d getRotation2d(){
-    return Rotation2d.fromDegrees(m_gyro.getAngle());
-  }
-  
-
-  public void toggleArcadeDriveSpeed(){
-    if (arcadeDriveSpeed == "default"){
-      arcadeDriveSpeed = "slow";
-      brakeDriveMotors();
-    } else{
-      arcadeDriveSpeed = "default";
-      coastDriveMotors();
-    }
+    m_shiftSolenoid.set(Value.kReverse);
   }
 
   public void brakeDriveMotors(){
@@ -150,16 +111,27 @@ public class DriveTrain extends SubsystemBase {
     m_leftBackMotor.setIdleMode(IdleMode.kCoast);
     m_rightFrontMotor.setIdleMode(IdleMode.kCoast);
     m_rightBackMotor.setIdleMode(IdleMode.kCoast);
+  }  
+  public void toggleArcadeDriveSpeed(){
+    if (arcadeDriveSpeed == "default"){
+      arcadeDriveSpeed = "slow";
+      brakeDriveMotors();
+    } else{
+      arcadeDriveSpeed = "default";
+      coastDriveMotors();
+    }
   }
+
+  /** 
+  public void switchArcadeDriveSpeed(){
+    switch(arcadeDriveSpeed){
+      case 1: "default"
+    }
+  } */
   
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     m_compressor.enableDigital(); //Runs compressor
-    getRotation2d();
-    getLeftDriveEncoderDist();
-    getRightDriveEncoderDist();
-
-    m_odometry.update(getRotation2d(), getLeftDriveEncoderDist(), getRightDriveEncoderDist());
   }
 }
