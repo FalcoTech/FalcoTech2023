@@ -45,26 +45,26 @@ import frc.robot.Constants.OperatorConstants;
 
 public class DriveTrain extends SubsystemBase {
   //Motor Inits
-  private CANSparkMax m_leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
-  private CANSparkMax m_leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
-  private CANSparkMax m_rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
-  private CANSparkMax m_rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless); 
+  private final CANSparkMax leftFrontMotor = new CANSparkMax(DriveTrainConstants.leftFrontMotor_ID, MotorType.kBrushless);
+  private final CANSparkMax leftBackMotor = new CANSparkMax(DriveTrainConstants.leftBackMotor_ID, MotorType.kBrushless); 
+  private final CANSparkMax rightFrontMotor = new CANSparkMax(DriveTrainConstants.rightFrontMotor_ID, MotorType.kBrushless); 
+  private final CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless); 
 
   //Differentialdrive Inits
-  private final MotorControllerGroup m_leftDrive = new MotorControllerGroup(m_leftFrontMotor, m_leftBackMotor);
-  private final MotorControllerGroup m_rightDrive = new MotorControllerGroup(m_rightFrontMotor, m_rightBackMotor);
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftDrive, m_rightDrive);
+  private final MotorControllerGroup leftDriveGroup = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
+  private final MotorControllerGroup rightDriveGroup = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
+  private final DifferentialDrive m_Drive = new DifferentialDrive(leftDriveGroup, rightDriveGroup);
 
   ///Encoders 
-  private final RelativeEncoder m_leftDriveEncoder = m_leftFrontMotor.getEncoder();
-  private final RelativeEncoder m_rightDriveEncoder = m_rightFrontMotor.getEncoder();
+  private final RelativeEncoder leftDriveEncoder = leftFrontMotor.getEncoder();
+  private final RelativeEncoder rightDriveEncoder = rightFrontMotor.getEncoder();
 
   //Gyro
-  private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
+  private final ADIS16470_IMU gyro = new ADIS16470_IMU();
 
   //Compressor/Solenoids Inits
-  private final Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
-  private final DoubleSolenoid m_shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
+  private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
+  private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
 
   //Booleans/Strings
   public String arcadeDriveSpeed = "default"; 
@@ -72,45 +72,45 @@ public class DriveTrain extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-    m_leftDrive.setInverted(true); //Invert one side drive motors
+    leftDriveGroup.setInverted(true); //Invert one side drive motors
 
-    m_shiftSolenoid.set(Value.kForward); //Start in low gear
+    shiftSolenoid.set(Value.kForward); //Start in low gear
     coastDriveMotors(); //Start coasting drive motors
     arcadeDriveSpeed = "default"; //regular speed
     
     //Motor follows
-    m_leftBackMotor.follow(m_leftFrontMotor);
-    m_rightBackMotor.follow(m_rightFrontMotor);
+    leftBackMotor.follow(leftFrontMotor);
+    rightBackMotor.follow(rightFrontMotor);
 
   }
 
   //Our main ArcadeDrive command. 
   public void arcadeDrive(double speed, double rotation){
-    m_drive.arcadeDrive(speed, -rotation, false);
+    m_Drive.arcadeDrive(speed, -rotation, false);
   } 
   //Secondary ArcadeDrive command. Has additional bool for squared inputs to increase controlability at low speeds. 
   public void arcadeDrive(double speed, double rotation, boolean isSquaredInputs){
-    m_drive.arcadeDrive(speed, -rotation, isSquaredInputs);
+    m_Drive.arcadeDrive(speed, -rotation, isSquaredInputs);
   } 
 
   public void shiftLowGear(){
-    m_shiftSolenoid.set(Value.kForward);
+    shiftSolenoid.set(Value.kForward);
   }
   public void shiftHighGear(){
-    m_shiftSolenoid.set(Value.kReverse);
+    shiftSolenoid.set(Value.kReverse);
   }
 
   public void brakeDriveMotors(){
-    m_leftFrontMotor.setIdleMode(IdleMode.kBrake);
-    m_leftBackMotor.setIdleMode(IdleMode.kBrake);
-    m_rightFrontMotor.setIdleMode(IdleMode.kBrake);
-    m_rightBackMotor.setIdleMode(IdleMode.kBrake);
+    leftFrontMotor.setIdleMode(IdleMode.kBrake);
+    leftBackMotor.setIdleMode(IdleMode.kBrake);
+    rightFrontMotor.setIdleMode(IdleMode.kBrake);
+    rightBackMotor.setIdleMode(IdleMode.kBrake);
   }
   public void coastDriveMotors(){
-    m_leftFrontMotor.setIdleMode(IdleMode.kCoast);
-    m_leftBackMotor.setIdleMode(IdleMode.kCoast);
-    m_rightFrontMotor.setIdleMode(IdleMode.kCoast);
-    m_rightBackMotor.setIdleMode(IdleMode.kCoast);
+    leftFrontMotor.setIdleMode(IdleMode.kCoast);
+    leftBackMotor.setIdleMode(IdleMode.kCoast);
+    rightFrontMotor.setIdleMode(IdleMode.kCoast);
+    rightBackMotor.setIdleMode(IdleMode.kCoast);
   }  
   public void toggleArcadeDriveSpeed(){
     if (arcadeDriveSpeed == "default"){
@@ -120,18 +120,11 @@ public class DriveTrain extends SubsystemBase {
       arcadeDriveSpeed = "default";
       coastDriveMotors();
     }
-  }
-
-  /** 
-  public void switchArcadeDriveSpeed(){
-    switch(arcadeDriveSpeed){
-      case 1: "default"
-    }
-  } */
+  } 
   
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_compressor.enableDigital(); //Runs compressor
+    compressor.enableDigital(); //Runs compressor
   }
 }

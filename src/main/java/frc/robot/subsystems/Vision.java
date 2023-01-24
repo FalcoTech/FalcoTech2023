@@ -31,33 +31,14 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Vision extends SubsystemBase {
   //USB Camera(s)
-  // private final UsbCamera USBCamera;
-  //AprilTag stuff
-  private final PhotonCamera photonCamera;
-  private static boolean photonHasTarget;
-  private static PhotonPipelineResult photonResult;
-  private final CvSink cvSink;
-  private final AprilTagDetector detector;
 
-  //Limelight values
-  public static NetworkTable table;
-  public static NetworkTableEntry tx;
-  public static NetworkTableEntry ty;
-  public static NetworkTableEntry ta;
-  public static NetworkTableEntry tv;
-  public static NetworkTableEntry camMode;
-  public static NetworkTableEntry ledMode;
+  private final CvSink cvSink;
+  
 
   public Vision() {
     //Start USB camera on RoboRIO
     CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
     cvSink = CameraServer.getVideo();
-
-    //Apriltag stuff
-    // photonCamera = new PhotonCamera("Microsoft® LifeCam HD-3000");
-    photonCamera = new PhotonCamera("photonvision");
-    detector = new AprilTagDetector();
-    detector.addFamily(VisionConstants.tagFamily);
   }
 
   @Override
