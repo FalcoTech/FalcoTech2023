@@ -50,6 +50,11 @@ public final class Constants {
     public static final int shiftSolForward_ID = 0;
     public static final int shiftSolReverse_ID = 1;
 
+  }
+  
+  public static class IntakeConstants{
+    public static final int intakeLeftMotor_ID = 20;
+    public static final int intakeRightMotor_ID = 21;
 
   }
 

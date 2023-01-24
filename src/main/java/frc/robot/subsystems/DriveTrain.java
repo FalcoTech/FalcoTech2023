@@ -60,7 +60,6 @@ public class DriveTrain extends SubsystemBase {
 
     shiftSolenoid.set(Value.kForward); //Start in low gear
     coastDriveMotors(); //Start coasting drive motors
-    arcadeDriveSpeed = "default"; //regular speed
     
     //Motor follows
     leftBackMotor.follow(leftFrontMotor);
@@ -68,12 +67,10 @@ public class DriveTrain extends SubsystemBase {
 
   }
 
-  //Our main ArcadeDrive command. 
-  public void arcadeDrive(double speed, double rotation){
+  public void arcadeDrive(double speed, double rotation){   //Our main ArcadeDrive command. 
     m_Drive.arcadeDrive(speed, -rotation, false);
   } 
-  //Secondary ArcadeDrive command. Has additional bool for squared inputs to increase controlability at low speeds. 
-  public void arcadeDrive(double speed, double rotation, boolean isSquaredInputs){
+  public void arcadeDrive(double speed, double rotation, boolean isSquaredInputs){   //Secondary ArcadeDrive command. Has additional bool for squared inputs to increase controlability at low speeds. 
     m_Drive.arcadeDrive(speed, -rotation, isSquaredInputs);
   } 
 

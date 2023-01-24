@@ -10,7 +10,7 @@ import frc.robot.subsystems.DriveTrain;
 
 
 public class ArcadeDrive extends CommandBase {
-  // private final DriveTrain m_drivetrain;
+
 
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive() {
@@ -25,20 +25,6 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    runArcadeDrive();
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
-
-  public void runArcadeDrive(){
     double PilotLeftX = RobotContainer.Pilot.getLeftX();
     double PilotLeftY = RobotContainer.Pilot.getLeftY() * -1;
     double PilotRightX = RobotContainer.Pilot.getRightX();
@@ -52,7 +38,16 @@ public class ArcadeDrive extends CommandBase {
       RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY, slowTriggerTurn);
     } else{
       RobotContainer.m_drivetrain.arcadeDrive(PilotLeftY * .15, slowTriggerTurn * .15);
-    }
+    }  
   }
-  
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {}
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
 }
