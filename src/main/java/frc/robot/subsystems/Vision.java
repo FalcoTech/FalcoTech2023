@@ -13,13 +13,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Vision extends SubsystemBase {
   //USB Camera(s)
 
-  private final CvSink cvSink;
+  private final CvSink m_cvSink;
   
 
   public Vision() {
     //Start USB camera on RoboRIO
     CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
-    cvSink = CameraServer.getVideo();
+    m_cvSink = CameraServer.getVideo();
   }
 
   @Override

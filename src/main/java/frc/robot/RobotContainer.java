@@ -35,7 +35,7 @@ public class RobotContainer {
   public static final XboxController CoPilot = new XboxController(OperatorConstants.CoPilotControllerPort);
 
   //Smartdashboard choosers/data
-  SendableChooser<CommandBase> autoChooser = new SendableChooser<>(); //Autonomous chooser
+  SendableChooser<CommandBase> m_autoChooser = new SendableChooser<>(); //Autonomous chooser
   
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */ //Things that should happen when the robot first initializes
@@ -61,14 +61,14 @@ public class RobotContainer {
 
   private void configureSmartdashboard(){
     //Smartdashboard AutoChooser options
-    autoChooser.setDefaultOption("No Auto Selected", null);
-    autoChooser.addOption("Left Side Cube Run", null);
-    autoChooser.addOption("Right Side Cube Run", null);
-    SmartDashboard.putData("Auto Mode", autoChooser); // Add chooser for auto
+    m_autoChooser.setDefaultOption("No Auto Selected", null);
+    m_autoChooser.addOption("Left Side Cube Run", null);
+    m_autoChooser.addOption("Right Side Cube Run", null);
+    SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
 
   }
 
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected(); //Gets the autonomous mode selected on smartdashboard
+    return m_autoChooser.getSelected(); //Gets the autonomous mode selected on smartdashboard
   }
 }

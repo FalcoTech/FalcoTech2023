@@ -36,26 +36,16 @@ public final class Constants {
     public static final int driveTicksPerRevolution = 42;
     public static final double driveGearRatio = 8.68;
     public static final double driveDistPerRev = 2 * Math.PI * .0762; //in meters
-    //PID Stuff
-    public static final double drivekP = 0.00006;
-    public static final double drivekI = 0.000001;
-    public static final double drivekD = 0;
-    public static final double driveIz = 0;
-    public static final double drivekFF = 0.000015;
-    //Max Outputs
-    public static final double driveMinOutput = -1.0;
-    public static final double driveMaxOutput = 1.0;
-    public static final double driveMaxRPM = 5108;  
+    public static final double driveWheelCircumference = 2 * Math.PI * (4/2); /*radius in*/
+    
     //Shifter solenoid ID's
     public static final int shiftSolForward_ID = 0;
     public static final int shiftSolReverse_ID = 1;
-
   }
   
   public static class IntakeConstants{
     public static final int intakeLeftMotor_ID = 20;
     public static final int intakeRightMotor_ID = 21;
-
   }
 
   public static class VisionConstants {
