@@ -15,9 +15,10 @@ public class Vision extends SubsystemBase {
 
   private final CvSink m_cvSink;
   
+  //Limelight
+  
 
   public Vision() {
-    //Start USB camera on RoboRIO
     CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
     m_cvSink = CameraServer.getVideo();
   }
