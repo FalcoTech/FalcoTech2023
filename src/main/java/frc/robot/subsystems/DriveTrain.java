@@ -155,6 +155,10 @@ public class DriveTrain extends SubsystemBase {
     return ((currentEncoderValue / encoderFullRev) / gearRatio) * Units.inchesToMeters(wheelCircumferenceInInches);
   }
 
+  public void resetGyro(){
+    gyro.reset();
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
