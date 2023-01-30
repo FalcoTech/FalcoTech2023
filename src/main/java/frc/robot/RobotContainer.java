@@ -57,6 +57,8 @@ public class RobotContainer {
 
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.toggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
     //Copilot Controls
+    // Pilot.getAButton().onTrue(new InstantCommand(m_drivetrain::shiftHighGear)); lol ^-^
+
   }
 
   private void configureSmartdashboard(){

@@ -145,14 +145,15 @@ public class DriveTrain extends SubsystemBase {
       encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.driveGearRatio, DriveTrainConstants.driveWheelCircumference), 
       new Pose2d());
   }
+  public void resetGyro(){
+    gyro.reset();
+  }
 
   public double encoderTicksToMeters(double currentEncoderValue, double encoderFullRev, double gearRatio, double wheelCircumferenceInInches){
     return ((currentEncoderValue / encoderFullRev) / gearRatio) * Units.inchesToMeters(wheelCircumferenceInInches);
   }
 
-  public void resetGyro(){
-    gyro.reset();
-  }
+
   
   @Override
   public void periodic() {
