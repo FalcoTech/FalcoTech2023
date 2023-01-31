@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -63,8 +62,15 @@ public class RobotContainer {
 
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.toggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
     //Copilot Controls
-    // Pilot.getAButton().onTrue(new InstantCommand(m_drivetrain::shiftHighGear)); lol ^-^
+    new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm())); //Pilot's "A" button shifts to low gear
+    new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); //Pilot's "A" button shifts to low gear
 
+    // Pilot.getAButton().onTrue(new InstantCommand(m_drivetrain.shiftHighGear()));
+    
+    //left stick for arm control
+    //right bumper: in
+    //left bumper: out
+    
   }
 
   private void configureSmartdashboard(){

@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalSource;
@@ -28,12 +29,23 @@ public class Arm extends SubsystemBase {
 
   /** Creates a new Arm. */
   public Arm() {
+    armRightMotor.setInverted(true); //check this
+    
+    armLeftMotor.setIdleMode(IdleMode.kBrake);
+    armRightMotor.setIdleMode(IdleMode.kBrake);
+  }
 
+  public void MoveArm(double speed){
+    armLeftMotor.set(speed);
+    armRightMotor.set(speed);
   }
 
   public void ExtendArm(){
-    extenderSolenoid.set(Value.kForward); //WILL PROBABLY NEED CHANGED
+    if (true/*ENCODER NOT BETWEEN THIS VALUE AND THIS VALUE*/){
+      extenderSolenoid.set(Value.kForward); //WILL PROBABLY NEED CHANGED
+    }
   }
+  
   public void RetractArm(){
     extenderSolenoid.set(Value.kReverse); //WILL PROBBABLY NEED CHANGED
   }
