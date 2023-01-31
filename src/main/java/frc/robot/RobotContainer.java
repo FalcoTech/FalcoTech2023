@@ -4,16 +4,10 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.Autos;
-import frc.robot.commands.RunArm;
-import frc.robot.commands.RunIntake;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Wrist;
+//Import all (*) constants, subsystems and commands
+import frc.robot.Constants.*;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 import com.pathplanner.lib.server.PathPlannerServer;
 

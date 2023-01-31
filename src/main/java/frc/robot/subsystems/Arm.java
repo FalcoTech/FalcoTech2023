@@ -29,7 +29,7 @@ public class Arm extends SubsystemBase {
 
   /** Creates a new Arm. */
   public Arm() {
-    armRightMotor.setInverted(true); //check this
+    armRightMotor.follow(armLeftMotor, true);
     
     armLeftMotor.setIdleMode(IdleMode.kBrake);
     armRightMotor.setIdleMode(IdleMode.kBrake);
@@ -37,11 +37,10 @@ public class Arm extends SubsystemBase {
 
   public void MoveArm(double speed){
     armLeftMotor.set(speed);
-    armRightMotor.set(speed);
   }
 
   public void ExtendArm(){
-    if (true/*ENCODER NOT BETWEEN THIS VALUE AND THIS VALUE*/){
+    if (armEncoder.getDistance() > 135 /*ENCODER NOT BETWEEN THIS VALUE AND THIS VALUE*/){
       extenderSolenoid.set(Value.kForward); //WILL PROBABLY NEED CHANGED
     }
   }
