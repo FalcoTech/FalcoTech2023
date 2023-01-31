@@ -7,10 +7,13 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Autos;
+import frc.robot.commands.RunArm;
 import frc.robot.commands.RunIntake;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Wrist;
 
 import com.pathplanner.lib.server.PathPlannerServer;
 
@@ -27,12 +30,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static DriveTrain m_drivetrain = new DriveTrain();
-  public static Vision m_vision = new Vision();
+  public static Arm m_arm = new Arm();
+  public static Wrist m_wrist = new Wrist();
   public static Intake m_intake = new Intake();
+  public static Vision m_vision = new Vision();
 
   //Initialize driver station controllers
-  public static final XboxController Pilot = new XboxController(OperatorConstants.PilotControllerPort);
-  public static final XboxController CoPilot = new XboxController(OperatorConstants.CoPilotControllerPort);
+  public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
+  public static final XboxController CoPilot = new XboxController(OperatorConstants.COPILOTCONTROLLERPORT);
 
   //Smartdashboard choosers/data
   SendableChooser<CommandBase> m_autoChooser = new SendableChooser<>(); //Autonomous chooser
@@ -46,6 +51,7 @@ public class RobotContainer {
 
     //Set Default Commands
     m_drivetrain.setDefaultCommand(new ArcadeDrive()); //Defaults the pilot's drive command
+    m_arm.setDefaultCommand(new RunArm());
     m_intake.setDefaultCommand(new RunIntake());
   }
 

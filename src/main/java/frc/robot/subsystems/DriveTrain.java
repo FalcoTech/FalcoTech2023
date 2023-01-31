@@ -31,10 +31,10 @@ public class DriveTrain extends SubsystemBase {
   // private final CANSparkMax rightBackMotor = new CANSparkMax(DriveTrainConstants.rightBackMotor_ID, MotorType.kBrushless); 
 
   //Falcon motor controllers
-  private final WPI_TalonFX leftFrontMotor = new WPI_TalonFX(DriveTrainConstants.leftFrontMotor_ID);
-  private final WPI_TalonFX leftBackMotor = new WPI_TalonFX(DriveTrainConstants.leftBackMotor_ID);
-  private final WPI_TalonFX rightFrontMotor = new WPI_TalonFX(DriveTrainConstants.rightFrontMotor_ID);
-  private final WPI_TalonFX rightBackMotor = new WPI_TalonFX(DriveTrainConstants.rightBackMotor_ID);
+  private final WPI_TalonFX leftFrontMotor = new WPI_TalonFX(DriveTrainConstants.LEFTFRONTMOTOR_ID);
+  private final WPI_TalonFX leftBackMotor = new WPI_TalonFX(DriveTrainConstants.LEFTBACKMOTOR_ID);
+  private final WPI_TalonFX rightFrontMotor = new WPI_TalonFX(DriveTrainConstants.RIGHTFRONTMOTOR_ID);
+  private final WPI_TalonFX rightBackMotor = new WPI_TalonFX(DriveTrainConstants.RIGHTBACKMOTOR_ID);
 
   //Differentialdrive groups
   private final MotorControllerGroup m_leftDriveGroup = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
@@ -49,7 +49,7 @@ public class DriveTrain extends SubsystemBase {
 
   //Compressor/Solenoids Inits
   private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
-  private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.shiftSolForward_ID, DriveTrainConstants.shiftSolReverse_ID);
+  private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.SHIFTSOLFORWARD_ID, DriveTrainConstants.SHIFTSOLREVERSE_ID);
 
   //Booleans/Strings
   public String arcadeDriveSpeed = "default"; 
@@ -78,14 +78,14 @@ public class DriveTrain extends SubsystemBase {
     //Odometry
     m_odometry = new DifferentialDriveOdometry(
       getRotation2d(),
-      encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.driveGearRatio, DriveTrainConstants.driveWheelCircumference),
-      encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.driveGearRatio, DriveTrainConstants.driveWheelCircumference)
+      encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.DRIVEGEARRATIO_LOW, DriveTrainConstants.DRIVEWHEELCIRCUMFERENCE),
+      encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.DRIVEGEARRATIO_LOW, DriveTrainConstants.DRIVEWHEELCIRCUMFERENCE)
     );
 
     m_odometry.resetPosition(
       getRotation2d(), 
-      encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.driveGearRatio, DriveTrainConstants.driveWheelCircumference), 
-      encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.driveGearRatio, DriveTrainConstants.driveWheelCircumference), 
+      encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.DRIVEGEARRATIO_LOW, DriveTrainConstants.DRIVEWHEELCIRCUMFERENCE), 
+      encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.DRIVEGEARRATIO_LOW, DriveTrainConstants.DRIVEWHEELCIRCUMFERENCE), 
       new Pose2d()
     );
   }
@@ -141,8 +141,8 @@ public class DriveTrain extends SubsystemBase {
     resetEncoders();
     m_odometry.resetPosition(
       getRotation2d(), 
-      encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.driveGearRatio, DriveTrainConstants.driveWheelCircumference), 
-      encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.driveGearRatio, DriveTrainConstants.driveWheelCircumference), 
+      encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.DRIVEGEARRATIO_LOW, DriveTrainConstants.DRIVEWHEELCIRCUMFERENCE), 
+      encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.DRIVEGEARRATIO_LOW, DriveTrainConstants.DRIVEWHEELCIRCUMFERENCE), 
       new Pose2d());
   }
   public void resetGyro(){
@@ -163,8 +163,8 @@ public class DriveTrain extends SubsystemBase {
 
     m_odometry.update(
       getRotation2d(), 
-      encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.driveGearRatio, DriveTrainConstants.driveWheelCircumference), 
-      encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.driveGearRatio, DriveTrainConstants.driveWheelCircumference)
+      encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.DRIVEGEARRATIO_LOW, DriveTrainConstants.DRIVEWHEELCIRCUMFERENCE), 
+      encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition(), 4096, DriveTrainConstants.DRIVEGEARRATIO_LOW, DriveTrainConstants.DRIVEWHEELCIRCUMFERENCE)
     );
   }
 }

@@ -19,41 +19,51 @@ import edu.wpi.first.wpilibj2.command.Command;
 public final class Constants {
   public static class OperatorConstants { //Constants for OI/Driver controls 
     //Controller Ports
-    public static final int PilotControllerPort = 0;
-    public static final int CoPilotControllerPort = 1;
+    public static final int PILOTCONTROLLERPORT = 0;
+    public static final int COPILOTCONTROLLERPORT = 1;
 
-    //Gyro Stuff
-    public static final int gyroID = 0; //Idk what this will be but it's not this lol
   }
   
   public static class DriveTrainConstants { //Constants for drive train stuff like motors/pneumatics
     //Motor ID's
-    public static final int leftFrontMotor_ID = 41;
-    public static final int leftBackMotor_ID = 43;
-    public static final int rightFrontMotor_ID = 40;
-    public static final int rightBackMotor_ID = 42;
+    public static final int LEFTFRONTMOTOR_ID = 41;
+    public static final int LEFTBACKMOTOR_ID = 43;
+    public static final int RIGHTFRONTMOTOR_ID = 40;
+    public static final int RIGHTBACKMOTOR_ID = 42;
     //Encoder Values
-    public static final int driveTicksPerRevolution = 42;
-    public static final double driveGearRatio = 8.68;
-    public static final double driveDistPerRev = 2 * Math.PI * .0762; //in meters
-    public static final double driveWheelCircumference = 2 * Math.PI * (4/2); /*radius in*/
+    public static final int DRIVETICKSPERREVOLUTION = 42;
+    public static final double DRIVEGEARRATIO_LOW = 16.36;
+    public static final double DRIVEGEARRATIO_HIGH = 7.95; 
+    //rpm DIVIDED BY gear ratio = free speed
+
+    public static final double DRIVEDISTPERREVOLUTION = 2 * Math.PI * .0762; //in meters
+    //6 INCH WHEELS THIS YEAR
+    public static final double DRIVEWHEELCIRCUMFERENCE = 2 * Math.PI * (4/2); /*radius in*/
     
     //Shifter solenoid ID's
-    public static final int shiftSolForward_ID = 0;
-    public static final int shiftSolReverse_ID = 1;
+    public static final int SHIFTSOLFORWARD_ID = 0;
+    public static final int SHIFTSOLREVERSE_ID = 1;
   }
-  
+  //Arm constants
+  public static class ArmConstants{
+    public static final int LEFTARMMOTOR_ID = 1000; //change when we find out
+    public static final int RIGHTARMMOTOR_ID = 1001; //CHANGE WHEN FIND OUT caps lol
+
+    public static final int EXTENDERSOLFORWARD_ID = 2;
+    public static final int EXTENDERSOLREVERSE_ID = 3;
+  }
+
   public static class IntakeConstants{
-    public static final int intakeLeftMotor_ID = 20;
-    public static final int intakeRightMotor_ID = 21;
+    public static final int INTAKELEFTMOTOR_ID = 20;
+    public static final int INTAKERIGHTMOTOR_ID = 21;
   }
 
   public static class VisionConstants {
-    public static final String tagFamily = "tag16h5";
+    public static final String TAGFAMILY = "tag16h5";
   }
 
   public static class PathPlannerConstants {
-    public static final HashMap<String, Command> autoEventMap = new HashMap<>();
+    public static final HashMap<String, Command> AUTOEVENTMAP = new HashMap<>();
   }
   
 }
