@@ -35,7 +35,7 @@ public class Vision extends SubsystemBase {
     CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
     m_cvSink = CameraServer.getVideo();
 
-    table = NetworkTableInstance.getDefault().getTable("limelight"); //Limelight table
+    table = NetworkTableInstance.getDefault().getTable("limelight");
     //Limelight entries
     tValidTarget = table.getEntry("tv"); 
     tOffsetX = table.getEntry("tx");

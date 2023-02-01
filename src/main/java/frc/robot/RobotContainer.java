@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 
 public class RobotContainer {
@@ -29,24 +30,25 @@ public class RobotContainer {
   public static Vision m_vision = new Vision();
   public static LEDs m_leds = new LEDs();
 
-  //Initialize driver station controllers
   public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
   public static final XboxController CoPilot = new XboxController(OperatorConstants.COPILOTCONTROLLERPORT);
 
   //Smartdashboard choosers/data
-  SendableChooser<CommandBase> m_autoChooser = new SendableChooser<>(); //Autonomous chooser
+  SendableChooser<CommandBase> m_autoChooser = new SendableChooser<>();
   
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */ //Things that should happen when the robot first initializes
   public RobotContainer() {
-    configureBindings(); // Configure the trigger bindings
-    configureSmartdashboard(); //Configures the smartdashboard settings/choosers
-    PathPlannerServer.startServer(5811); //Start PathPlanner server to run with the app
+    configureBindings(); 
+    configureSmartdashboard(); 
+    PathPlannerServer.startServer(5811); 
 
     //Set Default Commands
-    m_drivetrain.setDefaultCommand(new ArcadeDrive()); //Defaults the pilot's drive command
+    m_drivetrain.setDefaultCommand(new ArcadeDrive()); 
     m_arm.setDefaultCommand(new RunArm());
     m_intake.setDefaultCommand(new RunIntake());
+    // m_leds.setDefaultCommand(new RunCommand(m_leds::Rainbow, m_leds));
+
   }
 
   /** Use this method to define your trigger->command mappings. Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@lin CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}. */

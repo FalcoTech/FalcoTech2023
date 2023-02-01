@@ -16,7 +16,9 @@ public class LEDs extends SubsystemBase {
   
   private final AddressableLEDBuffer LEDStripBuffer = new AddressableLEDBuffer(LEDsConstants.LEDSTRIPLENGTH);
 
-  private String LightsColor = "";
+  private String lightsColor = "";
+
+  private int rainbowFirstPixelHue;
 
 
   /** Creates a new LEDs. */
@@ -37,13 +39,27 @@ public class LEDs extends SubsystemBase {
     } 
   }
   
+  public void Rainbow() {
+    // For every pixel
+    for (var i = 0; i < LEDStripBuffer.getLength(); i++) {
+      final var hue = (rainbowFirstPixelHue + (i * 180 / LEDStripBuffer.getLength())) % 180;
+      // Set the value
+      LEDStripBuffer.setHSV(i, hue, 255, 128);
+    }
+    rainbowFirstPixelHue += 3;
+    rainbowFirstPixelHue %= 180;
+
+    LEDStripLeft.setData(LEDStripBuffer);
+    LEDStripRight.setData(LEDStripBuffer);
+  }
+
   public void HumanPlayerLEDSwitch(){
-    if (LightsColor != "Yellow"){
+    if (lightsColor != "Yellow"){
       ChangeLEDColor(255, 255, 0);
-      LightsColor = "Yellow";
+      lightsColor = "Yellow";
     } else{
       ChangeLEDColor(255, 0, 255);
-      LightsColor = "Purple";
+      lightsColor = "Purple";
     }
   }
 
