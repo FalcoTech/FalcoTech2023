@@ -27,6 +27,7 @@ public class RobotContainer {
   public static Wrist m_wrist = new Wrist();
   public static Intake m_intake = new Intake();
   public static Vision m_vision = new Vision();
+  public static LEDs m_leds = new LEDs();
 
   //Initialize driver station controllers
   public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
@@ -55,15 +56,14 @@ public class RobotContainer {
     new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.shiftHighGear())); //Pilot's "B" button shifts to high gear
 
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.toggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
-    //Copilot Controls
-    new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm())); //Pilot's "A" button shifts to low gear
-    new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); //Pilot's "A" button shifts to low gear
-
-    // Pilot.getAButton().onTrue(new InstantCommand(m_drivetrain.shiftHighGear()));
     
-    //left stick for arm control
-    //right bumper: in
-    //left bumper: out
+    //Copilot Controls
+    
+    //Arm extender
+    new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
+    new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
+
+    new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.HumanPlayerLEDSwitch())); 
     
   }
 

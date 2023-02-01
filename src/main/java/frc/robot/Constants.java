@@ -21,7 +21,6 @@ public final class Constants {
     //Controller Ports
     public static final int PILOTCONTROLLERPORT = 0;
     public static final int COPILOTCONTROLLERPORT = 1;
-
   }
   
   public static class DriveTrainConstants { //Constants for drive train stuff like motors/pneumatics
@@ -53,13 +52,22 @@ public final class Constants {
     public static final int EXTENDERSOLREVERSE_ID = 3;
   }
 
+  public static class WristConstants{
+    public static final int WRISTMOTOR_ID = 1002;
+  }
+
   public static class IntakeConstants{
     public static final int INTAKELEFTMOTOR_ID = 20;
     public static final int INTAKERIGHTMOTOR_ID = 21;
   }
 
-  public static class VisionConstants {
+  public static class VisionConstants{
     public static final String TAGFAMILY = "tag16h5";
+  }
+  public static class LEDsConstants{
+    public static final int LEDSTRIPLEFTPORT = 8;
+    public static final int LEDSTRIPRIGHTPORT = 9;
+    public static final int LEDSTRIPLENGTH = 180; //maybe 90 each, maybe 180 each? idk lol
   }
 
   public static class PathPlannerConstants {
