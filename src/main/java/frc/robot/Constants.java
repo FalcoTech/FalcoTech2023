@@ -45,15 +45,15 @@ public final class Constants {
   }
   //Arm constants
   public static class ArmConstants{
-    public static final int LEFTARMMOTOR_ID = 1000; //change when we find out
-    public static final int RIGHTARMMOTOR_ID = 1001; //CHANGE WHEN FIND OUT caps lol
+    public static final int LEFTARMMOTOR_ID = 23; //change when we find out
+    public static final int RIGHTARMMOTOR_ID = 24; //CHANGE WHEN FIND OUT caps lol
 
     public static final int EXTENDERSOLFORWARD_ID = 2;
     public static final int EXTENDERSOLREVERSE_ID = 3;
   }
 
   public static class WristConstants{
-    public static final int WRISTMOTOR_ID = 1002;
+    public static final int WRISTMOTOR_ID = 22;
   }
 
   public static class IntakeConstants{
