@@ -60,6 +60,7 @@ public final class Constants {
 
   public static class VisionConstants{
     public static final String TAGFAMILY = "tag16h5";
+    public static final String LIMELIGHTNAME = "limelight";
   }
 
   public static class LEDsConstants{

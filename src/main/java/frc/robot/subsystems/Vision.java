@@ -10,49 +10,34 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.VisionConstants;
+import frc.robot.lib.LimelightHelpers;
 
 
 
 public class Vision extends SubsystemBase {
   //USB Camera(s)
-
   private final CvSink m_cvSink;
   
-  //Limelight
-  private NetworkTable table;
-  private NetworkTableEntry tValidTarget;
-  private NetworkTableEntry tOffsetX;
-  private NetworkTableEntry tOffsetY;
-  private NetworkTableEntry tArea;
-
-  private NetworkTableEntry tShortestLength;
-  private NetworkTableEntry tLongestLength;
-  private NetworkTableEntry tHorizontalLength;
-  private NetworkTableEntry tVerticalLength;
-
+  
 
   public Vision() {
     CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
     m_cvSink = CameraServer.getVideo();
 
-    table = NetworkTableInstance.getDefault().getTable("limelight");
-    //Limelight entries
-    tValidTarget = table.getEntry("tv"); 
-    tOffsetX = table.getEntry("tx");
-    tOffsetY = table.getEntry("ty");
-    tArea = table.getEntry("ta");
   }
 
-  public void updateLimelight(){
-    double tv = tValidTarget.getDouble(0.0);
-    double tx = tOffsetX.getDouble(0.0);
-    double ty = tOffsetY.getDouble(0.0);
-    double ta = tArea.getDouble(0.0);
+  public void LLLEDsOFF(){
+    LimelightHelpers.setLEDMode_ForceOff("");
+  }
+  public void LimelightLEDsOn(){
+    LimelightHelpers.setLEDMode_ForceOn("");
   }
 
 
   @Override
   public void periodic() { // This method will be called once per scheduler run
-    updateLimelight();
+
   }
 }
