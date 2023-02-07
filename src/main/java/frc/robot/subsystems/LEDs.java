@@ -11,15 +11,57 @@ import frc.robot.Constants;
 import frc.robot.Constants.LEDsConstants;
 
 public class LEDs extends SubsystemBase {
+  // private final AddressableLED LEDStripLeft = new AddressableLED(LEDsConstants.LEDSTRIPLEFTPORT);
+  // private final AddressableLED LEDStripRight = new AddressableLED(LEDsConstants.LEDSTRIPRIGHTPORT);
+  private final AddressableLED testLEDStrip = new AddressableLED(9);
+  private final AddressableLEDBuffer LEDBuffer = new AddressableLEDBuffer(LEDsConstants.LEDSTRIPLENGTH);
+
+
+  private int rainbowFirstPixelHue;
+
 
   /** Creates a new LEDs. */
-  public LEDs() {  
+  public LEDs() {
+    testLEDStrip.setLength(LEDBuffer.getLength());
+    testLEDStrip.setData(LEDBuffer);
+    testLEDStrip.start();
+  
 
   }
 
+  public void ChangeLEDColor(int red, int green, int blue){
+    for (var i = 0; i < LEDBuffer.getLength(); i++){
+      LEDBuffer.setRGB(i, red, green, blue);
+    } 
+    testLEDStrip.setData(LEDBuffer);
+  }
+  
+  public void rainbow() {
+    for (var i = 0; i < LEDBuffer.getLength(); i++) {
+      final var hue = (rainbowFirstPixelHue + (i * 180 / LEDBuffer.getLength())) % 180;
+      LEDBuffer.setHSV(i, hue, 255, 128);
+    }
+    rainbowFirstPixelHue += 3;
+    rainbowFirstPixelHue %= 180;
+    testLEDStrip.setData(LEDBuffer);
+  }
+
+  // public void HumanPlayerLEDSwitch(){
+  //   if (lightsColor != "Yellow"){
+  //     ChangeLEDColor(255, 255, 0);
+  //     lightsColor = "Yellow";
+  //   } else{
+  //     ChangeLEDColor(255, 0, 255);
+  //     lightsColor = "Purple";
+  //   }
+  // }
 
   @Override
   public void periodic() {// This method will be called once per scheduler run
-    
+    // LEDStripLeft.setData(LEDStripBuffer);
+    // LEDStripRight.setData(LEDStripBuffer);
+    // ChangeLEDColor(255, 0, 255); THIS breaks robot lol
+    rainbow();
+    testLEDStrip.setData(LEDBuffer);
   }
 }
