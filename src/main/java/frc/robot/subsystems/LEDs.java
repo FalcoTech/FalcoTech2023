@@ -18,7 +18,7 @@ public class LEDs extends SubsystemBase {
 
 
   private int rainbowFirstPixelHue;
-
+  private int purpleFirstPixelHue = 250; 
 
   /** Creates a new LEDs. */
   public LEDs() {
@@ -36,7 +36,7 @@ public class LEDs extends SubsystemBase {
     testLEDStrip.setData(LEDBuffer);
   }
   
-  public void rainbow() {
+  public void Rainbow(){
     for (var i = 0; i < LEDBuffer.getLength(); i++) {
       final var hue = (rainbowFirstPixelHue + (i * 180 / LEDBuffer.getLength())) % 180;
       LEDBuffer.setHSV(i, hue, 255, 128);
@@ -46,22 +46,22 @@ public class LEDs extends SubsystemBase {
     testLEDStrip.setData(LEDBuffer);
   }
 
-  // public void HumanPlayerLEDSwitch(){
-  //   if (lightsColor != "Yellow"){
-  //     ChangeLEDColor(255, 255, 0);
-  //     lightsColor = "Yellow";
-  //   } else{
-  //     ChangeLEDColor(255, 0, 255);
-  //     lightsColor = "Purple";
-  //   }
-  // }
+  public void PurpleFlow(){
+    for (var i = 0; i < LEDBuffer.getLength(); i++) {
+      final var hue = (purpleFirstPixelHue = (i * 25 / LEDBuffer.getLength())) % 25;
+      LEDBuffer.setHSV(i, hue, 255, 128);
+    }
+    purpleFirstPixelHue += 2;
+    purpleFirstPixelHue %= 25;
+    testLEDStrip.setData(LEDBuffer);
+  }
 
   @Override
   public void periodic() {// This method will be called once per scheduler run
     // LEDStripLeft.setData(LEDStripBuffer);
     // LEDStripRight.setData(LEDStripBuffer);
     // ChangeLEDColor(255, 0, 255); THIS breaks robot lol
-    rainbow();
+    Rainbow();
     testLEDStrip.setData(LEDBuffer);
   }
 }

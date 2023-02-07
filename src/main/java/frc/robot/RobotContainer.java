@@ -63,6 +63,7 @@ public class RobotContainer {
     new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
     new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
     
+    //LEDS IDEA: HAVE THE DEFAULT COMMAND SWITCH WITH COPILOT INPUT.  
   }
 
   private void configureSmartdashboard(){
@@ -71,6 +72,7 @@ public class RobotContainer {
     m_autoChooser.addOption("Left Side Cube Run", null);
     m_autoChooser.addOption("Right Side Cube Run", null);
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
+
 
   }
 
