@@ -26,6 +26,7 @@ public class Vision extends SubsystemBase {
     CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
     m_cvSink = CameraServer.getVideo();
 
+    
   }
 
   public void LLLEDsOFF(){

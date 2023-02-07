@@ -11,63 +11,15 @@ import frc.robot.Constants;
 import frc.robot.Constants.LEDsConstants;
 
 public class LEDs extends SubsystemBase {
-  // private final AddressableLED LEDStripLeft = new AddressableLED(LEDsConstants.LEDSTRIPLEFTPORT);
-  // private final AddressableLED LEDStripRight = new AddressableLED(LEDsConstants.LEDSTRIPRIGHTPORT);
-  private final AddressableLED testLEDStrip = new AddressableLED(9);
-  private final AddressableLEDBuffer LEDStripBuffer = new AddressableLEDBuffer(LEDsConstants.LEDSTRIPLENGTH);
-
-  private String lightsColor = "";
-
-  private int rainbowFirstPixelHue;
-
 
   /** Creates a new LEDs. */
-  public LEDs() {
-    // LEDStripLeft.setLength(LEDStripBuffer.getLength());
-    // LEDStripRight.setLength(LEDStripBuffer.getLength());
-    testLEDStrip.setLength(LEDStripBuffer.getLength());
-    // LEDStripLeft.setData(LEDStripBuffer);
-    // LEDStripRight.setData(LEDStripBuffer);
-    testLEDStrip.setData(LEDStripBuffer);   
-    // LEDStripLeft.start();
-    // LEDStripRight.start();
-    testLEDStrip.start();
+  public LEDs() {  
+
   }
 
-  public void ChangeLEDColor(int red, int green, int blue){
-    for (var i = 0; i < LEDStripBuffer.getLength(); i++){
-      LEDStripBuffer.setRGB(i, red, green, blue);
-    } 
-  }
-  
-  // public void Rainbow() {
-  //   // For every pixel
-  //   for (var i = 0; i < LEDStripBuffer.getLength(); i++) {
-  //     final var hue = (rainbowFirstPixelHue + (i * 180 / LEDStripBuffer.getLength())) % 180;
-  //     // Set the value
-  //     LEDStripBuffer.setHSV(i, hue, 255, 128);
-  //   }
-  //   rainbowFirstPixelHue += 3;
-  //   rainbowFirstPixelHue %= 180;
-
-  //   LEDStripLeft.setData(LEDStripBuffer);
-  //   LEDStripRight.setData(LEDStripBuffer);
-  // }
-
-  // public void HumanPlayerLEDSwitch(){
-  //   if (lightsColor != "Yellow"){
-  //     ChangeLEDColor(255, 255, 0);
-  //     lightsColor = "Yellow";
-  //   } else{
-  //     ChangeLEDColor(255, 0, 255);
-  //     lightsColor = "Purple";
-  //   }
-  // }
 
   @Override
   public void periodic() {// This method will be called once per scheduler run
-    // LEDStripLeft.setData(LEDStripBuffer);
-    // LEDStripRight.setData(LEDStripBuffer);
-    testLEDStrip.setData(LEDStripBuffer);
+    
   }
 }
