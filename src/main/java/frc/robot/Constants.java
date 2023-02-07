@@ -28,7 +28,7 @@ public final class Constants {
     public static final double GEARRATIO_HIGH = 7.95; 
 
     public static final double WHEELRADIUSINCHES = 3; //6 inch wheels this year. /2 for radius
-    public static final double WHEELCIRCUMFERENCEINCHES = 2 * Math.PI * WHEELRADIUSINCHES;
+    public static final double WHEELCIRCUMFERENCEMETERS = 2 * Math.PI * Units.inchesToMeters(WHEELRADIUSINCHES);
     public static final double TRACKWIDTH = Units.inchesToMeters(22); //TBD "Track width is the empirical measurement of the length from one center wheel to the opposite rail center wheel" - Google lol
     public static final DifferentialDriveKinematics DRIVEKINEMATICS = new DifferentialDriveKinematics(TRACKWIDTH); 
 

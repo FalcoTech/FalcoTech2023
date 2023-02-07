@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveTrainConstants;
 
@@ -51,6 +52,9 @@ public class DriveTrain extends SubsystemBase {
   //Gyro
   private final ADIS16470_IMU gyro = new ADIS16470_IMU();
 
+  //Field Image
+  private final Field2d m_field2d = new Field2d();
+
   //Compressor/Solenoids Inits
   private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.SHIFTSOLFORWARD_ID, DriveTrainConstants.SHIFTSOLREVERSE_ID);
@@ -68,15 +72,17 @@ public class DriveTrain extends SubsystemBase {
     rightBackMotor.follow(rightFrontMotor);
     m_leftDriveGroup.setInverted(true); //Invert one side drive motors
 
-    coastDriveMotors(); //Start coasting drive motors
+    CoastDriveMotors(); //Start coasting drive motors
   
     leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     rightFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-    leftFrontMotor.setSelectedSensorPosition(0);
-    rightFrontMotor.setSelectedSensorPosition(0);
+    
+    resetEncoders();
+    resetGyro();
+
 
     m_odometry = new DifferentialDriveOdometry(
-    getRotation2d(), 
+    GetRotation2d(), 
     encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
     encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
   }
@@ -88,57 +94,54 @@ public class DriveTrain extends SubsystemBase {
     m_drive.arcadeDrive(speed, -rotation, isSquaredInputs);
   } 
 
-  public void shiftLowGear(){
+  public void ShiftLowGear(){
     shiftSolenoid.set(Value.kForward);
   }
-  public void shiftHighGear(){
+  public void ShiftHighGear(){
     shiftSolenoid.set(Value.kReverse);
   }
 
-  public void brakeDriveMotors(){
+  public void BrakeDriveMotors(){
     leftFrontMotor.setNeutralMode(NeutralMode.Brake);
     leftBackMotor.setNeutralMode(NeutralMode.Brake);
     rightFrontMotor.setNeutralMode(NeutralMode.Brake);
     rightBackMotor.setNeutralMode(NeutralMode.Brake);
   }
-  public void coastDriveMotors(){
+  public void CoastDriveMotors(){
     leftFrontMotor.setNeutralMode(NeutralMode.Coast);
     leftBackMotor.setNeutralMode(NeutralMode.Coast);
     rightFrontMotor.setNeutralMode(NeutralMode.Coast);
     rightBackMotor.setNeutralMode(NeutralMode.Coast);
   }  
-  public void toggleArcadeDriveSpeed(){
+  public void ToggleArcadeDriveSpeed(){
     if (arcadeDriveSpeed == "default"){
       arcadeDriveSpeed = "slow";
-      brakeDriveMotors();
+      BrakeDriveMotors();
     } else{
       arcadeDriveSpeed = "default";
-      coastDriveMotors();
+      CoastDriveMotors();
     }
   } 
   
-  public Rotation2d getRotation2d(){
+  public Rotation2d GetRotation2d(){
     return Rotation2d.fromDegrees(gyro.getAngle());
   }
-  public Pose2d getPose2d(){
+  public Pose2d GetPose2d(){
     return m_odometry.getPoseMeters();
   }
   
-  public double leftEncoderVelocity(){
+  public double GetLeftEncoderVelocity(){
     return -encoderTicksToMeters(leftFrontMotor.getSelectedSensorVelocity());
-  }
-  public double rightEncoderVelocity(){
+  } //Check to see if these values return the same when driving straight
+  public double GetRightEncoderVelocity(){
     return -encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()) * 10;
   }
 
-  public DifferentialDriveWheelSpeeds getWheelSpeeds(){
-    return new DifferentialDriveWheelSpeeds(leftEncoderVelocity(), rightEncoderVelocity());
-  }
 
   public double encoderTicksToMeters(double currentEncoderValue){
-    double motorRotations = currentEncoderValue / DriveTrainConstants.ENCODERFULLREV;
+    double motorRotations = (double)currentEncoderValue / DriveTrainConstants.ENCODERFULLREV; //FULLREV may need to be 2048 idk
     double wheelRotations = motorRotations / DriveTrainConstants.GEARRATIO_LOW;
-    double positionMeters = wheelRotations * Units.inchesToMeters(DriveTrainConstants.WHEELCIRCUMFERENCEINCHES);
+    double positionMeters = wheelRotations * DriveTrainConstants.WHEELCIRCUMFERENCEMETERS;
     return positionMeters;
   }
 
@@ -154,7 +157,7 @@ public class DriveTrain extends SubsystemBase {
   public void resetOdometry(Pose2d pose){
     resetEncoders();
     m_odometry.resetPosition(
-      getRotation2d(), 
+      GetRotation2d(), 
       encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
       encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()), 
       new Pose2d());
@@ -165,12 +168,14 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     compressor.enableDigital(); //Runs compressor
-    getRotation2d();
+    GetRotation2d();
 
     m_odometry.update(
-      getRotation2d(), 
+      GetRotation2d(), 
       encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
       encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
-
+    
+      m_field2d.setRobotPose(GetPose2d());
+    
   }
 }
