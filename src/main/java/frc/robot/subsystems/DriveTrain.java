@@ -77,20 +77,20 @@ public class DriveTrain extends SubsystemBase {
     leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     rightFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     
-    resetEncoders();
-    resetGyro();
+    ResetEncoders();
+    ResetGyro();
 
 
     m_odometry = new DifferentialDriveOdometry(
     GetRotation2d(), 
-    encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
-    encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
+    EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
+    EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
   }
 
-  public void arcadeDrive(double speed, double rotation){   //Our main ArcadeDrive command. 
+  public void ArcadeDrive(double speed, double rotation){   //Our main ArcadeDrive command. 
     m_drive.arcadeDrive(speed, -rotation, false);
   } 
-  public void arcadeDrive(double speed, double rotation, boolean isSquaredInputs){   //Secondary ArcadeDrive command. Has additional bool for squared inputs to increase controlability at low speeds. 
+  public void ArcadeDrive(double speed, double rotation, boolean isSquaredInputs){   //Secondary ArcadeDrive command. Has additional bool for squared inputs to increase controlability at low speeds. 
     m_drive.arcadeDrive(speed, -rotation, isSquaredInputs);
   } 
 
@@ -131,35 +131,36 @@ public class DriveTrain extends SubsystemBase {
   }
   
   public double GetLeftEncoderVelocity(){
-    return -encoderTicksToMeters(leftFrontMotor.getSelectedSensorVelocity());
+    return -EncoderTicksToMeters(leftFrontMotor.getSelectedSensorVelocity());
   } //Check to see if these values return the same when driving straight
   public double GetRightEncoderVelocity(){
-    return -encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()) * 10;
+    return -EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()) * 10;
   }
 
 
-  public double encoderTicksToMeters(double currentEncoderValue){
+  public double EncoderTicksToMeters(double currentEncoderValue){
     double motorRotations = (double)currentEncoderValue / DriveTrainConstants.ENCODERFULLREV; //FULLREV may need to be 2048 idk
     double wheelRotations = motorRotations / DriveTrainConstants.GEARRATIO_LOW;
     double positionMeters = wheelRotations * DriveTrainConstants.WHEELCIRCUMFERENCEMETERS;
     return positionMeters;
   }
 
-  public void resetEncoders(){
+  public void ResetEncoders(){
     leftFrontMotor.setSelectedSensorPosition(0);
     rightFrontMotor.setSelectedSensorPosition(0);
     leftBackMotor.setSelectedSensorPosition(0);
     rightBackMotor.setSelectedSensorPosition(0);
   }
-  public void resetGyro(){
+  public void ResetGyro(){
     gyro.reset();
   }
-  public void resetOdometry(Pose2d pose){
-    resetEncoders();
+  public void ResetOdometry(Pose2d pose){
+    ResetEncoders();
+    ResetGyro();
     m_odometry.resetPosition(
       GetRotation2d(), 
-      encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
-      encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()), 
+      EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
+      EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()), 
       new Pose2d());
   }
 
@@ -172,10 +173,10 @@ public class DriveTrain extends SubsystemBase {
 
     m_odometry.update(
       GetRotation2d(), 
-      encoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
-      encoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
+      EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
+      EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
     
-      m_field2d.setRobotPose(GetPose2d());
+    m_field2d.setRobotPose(GetPose2d());
     
   }
 }
