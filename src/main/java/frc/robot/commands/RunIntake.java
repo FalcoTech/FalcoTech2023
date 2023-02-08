@@ -26,14 +26,6 @@ public class RunIntake extends CommandBase {
   public void execute() {
     double CoPilotLeftTrigger = RobotContainer.CoPilot.getLeftTriggerAxis();
     double CoPilotRightTrigger = RobotContainer.CoPilot.getRightTriggerAxis();
-
-    //This obviously won't work off the bat, but it's a good proof of concept
-    if (RobotContainer.m_intake.intakeColorSensor.getColor() != new Color(255, 0, 255) 
-    || RobotContainer.m_intake.intakeColorSensor.getColor() != new Color(255, 255, 0)){
-      RobotContainer.m_intake.runIntake(CoPilotRightTrigger * .9);
-    } else {
-      RobotContainer.m_intake.runIntake(-CoPilotLeftTrigger * .9);
-    }
     
   }
 

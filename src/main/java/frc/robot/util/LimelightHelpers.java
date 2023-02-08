@@ -1,6 +1,6 @@
 //LimelightHelpers v1.0 (Feb 2, 2023)
 
-package frc.robot.lib;
+package frc.robot.util;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;

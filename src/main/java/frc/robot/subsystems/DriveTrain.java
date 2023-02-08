@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPRamseteCommand;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -14,6 +16,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -24,6 +27,9 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveTrainConstants;
 
@@ -87,6 +93,21 @@ public class DriveTrain extends SubsystemBase {
     EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
   }
 
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    compressor.enableDigital(); //Runs compressor
+    GetRotation2d();
+
+    m_odometry.update(
+      GetRotation2d(), 
+      EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
+      EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
+    
+    m_field2d.setRobotPose(GetPose2d());
+    
+  }
+
   public void ArcadeDrive(double speed, double rotation){   //Our main ArcadeDrive command. 
     m_drive.arcadeDrive(speed, -rotation, false);
   } 
@@ -136,7 +157,7 @@ public class DriveTrain extends SubsystemBase {
   public double GetRightEncoderVelocity(){
     return -EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()) * 10;
   }
-
+  
 
   public double EncoderTicksToMeters(double currentEncoderValue){
     double motorRotations = (double)currentEncoderValue / DriveTrainConstants.ENCODERFULLREV; //FULLREV may need to be 2048 idk
@@ -164,19 +185,20 @@ public class DriveTrain extends SubsystemBase {
       new Pose2d());
   }
 
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    compressor.enableDigital(); //Runs compressor
-    GetRotation2d();
-
-    m_odometry.update(
-      GetRotation2d(), 
-      EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
-      EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
-    
-    m_field2d.setRobotPose(GetPose2d());
-    
+  public Command PPFollowTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath){
+    return new SequentialCommandGroup(
+      new InstantCommand(() -> {
+        if(isFirstPath){
+          this.ResetOdometry(traj.getInitialPose());
+        }
+      }),
+      new PPRamseteCommand(
+        traj, 
+        this::GetPose2d, 
+        new RamseteController(), 
+        DriveTrainConstants.DRIVEKINEMATICS, 
+        null, 
+        this)
+    );
   }
 }
