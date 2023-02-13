@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.LEDsConstants;
 
@@ -29,7 +30,7 @@ public class LEDs extends SubsystemBase {
 
   }
 
-  public void ChangeLEDColor(int red, int green, int blue){
+  public void ChangeLEDColorRGB(int red, int green, int blue){
     for (var i = 0; i < LEDBuffer.getLength(); i++){
       LEDBuffer.setRGB(i, red, green, blue);
     } 
@@ -53,6 +54,16 @@ public class LEDs extends SubsystemBase {
     testLEDStrip.setData(LEDBuffer);
   }
 
+  public void FlashPurple(){
+    for (var i = 0; i < LEDBuffer.getLength(); i++){
+      LEDBuffer.setHSV(i, 295, 255, 128);
+    } 
+    testLEDStrip.setData(LEDBuffer);
+    new WaitCommand(1);
+    for (var i = 0; i < LEDBuffer.getLength(); i++){
+      LEDBuffer.setHSV(i, 0, 0, 0);
+    } 
+  }
 
   @Override
   public void periodic() {// This method will be called once per scheduler run
