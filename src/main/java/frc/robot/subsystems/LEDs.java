@@ -54,16 +54,6 @@ public class LEDs extends SubsystemBase {
     testLEDStrip.setData(LEDBuffer);
   }
 
-  public void FlashPurple(){
-    for (var i = 0; i < LEDBuffer.getLength(); i++){
-      LEDBuffer.setHSV(i, 295, 255, 128);
-    } 
-    testLEDStrip.setData(LEDBuffer);
-    new WaitCommand(1);
-    for (var i = 0; i < LEDBuffer.getLength(); i++){
-      LEDBuffer.setHSV(i, 0, 0, 0);
-    } 
-  }
 
   @Override
   public void periodic() {// This method will be called once per scheduler run
@@ -71,7 +61,6 @@ public class LEDs extends SubsystemBase {
     // LEDStripRight.setData(LEDStripBuffer);
     // ChangeLEDColor(255, 0, 255); THIS breaks robot lol
     // Rainbow(); works goo
-    Rainbow();
     testLEDStrip.setData(LEDBuffer);
   }
 }
