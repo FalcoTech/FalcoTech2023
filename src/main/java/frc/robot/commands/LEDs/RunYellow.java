@@ -7,22 +7,23 @@ package frc.robot.commands.LEDs;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class SolidPurple extends CommandBase {
-  /** Creates a new SolidPurple. */
-  public SolidPurple() {
+public class RunYellow extends CommandBase {
+  /** Creates a new RunYellow. */
+  public RunYellow() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_leds);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_leds.ChangeLEDColorHSV(295);
-    
+    RobotContainer.m_leds.Yellow();
   }
 
   // Called once the command ends or is interrupted.

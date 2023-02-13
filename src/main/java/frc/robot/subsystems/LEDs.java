@@ -9,7 +9,10 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.LEDsConstants;
+import frc.robot.commands.LEDs.RunPurple;
+import frc.robot.commands.LEDs.RunYellow;
 
 public class LEDs extends SubsystemBase {
   // private final AddressableLED LEDStripLeft = new AddressableLED(LEDsConstants.LEDSTRIPLEFTPORT);
@@ -19,7 +22,7 @@ public class LEDs extends SubsystemBase {
 
 
   private int rainbowFirstPixelHue;
-  private int purplePixelHue = 270; 
+  private String CurrentColor = "";
 
   /** Creates a new LEDs. */
   public LEDs() {
@@ -39,7 +42,14 @@ public class LEDs extends SubsystemBase {
   
   public void ChangeLEDColorHSV(int hue){
     for (var i = 0; i < LEDBuffer.getLength(); i++){
-      LEDBuffer.setHSV(i, hue, 255, 128);;
+      LEDBuffer.setHSV(i, hue, 255, 128);
+    } 
+    testLEDStrip.setData(LEDBuffer);
+  }
+
+  public void LEDsOff(){
+    for (var i = 0; i < LEDBuffer.getLength(); i++){
+      LEDBuffer.setHSV(i, 0, 0, 0);
     } 
     testLEDStrip.setData(LEDBuffer);
   }
@@ -53,7 +63,30 @@ public class LEDs extends SubsystemBase {
     rainbowFirstPixelHue %= 180;
     testLEDStrip.setData(LEDBuffer);
   }
+  public void Purple(){
+    ChangeLEDColorHSV(295);
+  
+  }
+  public void Yellow(){
+    ChangeLEDColorHSV(60);
+  }
 
+  public void SwitchColor(){
+    switch (CurrentColor){
+      case "":
+        RobotContainer.m_leds.setDefaultCommand(new RunPurple());
+        CurrentColor = "Purple";
+        break;
+      case "Purple":
+        RobotContainer.m_leds.setDefaultCommand(new RunYellow());
+        CurrentColor = "Yellow";
+        break;
+      case "Yellow": 
+        RobotContainer.m_leds.setDefaultCommand(new RunPurple());
+        CurrentColor = "Purple";
+        break;
+    }
+  }
 
   @Override
   public void periodic() {// This method will be called once per scheduler run
@@ -61,6 +94,5 @@ public class LEDs extends SubsystemBase {
     // LEDStripRight.setData(LEDStripBuffer);
     // ChangeLEDColor(255, 0, 255); THIS breaks robot lol
     // Rainbow(); works goo
-    testLEDStrip.setData(LEDBuffer);
   }
 }
