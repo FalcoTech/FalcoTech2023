@@ -25,6 +25,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -157,7 +158,9 @@ public class DriveTrain extends SubsystemBase {
   public double GetRightEncoderVelocity(){
     return -EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()) * 10;
   }
-  
+  public WheelSpeeds GetWheelSpeeds(){
+    return new WheelSpeeds(GetLeftEncoderVelocity(), GetRightEncoderVelocity());
+  }
 
   public double EncoderTicksToMeters(double currentEncoderValue){
     double motorRotations = (double)currentEncoderValue / DriveTrainConstants.ENCODERFULLREV; //FULLREV may need to be 2048 idk

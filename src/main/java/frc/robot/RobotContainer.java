@@ -58,6 +58,7 @@ public class RobotContainer {
   public RobotContainer() {
     configureBindings(); 
     configureSmartdashboard(); 
+
     PathPlannerServer.startServer(5811); 
 
     //Set Default Commands

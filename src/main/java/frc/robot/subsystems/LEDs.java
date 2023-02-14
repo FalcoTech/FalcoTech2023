@@ -11,8 +11,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.LEDsConstants;
-import frc.robot.commands.LEDs.RunPurple;
-import frc.robot.commands.LEDs.RunYellow;
+import frc.robot.commands.LEDs.*;
 
 public class LEDs extends SubsystemBase {
   // private final AddressableLED LEDStripLeft = new AddressableLED(LEDsConstants.LEDSTRIPLEFTPORT);
@@ -90,9 +89,6 @@ public class LEDs extends SubsystemBase {
 
   @Override
   public void periodic() {// This method will be called once per scheduler run
-    // LEDStripLeft.setData(LEDStripBuffer);
-    // LEDStripRight.setData(LEDStripBuffer);
-    // ChangeLEDColor(255, 0, 255); THIS breaks robot lol
-    // Rainbow(); works goo
+  
   }
 }
