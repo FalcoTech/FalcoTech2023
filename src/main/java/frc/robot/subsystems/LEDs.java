@@ -70,7 +70,7 @@ public class LEDs extends SubsystemBase {
     ChangeLEDColorHSV(60);
   }
 
-  public void SwitchColor(){
+  public void SwitchHPColor(){
     switch (CurrentColor){
       case "":
         RobotContainer.m_leds.setDefaultCommand(new RunPurple());
