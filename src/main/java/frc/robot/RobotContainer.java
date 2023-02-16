@@ -10,13 +10,17 @@ import frc.robot.commands.*;
 import frc.robot.commands.LEDs.*;
 import frc.robot.subsystems.*;
 
+import java.util.HashMap;
+import java.util.List;
+
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.RamseteAutoBuilder;
-import com.pathplanner.lib.commands.PPRamseteCommand;
 import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -24,7 +28,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 
 
 public class RobotContainer {
@@ -43,15 +46,28 @@ public class RobotContainer {
   SendableChooser<CommandBase> m_autoChooser = new SendableChooser<>();
   
   //Pathplanner
-
-  RamseteAutoBuilder autoBuilder = new RamseteAutoBuilder(
-    m_drivetrain::GetPose2d, 
-    m_drivetrain::ResetOdometry, 
-    new RamseteController(), 
-    DriveTrainConstants.DRIVEKINEMATICS, 
-    null, 
-    AutoConstants.AUTOEVENTMAP, 
-    m_drivetrain);
+  public Command ramAutoBuilder(String pathName, HashMap<String, Command> eventMap){
+    RamseteAutoBuilder autoRouteBuilder = new RamseteAutoBuilder(
+      m_drivetrain::GetPose2d, 
+      m_drivetrain::ResetOdometry, 
+      new RamseteController(2, .7),//TBD PLEASE CHANGE ME
+      DriveTrainConstants.DRIVEKINEMATICS, 
+      new SimpleMotorFeedforward(
+        1, 
+        1,
+        1
+      ), 
+      m_drivetrain::GetWheelSpeeds, 
+      new PIDConstants(1, 0, 0),
+      m_drivetrain::TankDriveVolts,
+      eventMap,
+      m_drivetrain
+    );
+    List<PathPlannerTrajectory> pathToFollow = PathPlanner.loadPathGroup(pathName, PathPlanner.getConstraintsFromPath(pathName));
+    final Command auto = autoRouteBuilder.fullAuto(pathToFollow);
+    return auto;
+  }
+  
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */ //Things that should happen when the robot first initializes
@@ -75,14 +91,10 @@ public class RobotContainer {
     new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
   
-    
     //Copilot Controls
-    
+    new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
+    new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
 
-    // new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
-    // new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
-
-    //LEDS IDEA: HAVE THE DEFAULT COMMAND SWITCH WITH COPILOT INPUT.  
   }
 
   private void configureSmartdashboard(){
@@ -91,8 +103,6 @@ public class RobotContainer {
     m_autoChooser.addOption("Left Side Cube Run", null);
     m_autoChooser.addOption("Right Side Cube Run", null);
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
-
-    SmartDashboard.putData(m_drivetrain.m_field2d);
 
   }
 
