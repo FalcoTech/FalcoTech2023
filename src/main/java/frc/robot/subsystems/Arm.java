@@ -33,6 +33,7 @@ public class Arm extends SubsystemBase {
     
     // armLeftMotor.setIdleMode(IdleMode.kBrake);
     // armRightMotor.setIdleMode(IdleMode.kBrake);
+<<<<<<< HEAD
   }
 
   public void MoveArm(double speed){
@@ -47,6 +48,22 @@ public class Arm extends SubsystemBase {
   
   public void RetractArm(){
     // extenderSolenoid.set(Value.kReverse); //WILL PROBBABLY NEED CHANGED
+=======
+  // }
+
+  // public void MoveArm(double speed){
+  //   armLeftMotor.set(speed);
+  // }
+
+  // public void ExtendArm(){
+  //   if (armEncoder.getDistance() > 135 /*ENCODER NOT BETWEEN THIS VALUE AND THIS VALUE*/){
+  //     extenderSolenoid.set(Value.kForward); //WILL PROBABLY NEED CHANGED
+  //   }
+  // }
+  
+  // public void RetractArm(){
+  //   extenderSolenoid.set(Value.kReverse); //WILL PROBBABLY NEED CHANGED
+>>>>>>> master
   }
 
   @Override

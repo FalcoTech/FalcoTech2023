@@ -18,6 +18,7 @@ import frc.robot.Constants.IntakeConstants;
 public class Intake extends SubsystemBase {
   // private final CANSparkMax intakeLeftMotor = new CANSparkMax(IntakeConstants.INTAKELEFTMOTOR_ID, MotorType.kBrushless);
   // private final CANSparkMax intakeRightMotor = new CANSparkMax(IntakeConstants.INTAKERIGHTMOTOR_ID, MotorType.kBrushless);
+<<<<<<< HEAD
   
   /** Creates a new Intake. */
   public Intake() {
@@ -28,6 +29,20 @@ public class Intake extends SubsystemBase {
   public void runIntake(double speed){
     //  intakeLeftMotor.set(speed);
   }
+=======
+
+  // public final ColorSensorV3 intakeColorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+  
+  /** Creates a new Intake. */
+  public Intake() {
+    // intakeRightMotor.follow(intakeLeftMotor, true);
+  }
+
+  
+  // public void runIntake(double speed){
+  //    intakeLeftMotor.set(speed);
+  // }
+>>>>>>> master
 
 
   @Override
