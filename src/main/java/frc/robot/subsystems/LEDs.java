@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.LEDsConstants;
-import frc.robot.commands.LEDs.*;
+import frc.robot.commands.*;
 
 public class LEDs extends SubsystemBase {
   // private final AddressableLED LEDStripLeft = new AddressableLED(LEDsConstants.LEDSTRIPLEFTPORT);
@@ -70,22 +70,22 @@ public class LEDs extends SubsystemBase {
     ChangeLEDColorHSV(60);
   }
 
-  public void SwitchColor(){
-    switch (CurrentColor){
-      case "":
-        RobotContainer.m_leds.setDefaultCommand(new RunPurple());
-        CurrentColor = "Purple";
-        break;
-      case "Purple":
-        RobotContainer.m_leds.setDefaultCommand(new RunYellow());
-        CurrentColor = "Yellow";
-        break;
-      case "Yellow": 
-        RobotContainer.m_leds.setDefaultCommand(new RunPurple());
-        CurrentColor = "Purple";
-        break;
-    }
-  }
+  // public void SwitchColor(){
+  //   switch (CurrentColor){
+  //     case "":
+  //       RobotContainer.m_leds.setDefaultCommand(new RunPurple());
+  //       CurrentColor = "Purple";
+  //       break;
+  //     case "Purple":
+  //       RobotContainer.m_leds.setDefaultCommand(new RunYellow());
+  //       CurrentColor = "Yellow";
+  //       break;
+  //     case "Yellow": 
+  //       RobotContainer.m_leds.setDefaultCommand(new RunPurple());
+  //       CurrentColor = "Purple";
+  //       break;
+  //   }
+  // }
 
   @Override
   public void periodic() {// This method will be called once per scheduler run

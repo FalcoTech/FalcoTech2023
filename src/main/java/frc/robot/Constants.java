@@ -17,10 +17,10 @@ public final class Constants {
   }
   
   public static class DriveTrainConstants { 
-    public static final int LEFTFRONTMOTOR_ID = 41;
-    public static final int LEFTBACKMOTOR_ID = 43;
-    public static final int RIGHTFRONTMOTOR_ID = 40;
-    public static final int RIGHTBACKMOTOR_ID = 42;
+    public static final int LEFTFRONTMOTOR_ID = 40;
+    public static final int LEFTBACKMOTOR_ID = 41;
+    public static final int RIGHTFRONTMOTOR_ID = 42;
+    public static final int RIGHTBACKMOTOR_ID = 43;
     
     //DRIVE Encoder Values
     public static final int ENCODERFULLREV = 4096; //TBD

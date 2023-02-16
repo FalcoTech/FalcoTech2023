@@ -60,7 +60,7 @@ public class DriveTrain extends SubsystemBase {
   private final ADIS16470_IMU gyro = new ADIS16470_IMU();
 
   //Field Image
-  private final Field2d m_field2d = new Field2d();
+  public final Field2d m_field2d = new Field2d();
 
   //Compressor/Solenoids Inits
   private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
@@ -110,10 +110,10 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void ArcadeDrive(double speed, double rotation){   //Our main ArcadeDrive command. 
-    m_drive.arcadeDrive(speed, -rotation, false);
+    m_drive.arcadeDrive(speed, rotation, false);
   } 
   public void ArcadeDrive(double speed, double rotation, boolean isSquaredInputs){   //Secondary ArcadeDrive command. Has additional bool for squared inputs to increase controlability at low speeds. 
-    m_drive.arcadeDrive(speed, -rotation, isSquaredInputs);
+    m_drive.arcadeDrive(speed, rotation, isSquaredInputs);
   } 
 
   public void ShiftLowGear(){
@@ -157,9 +157,6 @@ public class DriveTrain extends SubsystemBase {
   } //Check to see if these values return the same when driving straight
   public double GetRightEncoderVelocity(){
     return -EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()) * 10;
-  }
-  public WheelSpeeds GetWheelSpeeds(){
-    return new WheelSpeeds(GetLeftEncoderVelocity(), GetRightEncoderVelocity());
   }
 
   public double EncoderTicksToMeters(double currentEncoderValue){

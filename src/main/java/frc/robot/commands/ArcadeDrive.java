@@ -26,9 +26,9 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     double PilotLeftX = RobotContainer.Pilot.getLeftX();
-    double PilotLeftY = RobotContainer.Pilot.getLeftY() * -1;
+    double PilotLeftY = RobotContainer.Pilot.getLeftY();
     double PilotRightX = RobotContainer.Pilot.getRightX();
-    double PilotRightY = RobotContainer.Pilot.getRightY() * -1;
+    double PilotRightY = RobotContainer.Pilot.getRightY();
 
     double PilotRightTrigger = RobotContainer.Pilot.getRightTriggerAxis();
     double PilotLeftTrigger = RobotContainer.Pilot.getLeftTriggerAxis();
