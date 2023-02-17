@@ -41,8 +41,8 @@ public final class Constants {
     public static final int LEFTARMMOTOR_ID = 10; //tbd
     public static final int RIGHTARMMOTOR_ID = 11; //tbd
  
-    public static final int EXTENDERSOLFORWARD_ID = 2; //tbd
-    public static final int EXTENDERSOLREVERSE_ID = 3; //tbd
+    // public static final int EXTENDERSOLFORWARD_ID = 2; //tbd
+    // public static final int EXTENDERSOLREVERSE_ID = 3; //tbd
   }
 
   public static class IntakeConstants{

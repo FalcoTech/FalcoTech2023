@@ -56,8 +56,8 @@ public class DriveTrain extends SubsystemBase {
   public final Field2d m_field2d = new Field2d();
 
   //Compressor/Solenoids Inits
-  private final Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
-  private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveTrainConstants.SHIFTSOLFORWARD_ID, DriveTrainConstants.SHIFTSOLREVERSE_ID);
+  private final Compressor compressor = new Compressor(2, PneumaticsModuleType.REVPH);
+  private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, DriveTrainConstants.SHIFTSOLFORWARD_ID, DriveTrainConstants.SHIFTSOLREVERSE_ID);
 
   //Booleans/Strings
   public String arcadeDriveSpeed = "default"; 
@@ -102,6 +102,7 @@ public class DriveTrain extends SubsystemBase {
     
     m_field2d.setRobotPose(GetPose2d());
     
+    compressor.enableDigital();
   }
 
   public void ArcadeDrive(double speed, double rotation){   //Our main ArcadeDrive command. 
