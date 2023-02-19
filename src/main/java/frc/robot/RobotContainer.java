@@ -50,7 +50,7 @@ public class RobotContainer {
     RamseteAutoBuilder autoRouteBuilder = new RamseteAutoBuilder(
       m_drivetrain::GetPose2d, 
       m_drivetrain::ResetOdometry, 
-      new RamseteController(2, .7),//TBD PLEASE CHANGE ME
+      new RamseteController(2, .7),//TBD
       DriveTrainConstants.DRIVEKINEMATICS, 
       new SimpleMotorFeedforward(
         1, 

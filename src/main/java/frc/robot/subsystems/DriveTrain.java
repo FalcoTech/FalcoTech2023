@@ -101,8 +101,10 @@ public class DriveTrain extends SubsystemBase {
       EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
     
     m_field2d.setRobotPose(GetPose2d());
-    
     compressor.enableDigital();
+
+    SmartDashboard.putNumber("Left Encoder Value", leftFrontMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Right Encoder Value", rightFrontMotor.getSelectedSensorPosition());
   }
 
   public void ArcadeDrive(double speed, double rotation){   //Our main ArcadeDrive command. 

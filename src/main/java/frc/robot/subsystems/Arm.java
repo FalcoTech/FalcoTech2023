@@ -9,6 +9,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -19,20 +20,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
-  // private final CANSparkMax armLeftMotor = new CANSparkMax(ArmConstants.LEFTARMMOTOR_ID, MotorType.kBrushless);
-  // private final CANSparkMax armRightMotor = new CANSparkMax(ArmConstants.RIGHTARMMOTOR_ID, MotorType.kBrushless);
-  // private final Encoder armEncoder = new Encoder(0, 1);
+  private final CANSparkMax armLeftMotor = new CANSparkMax(ArmConstants.LEFTARMMOTOR_ID, MotorType.kBrushless);
+  private final CANSparkMax armRightMotor = new CANSparkMax(ArmConstants.RIGHTARMMOTOR_ID, MotorType.kBrushless);
+  private final Encoder armEncoder = new Encoder(0, 1);
 
+  private final PIDController armPID = new PIDController(0, 0, 0);
 
-  // private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
 
   /** Creates a new Arm. */
   public Arm() {
-    // armRightMotor.follow(armLeftMotor, true);
+    armRightMotor.follow(armLeftMotor, true);
     
-    // armLeftMotor.setIdleMode(IdleMode.kBrake);
-    // armRightMotor.setIdleMode(IdleMode.kBrake);
+    armLeftMotor.setIdleMode(IdleMode.kBrake);
+    armRightMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void MoveArm(double speed){
@@ -44,11 +45,14 @@ public class Arm extends SubsystemBase {
   //     extenderSolenoid.set(Value.kForward); //WILL PROBABLY NEED CHANGED
   //   }
   }
-  
   public void RetractArm(){
   //   extenderSolenoid.set(Value.kReverse); //WILL PROBBABLY NEED CHANGED
   }
   
+  public void SetArmToStation(){
+    armLeftMotor.set(armPID.calculate(armEncoder.getDistance(), 90));
+  }
+
 
   @Override
   public void periodic() {

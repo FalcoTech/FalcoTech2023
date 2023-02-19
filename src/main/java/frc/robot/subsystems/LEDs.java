@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.sql.Time;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -30,8 +32,6 @@ public class LEDs extends SubsystemBase {
     testLEDStrip.setLength(LEDBuffer.getLength());
     testLEDStrip.setData(LEDBuffer);
     testLEDStrip.start();
-  
-
   }
 
   public void ChangeLEDColorRGB(int red, int green, int blue){
@@ -48,12 +48,6 @@ public class LEDs extends SubsystemBase {
     testLEDStrip.setData(LEDBuffer);
   }
 
-  public void LEDsOff(){
-    for (var i = 0; i < LEDBuffer.getLength(); i++){
-      LEDBuffer.setHSV(i, 0, 0, 0);
-    } 
-    testLEDStrip.setData(LEDBuffer);
-  }
 
   public void Rainbow(){
     for (var i = 0; i < LEDBuffer.getLength(); i++) {
@@ -66,11 +60,19 @@ public class LEDs extends SubsystemBase {
   }
   public void Purple(){
     ChangeLEDColorHSV(295);
-  
   }
   public void Yellow(){
     ChangeLEDColorHSV(60);
   }
+  public void BlinkGreen(){
+    for (var i = 0; i < LEDBuffer.getLength(); i++) {
+      LEDBuffer.setHSV(i, 130, 255, 128);
+      if (i>7){
+        LEDBuffer.setHSV(i-6, 0, 0, 0);
+      }
+    }
+  }
+
 
   public void SwitchHPColor(){
     switch (CurrentColor){

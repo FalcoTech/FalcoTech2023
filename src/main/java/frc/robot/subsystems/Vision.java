@@ -20,7 +20,8 @@ public class Vision extends SubsystemBase {
   //USB Camera(s)
   private final CvSink m_cvSink;
   
-  
+  public static double tx = LimelightHelpers.getTX("");
+
 
   public Vision() {
     CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
@@ -29,8 +30,9 @@ public class Vision extends SubsystemBase {
   }
 
 
+
   @Override
   public void periodic() { // This method will be called once per scheduler run
-
+    
   }
 }
