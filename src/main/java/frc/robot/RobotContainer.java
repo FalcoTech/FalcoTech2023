@@ -43,7 +43,7 @@ public class RobotContainer {
   public static final XboxController CoPilot = new XboxController(OperatorConstants.COPILOTCONTROLLERPORT);
 
   //Smartdashboard choosers/data
-  SendableChooser<CommandBase> m_autoChooser = new SendableChooser<>();
+  SendableChooser<Command> m_autoChooser = new SendableChooser<>();
   
   //Pathplanner
   public Command ramAutoBuilder(String pathName, HashMap<String, Command> eventMap){
@@ -53,12 +53,12 @@ public class RobotContainer {
       new RamseteController(2, .7),//TBD
       DriveTrainConstants.DRIVEKINEMATICS, 
       new SimpleMotorFeedforward(
-        1, 
-        1,
-        1
+        0.01, //these 
+        0.12035, //change
+        2.0318 //speed
       ), 
       m_drivetrain::GetWheelSpeeds, 
-      new PIDConstants(1, 0, 0),
+      new PIDConstants(0.000000001, 0, 0), //this prob doesn't idk
       m_drivetrain::TankDriveVolts,
       eventMap,
       m_drivetrain
@@ -99,9 +99,10 @@ public class RobotContainer {
 
   private void configureSmartdashboard(){
     //Smartdashboard AutoChooser options
-    m_autoChooser.setDefaultOption("No Auto Selected", null);
+    m_autoChooser.setDefaultOption("No Auto Selected", new InstantCommand());
     m_autoChooser.addOption("Left Side Cube Run", null);
     m_autoChooser.addOption("Right Side Cube Run", null);
+    m_autoChooser.addOption("First Test Path", ramAutoBuilder("First Test", AutoConstants.AUTOEVENTMAP));
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
 
   }
