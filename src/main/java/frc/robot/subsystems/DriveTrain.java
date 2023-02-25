@@ -87,7 +87,7 @@ public class DriveTrain extends SubsystemBase {
     m_odometry = new DifferentialDriveOdometry(
       GetRotation2d(), 
       EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
-      EncoderTicksToMeters(-rightFrontMotor.getSelectedSensorPosition()));
+      EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
     
     SmartDashboard.putData(m_field2d);
   }
@@ -104,8 +104,9 @@ public class DriveTrain extends SubsystemBase {
     compressor.enableDigital();
 
     SmartDashboard.putNumber("Left Encoder Value", leftFrontMotor.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Right Encoder Value", -rightFrontMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Right Encoder Value", rightFrontMotor.getSelectedSensorPosition());
   }
+
 
   public void ArcadeDrive(double speed, double rotation){   //Our main ArcadeDrive command. 
     m_drive.arcadeDrive(speed, rotation, false);
@@ -118,12 +119,14 @@ public class DriveTrain extends SubsystemBase {
     m_rightDriveGroup.setVoltage(rightVolts);
   }
 
+
   public void ShiftLowGear(){
     shiftSolenoid.set(Value.kForward);
   }
   public void ShiftHighGear(){
     shiftSolenoid.set(Value.kReverse);
   }
+
 
   public void BrakeDriveMotors(){
     leftFrontMotor.setNeutralMode(NeutralMode.Brake);
@@ -147,12 +150,14 @@ public class DriveTrain extends SubsystemBase {
     }
   } 
 
+
   public double EncoderTicksToMeters(double currentEncoderValue){
     double motorRotations = (double) currentEncoderValue / DriveTrainConstants.ENCODERFULLREV; //FULLREV may need to be 2048 idk
     double wheelRotations = motorRotations / DriveTrainConstants.GEARRATIO_LOW; //Only in low gear
     double positionMeters = wheelRotations * DriveTrainConstants.WHEELCIRCUMFERENCEMETERS;
     return positionMeters;
   }
+
 
   public Rotation2d GetRotation2d(){
     return Rotation2d.fromDegrees(gyro.getAngle());
@@ -161,15 +166,17 @@ public class DriveTrain extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
 
+
   public double GetLeftEncoderVelocity(){
-    return EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition());
+    return EncoderTicksToMeters(leftFrontMotor.getSelectedSensorVelocity());
   }
   public double GetRightEncoderVelocity(){
-    return EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition());
+    return EncoderTicksToMeters(rightFrontMotor.getSelectedSensorVelocity());
   }
   public DifferentialDriveWheelSpeeds GetWheelSpeeds(){
     return new DifferentialDriveWheelSpeeds(GetLeftEncoderVelocity(), GetRightEncoderVelocity());
   }
+
 
   public void ResetEncoders(){
     leftFrontMotor.setSelectedSensorPosition(0);

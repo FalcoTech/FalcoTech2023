@@ -22,7 +22,6 @@ import frc.robot.Constants.ArmConstants;
 public class Arm extends SubsystemBase {
   private final CANSparkMax armLeftMotor = new CANSparkMax(ArmConstants.LEFTARMMOTOR_ID, MotorType.kBrushless);
   private final CANSparkMax armRightMotor = new CANSparkMax(ArmConstants.RIGHTARMMOTOR_ID, MotorType.kBrushless);
-  private final Encoder armEncoder = new Encoder(0, 1);
 
   private final PIDController armPID = new PIDController(0, 0, 0);
 
@@ -50,7 +49,7 @@ public class Arm extends SubsystemBase {
   }
   
   public void SetArmToStation(){
-    armLeftMotor.set(armPID.calculate(armEncoder.getDistance(), 90));
+    
   }
 
 
