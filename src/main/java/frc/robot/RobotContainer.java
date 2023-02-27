@@ -46,6 +46,7 @@ public class RobotContainer {
   SendableChooser<Command> m_autoChooser = new SendableChooser<>();
   
   //Pathplanner
+  public static HashMap<Command, String> autoMap = new HashMap<>();
   public Command ramAutoBuilder(String pathName, HashMap<String, Command> eventMap){
     RamseteAutoBuilder pathBuilder = new RamseteAutoBuilder(
       m_drivetrain::GetPose2d, 
@@ -53,12 +54,12 @@ public class RobotContainer {
       new RamseteController(2, .7),//TBD
       DriveTrainConstants.DRIVEKINEMATICS, 
       new SimpleMotorFeedforward(
-        0.01, //these 
-        0.12035, //change
-        2.0318 //speed
+        0.032, //these 
+        .48, //change
+        .07 //speed
       ), 
       m_drivetrain::GetWheelSpeeds, 
-      new PIDConstants(0.000000001, 0, 0), //this prob doesn't idk
+      new PIDConstants(.033, 0, 0), //this prob doesn't idk
       m_drivetrain::TankDriveVolts,
       eventMap,
       true,
@@ -66,6 +67,7 @@ public class RobotContainer {
     );
     List<PathPlannerTrajectory> pathToFollow = PathPlanner.loadPathGroup(pathName, PathPlanner.getConstraintsFromPath(pathName));
     final Command auto = pathBuilder.fullAuto(pathToFollow);
+    autoMap.put(auto, pathName);
     return auto;
   }
   
@@ -77,6 +79,7 @@ public class RobotContainer {
     configureSmartdashboard(); 
 
     PathPlannerServer.startServer(5811); 
+    autoMap.put(new InstantCommand(), "Nothing");
 
     //Set Default Commands
     m_drivetrain.setDefaultCommand(new ArcadeDrive()); 
