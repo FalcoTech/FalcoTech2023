@@ -6,34 +6,21 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPRamseteCommand;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveTrainConstants;
 
@@ -65,6 +52,10 @@ public class DriveTrain extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrain(){
+    leftFrontMotor.configFactoryDefault();
+    leftBackMotor.configFactoryDefault();
+    rightFrontMotor.configFactoryDefault();
+    rightBackMotor.configFactoryDefault();
 
     //Motor follows
     leftBackMotor.follow(leftFrontMotor);
@@ -73,14 +64,8 @@ public class DriveTrain extends SubsystemBase {
     m_leftDriveGroup.setInverted(true); //Invert one side drive motors
     CoastDriveMotors(); //Start coasting drive motors
   
-    leftFrontMotor.configFactoryDefault();
-    leftBackMotor.configFactoryDefault();
-    rightFrontMotor.configFactoryDefault();
-    rightBackMotor.configFactoryDefault();
-
     leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     rightFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-    
     ResetEncoders();
     ResetGyro();
 
@@ -88,7 +73,7 @@ public class DriveTrain extends SubsystemBase {
       GetRotation2d(), 
       EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
       EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
-    
+     
     SmartDashboard.putData(m_field2d);
   }
 
@@ -98,7 +83,7 @@ public class DriveTrain extends SubsystemBase {
     m_odometry.update(
       GetRotation2d(), 
       EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
-      EncoderTicksToMeters(-rightFrontMotor.getSelectedSensorPosition()));
+      EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition()));
     
     m_field2d.setRobotPose(GetPose2d());
     compressor.enableDigital();
@@ -117,6 +102,7 @@ public class DriveTrain extends SubsystemBase {
   public void TankDriveVolts(double leftVolts, double rightVolts){
     m_leftDriveGroup.setVoltage(leftVolts);
     m_rightDriveGroup.setVoltage(rightVolts);
+    m_drive.feed();
   }
 
 
@@ -150,15 +136,6 @@ public class DriveTrain extends SubsystemBase {
     }
   } 
 
-
-  public double EncoderTicksToMeters(double currentEncoderValue){
-    double motorRotations = (double) currentEncoderValue / DriveTrainConstants.ENCODERFULLREV; //FULLREV may need to be 2048 idk
-    double wheelRotations = motorRotations / DriveTrainConstants.GEARRATIO_LOW; //Only in low gear
-    double positionMeters = wheelRotations * DriveTrainConstants.WHEELCIRCUMFERENCEMETERS;
-    return positionMeters;
-  }
-
-
   public Rotation2d GetRotation2d(){
     return Rotation2d.fromDegrees(gyro.getAngle());
   }
@@ -166,12 +143,17 @@ public class DriveTrain extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
 
-
+  public double EncoderTicksToMeters(double currentEncoderValue){
+    double motorRotations = (double)currentEncoderValue / DriveTrainConstants.ENCODERFULLREV; 
+    double wheelRotations = motorRotations / DriveTrainConstants.GEARRATIO_LOW; //Only in low gear
+    double positionMeters = wheelRotations * DriveTrainConstants.WHEELCIRCUMFERENCEMETERS;
+    return positionMeters;
+  }
   public double GetLeftEncoderVelocity(){
-    return EncoderTicksToMeters(leftFrontMotor.getSelectedSensorVelocity());
+    return EncoderTicksToMeters(leftFrontMotor.getSelectedSensorVelocity()) * 10;
   }
   public double GetRightEncoderVelocity(){
-    return EncoderTicksToMeters(rightFrontMotor.getSelectedSensorVelocity());
+    return EncoderTicksToMeters(rightFrontMotor.getSelectedSensorVelocity()) * 10;
   }
   public DifferentialDriveWheelSpeeds GetWheelSpeeds(){
     return new DifferentialDriveWheelSpeeds(GetLeftEncoderVelocity(), GetRightEncoderVelocity());

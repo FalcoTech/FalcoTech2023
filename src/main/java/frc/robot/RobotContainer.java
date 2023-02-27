@@ -47,7 +47,7 @@ public class RobotContainer {
   
   //Pathplanner
   public Command ramAutoBuilder(String pathName, HashMap<String, Command> eventMap){
-    RamseteAutoBuilder autoRouteBuilder = new RamseteAutoBuilder(
+    RamseteAutoBuilder pathBuilder = new RamseteAutoBuilder(
       m_drivetrain::GetPose2d, 
       m_drivetrain::ResetOdometry, 
       new RamseteController(2, .7),//TBD
@@ -61,10 +61,11 @@ public class RobotContainer {
       new PIDConstants(0.000000001, 0, 0), //this prob doesn't idk
       m_drivetrain::TankDriveVolts,
       eventMap,
+      true,
       m_drivetrain
     );
     List<PathPlannerTrajectory> pathToFollow = PathPlanner.loadPathGroup(pathName, PathPlanner.getConstraintsFromPath(pathName));
-    final Command auto = autoRouteBuilder.fullAuto(pathToFollow);
+    final Command auto = pathBuilder.fullAuto(pathToFollow);
     return auto;
   }
   

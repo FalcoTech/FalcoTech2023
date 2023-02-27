@@ -23,7 +23,7 @@ public final class Constants {
     public static final int RIGHTBACKMOTOR_ID = 43;
     
     //DRIVE Encoder Values
-    public static final int ENCODERFULLREV = 2048; //TBD, 4096?
+    public static final int ENCODERFULLREV = 2048; 
     public static final double GEARRATIO_LOW = 16.36;
     public static final double GEARRATIO_HIGH = 7.95; 
 
