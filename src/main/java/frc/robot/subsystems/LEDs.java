@@ -64,14 +64,7 @@ public class LEDs extends SubsystemBase {
   public void Yellow(){
     ChangeLEDColorHSV(60);
   }
-  public void BlinkGreen(){
-    for (var i = 0; i < LEDBuffer.getLength(); i++) {
-      LEDBuffer.setHSV(i, 130, 255, 128);
-      if (i>7){
-        LEDBuffer.setHSV(i-6, 0, 0, 0);
-      }
-    }
-  }
+
 
 
   public void SwitchHPColor(){

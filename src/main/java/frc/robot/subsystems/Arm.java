@@ -54,6 +54,10 @@ public class Arm extends SubsystemBase {
   public double getRightEncoderPosition(){
     return rightArmEncoder.getDistance();
   }
+  public void resetArmEncoders(){
+    leftArmEncoder.reset();
+    rightArmEncoder.reset();
+  }
 
   @Override
   public void periodic() {
