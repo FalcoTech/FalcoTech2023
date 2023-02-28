@@ -4,39 +4,39 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
-  private final CANSparkMax armLeftMotor = new CANSparkMax(ArmConstants.LEFTARMMOTOR_ID, MotorType.kBrushless);
-  private final CANSparkMax armRightMotor = new CANSparkMax(ArmConstants.RIGHTARMMOTOR_ID, MotorType.kBrushless);
+  private final VictorSPX leftArmMotor = new VictorSPX(ArmConstants.LEFTARMMOTOR_ID);
+  private final VictorSPX rightArmMotor = new VictorSPX(ArmConstants.RIGHTARMMOTOR_ID);
 
-  private final PIDController armPID = new PIDController(0, 0, 0);
+  private final Encoder leftArmEncoder = new Encoder(1, 2);
+  private final Encoder rightArmEncoder = new Encoder(3, 4);
 
-
+  // private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, tbd, tbd);
 
   /** Creates a new Arm. */
   public Arm() {
-    armRightMotor.follow(armLeftMotor, true);
+    rightArmMotor.follow(leftArmMotor);
+    rightArmMotor.setInverted(true);
     
-    armLeftMotor.setIdleMode(IdleMode.kBrake);
-    armRightMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void MoveArm(double speed){
-  //   armLeftMotor.set(speed);
+    leftArmMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void ExtendArm(){
@@ -47,11 +47,13 @@ public class Arm extends SubsystemBase {
   public void RetractArm(){
   //   extenderSolenoid.set(Value.kReverse); //WILL PROBBABLY NEED CHANGED
   }
-  
-  public void SetArmToStation(){
-    
-  }
 
+  public double getLeftEncoderPosition(){
+    return leftArmEncoder.getDistance();
+  }
+  public double getRightEncoderPosition(){
+    return rightArmEncoder.getDistance();
+  }
 
   @Override
   public void periodic() {

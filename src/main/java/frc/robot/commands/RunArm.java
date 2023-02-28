@@ -23,7 +23,7 @@ public class RunArm extends CommandBase {
   public void execute() {
     double CoPilotLeftY = RobotContainer.CoPilot.getLeftY();
 
-    // RobotContainer.m_arm.MoveArm(CoPilotLeftY * .5);
+    RobotContainer.m_arm.MoveArm(CoPilotLeftY * .5);
   }
 
   // Called once the command ends or is interrupted.
@@ -33,6 +33,7 @@ public class RunArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // return RobotContainer.m_arm.getLeftEncoderPosition() > some value;
     return false;
   }
 }
