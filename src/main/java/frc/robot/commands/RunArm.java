@@ -22,13 +22,18 @@ public class RunArm extends CommandBase {
   @Override
   public void execute() {
     double CoPilotLeftY = RobotContainer.CoPilot.getLeftY();
+    double CoPilotRightY = RobotContainer.CoPilot.getRightY();
 
-    RobotContainer.m_arm.MoveArm(CoPilotLeftY * .5);
+    RobotContainer.m_arm.MoveArm(CoPilotRightY);
+    // RobotContainer.m_arm.MoveArm(CoPilotRightY);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    //set default command back to user control
+  }
 
   // Returns true when the command should end.
   @Override
