@@ -34,6 +34,7 @@ public class Arm extends SubsystemBase {
     rightArmMotor.follow(leftArmMotor);
     //START EXTENDER NOT EXTENDED
     ResetArmEncoder();
+    ResetWristEncoder();
   }
 
   public void MoveArm(double speed){
@@ -49,12 +50,22 @@ public class Arm extends SubsystemBase {
   public void RetractArm(){
   }
 
-  
+
   public double GetArmEncoderPosition(){
     return armEncoder.getDistance();
   }
+  public double GetWristEncoderPosition(){
+    return wristEncoder.getDistance();
+  }
   public void ResetArmEncoder(){
     armEncoder.reset();
+  }
+  public void ResetWristEncoder(){
+    wristEncoder.reset();
+  }
+  public void ResetArmAndWristEncoder(){
+    ResetArmEncoder();
+    ResetWristEncoder();
   }
 
   @Override
