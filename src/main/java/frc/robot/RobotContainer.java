@@ -8,6 +8,9 @@ package frc.robot;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.LEDs.*;
+import frc.robot.commands.armpresets.HumanPlayerPosArm;
+import frc.robot.commands.armpresets.ScoringPosArm;
+import frc.robot.commands.armpresets.ZeroArm;
 import frc.robot.subsystems.*;
 
 import java.util.HashMap;
@@ -26,7 +29,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 
@@ -97,6 +99,10 @@ public class RobotContainer {
     //Copilot Controls
     new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
     new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
+
+    new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
+    new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ScoringPosArm())));
+    new Trigger(() -> CoPilot.getXButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerPosArm())));
 
   }
 

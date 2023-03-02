@@ -22,28 +22,24 @@ import frc.robot.Constants.ArmConstants;
 public class Arm extends SubsystemBase {
   private final VictorSPX leftArmMotor = new VictorSPX(ArmConstants.LEFTARMMOTOR_ID);
   private final VictorSPX rightArmMotor = new VictorSPX(ArmConstants.RIGHTARMMOTOR_ID);
-  // private final Encoder armEncoder = new Encoder(1, 2);
+  private final Encoder armEncoder = new Encoder(ArmConstants.ARMENCODER_A, ArmConstants.ARMENCODER_B);
 
   private final VictorSPX wristMotor = new VictorSPX(ArmConstants.WRISTMOTOR_ID);
-  // private final Encoder wristEncoder = new Encoder(3, 4);
+  private final Encoder wristEncoder = new Encoder(ArmConstants.WRISTENCODER_A, ArmConstants.WRISTENCODER_B);
 
-  // private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, tbd, tbd);
+  private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
 
   public Arm() {
     rightArmMotor.follow(leftArmMotor);
     //START EXTENDER NOT EXTENDED
-    
+    ResetArmEncoder();
   }
 
   public void MoveArm(double speed){
     leftArmMotor.set(ControlMode.PercentOutput, speed);
   }
-  public void MoveArm(double leftSpeed, double rightSpeed){
-    leftArmMotor.set(ControlMode.PercentOutput, leftSpeed);
-    rightArmMotor.set(ControlMode.PercentOutput, rightSpeed);
-    
-  }
+
 
   public void ExtendArm(){
   //   if (armEncoder.getDistance() > 135 /*ENCODER NOT BETWEEN THIS VALUE AND THIS VALUE*/){
@@ -54,13 +50,12 @@ public class Arm extends SubsystemBase {
   //   extenderSolenoid.set(Value.kReverse); //WILL PROBBABLY NEED CHANGED
   }
 
-
-  // public double getRightEncoderPosition(){
-  //   return armEncoder.getDistance();
-  // }
-  // public void resetArmEncoder(){
-  //   armEncoder.reset();
-  // }
+  public double GetArmEncoderPosition(){
+    return armEncoder.getDistance();
+  }
+  public void ResetArmEncoder(){
+    armEncoder.reset();
+  }
 
   @Override
   public void periodic() {

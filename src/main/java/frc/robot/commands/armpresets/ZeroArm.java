@@ -2,14 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.armpresets;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.commands.RunArm;
 
-public class RunArm extends CommandBase {
-  /** Creates a new RunArm. */
-  public RunArm() {
+public class ZeroArm extends CommandBase {
+  public static double ArmEncoderPos = RobotContainer.m_arm.GetArmEncoderPosition();
+  
+  /** Creates a new ZeroArm. */
+  public ZeroArm() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_arm);
   }
@@ -21,23 +25,23 @@ public class RunArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double CoPilotRightY = RobotContainer.CoPilot.getRightY();
-
-    RobotContainer.m_arm.MoveArm(CoPilotRightY);
-    // RobotContainer.m_arm.MoveArm(CoPilotRightY);
-
+    if (ArmEncoderPos >= -10){
+      RobotContainer.m_arm.MoveArm(.5);
+    } else if (ArmEncoderPos <= 10){
+      RobotContainer.m_arm.MoveArm(-.5);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //set default command back to user control
+    RobotContainer.m_arm.MoveArm(0);
+    RobotContainer.m_arm.setDefaultCommand(new RunArm()); //set default command back to user control when command finishes
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return RobotContainer.m_arm.getLeftEncoderPosition() > some value;
-    return false;
+    return (ArmEncoderPos >= -10 && ArmEncoderPos <= 10);
   }
 }

@@ -2,14 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.armpresets;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class RunArm extends CommandBase {
-  /** Creates a new RunArm. */
-  public RunArm() {
+public class HumanPlayerPosArm extends CommandBase {
+  /** Creates a new HumanPlayerPosArm. */
+  public HumanPlayerPosArm() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_arm);
   }
@@ -20,24 +20,15 @@ public class RunArm extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    double CoPilotRightY = RobotContainer.CoPilot.getRightY();
-
-    RobotContainer.m_arm.MoveArm(CoPilotRightY);
-    // RobotContainer.m_arm.MoveArm(CoPilotRightY);
-
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    //set default command back to user control
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return RobotContainer.m_arm.getLeftEncoderPosition() > some value;
     return false;
   }
 }
