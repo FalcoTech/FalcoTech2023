@@ -41,6 +41,8 @@ public final class Constants {
     public static final int LEFTARMMOTOR_ID = 10; //tbd
     public static final int RIGHTARMMOTOR_ID = 11; //tbd
  
+    public static final int WRISTMOTOR_ID = 12;
+
     // public static final int EXTENDERSOLFORWARD_ID = 2; //tbd
     // public static final int EXTENDERSOLREVERSE_ID = 3; //tbd
   }
@@ -49,11 +51,6 @@ public final class Constants {
     public static final int INTAKELEFTMOTOR_ID = 20;
     public static final int INTAKERIGHTMOTOR_ID = 21;
   }
-
-  public static class WristConstants{
-    public static final int WRISTMOTOR_ID = 30;
-  }
-
 
 
   public static class VisionConstants{

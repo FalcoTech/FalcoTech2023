@@ -34,7 +34,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static DriveTrain m_drivetrain = new DriveTrain();
   public static Arm m_arm = new Arm();
-  public static Wrist m_wrist = new Wrist();
   public static Intake m_intake = new Intake();
   public static Vision m_vision = new Vision();
   public static LEDs m_leds = new LEDs();

@@ -22,16 +22,17 @@ import frc.robot.Constants.ArmConstants;
 public class Arm extends SubsystemBase {
   private final VictorSPX leftArmMotor = new VictorSPX(ArmConstants.LEFTARMMOTOR_ID);
   private final VictorSPX rightArmMotor = new VictorSPX(ArmConstants.RIGHTARMMOTOR_ID);
+  // private final Encoder armEncoder = new Encoder(1, 2);
 
-  // private final Encoder leftArmEncoder = new Encoder(1, 2);
-  // private final Encoder rightArmEncoder = new Encoder(3, 4);
+  private final VictorSPX wristMotor = new VictorSPX(ArmConstants.WRISTMOTOR_ID);
+  // private final Encoder wristEncoder = new Encoder(3, 4);
 
   // private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, tbd, tbd);
 
-  /** Creates a new Arm. */
+
   public Arm() {
     rightArmMotor.follow(leftArmMotor);
-    // rightArmMotor.setInverted(true);
+    //START EXTENDER NOT EXTENDED
     
   }
 
@@ -53,15 +54,12 @@ public class Arm extends SubsystemBase {
   //   extenderSolenoid.set(Value.kReverse); //WILL PROBBABLY NEED CHANGED
   }
 
-  // public double getLeftEncoderPosition(){
-  //   return leftArmEncoder.getDistance();
-  // }
+
   // public double getRightEncoderPosition(){
-  //   return rightArmEncoder.getDistance();
+  //   return armEncoder.getDistance();
   // }
-  // public void resetArmEncoders(){
-  //   leftArmEncoder.reset();
-  //   rightArmEncoder.reset();
+  // public void resetArmEncoder(){
+  //   armEncoder.reset();
   // }
 
   @Override
