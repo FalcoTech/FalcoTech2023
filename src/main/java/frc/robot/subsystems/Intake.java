@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,7 +23,6 @@ public class Intake extends SubsystemBase {
   public void RunIntake(double speed){
     leftIntakeMotor.set(speed);
   }
-
 
   @Override
   public void periodic() {
