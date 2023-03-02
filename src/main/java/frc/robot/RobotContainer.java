@@ -103,6 +103,7 @@ public class RobotContainer {
     new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
     new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ScoringPosArm())));
     new Trigger(() -> CoPilot.getXButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerPosArm())));
+    
 
   }
 

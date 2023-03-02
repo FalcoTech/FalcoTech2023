@@ -39,17 +39,17 @@ public class Arm extends SubsystemBase {
   public void MoveArm(double speed){
     leftArmMotor.set(ControlMode.PercentOutput, speed);
   }
+  public void MoveWrist(double speed){
+    wristMotor.set(ControlMode.PercentOutput, speed);
+  }
 
 
   public void ExtendArm(){
-  //   if (armEncoder.getDistance() > 135 /*ENCODER NOT BETWEEN THIS VALUE AND THIS VALUE*/){
-  //     extenderSolenoid.set(Value.kForward); //WILL PROBABLY NEED CHANGED
-  //   }
   }
   public void RetractArm(){
-  //   extenderSolenoid.set(Value.kReverse); //WILL PROBBABLY NEED CHANGED
   }
 
+  
   public double GetArmEncoderPosition(){
     return armEncoder.getDistance();
   }

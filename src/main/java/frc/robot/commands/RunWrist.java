@@ -4,37 +4,29 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class RunIntake extends CommandBase {
-  /** Creates a new RunIntake. */
-  public RunIntake() {
+public class RunWrist extends CommandBase {
+  /** Creates a new RunWrist. */
+  public RunWrist() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double CoPilotLeftTrigger = RobotContainer.CoPilot.getLeftTriggerAxis();
-    double CoPilotRightTrigger = RobotContainer.CoPilot.getRightTriggerAxis();
-    double IntakeTriggers = (CoPilotRightTrigger - CoPilotLeftTrigger) * .5; //multiply by negative if running wrong way
-
-    RobotContainer.m_intake.RunIntake(IntakeTriggers);
+    double CoPilotLeftX = RobotContainer.CoPilot.getLeftX();
+    RobotContainer.m_arm.MoveWrist(CoPilotLeftX * .5); //reverse sign for the other way
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
