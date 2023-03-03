@@ -36,6 +36,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static DriveTrain m_drivetrain = new DriveTrain();
   public static Arm m_arm = new Arm();
+  public static Wrist m_wrist = new Wrist();
   public static Intake m_intake = new Intake();
   public static Vision m_vision = new Vision();
   public static LEDs m_leds = new LEDs();
@@ -86,7 +87,7 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(new ArcadeDrive()); 
     m_arm.setDefaultCommand(new RunArm());
     m_intake.setDefaultCommand(new RunIntake());
-    // m_leds.setDefaultCommand(new RunRainbow());
+    m_leds.setDefaultCommand(new RunRainbow());
   }
 
   /** Use this method to define your trigger->command mappings. Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@lin CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}. */
@@ -97,6 +98,8 @@ public class RobotContainer {
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
   
     //Copilot Controls
+    new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
+
     new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
     new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
 

@@ -47,7 +47,7 @@ public class DriveTrain extends SubsystemBase {
   private final DoubleSolenoid shiftSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, DriveTrainConstants.SHIFTSOLFORWARD_ID, DriveTrainConstants.SHIFTSOLREVERSE_ID);
 
   //Booleans/Strings
-  public String arcadeDriveSpeed = "default"; 
+  public boolean m_slowDriveSpeed = false; 
 
 
   /** Creates a new DriveTrain. */
@@ -127,12 +127,12 @@ public class DriveTrain extends SubsystemBase {
     rightBackMotor.setNeutralMode(NeutralMode.Coast);
   }  
   public void ToggleArcadeDriveSpeed(){
-    if (arcadeDriveSpeed == "default"){
-      arcadeDriveSpeed = "slow";
-      BrakeDriveMotors();
-    } else{
-      arcadeDriveSpeed = "default";
+    if (m_slowDriveSpeed){
+      m_slowDriveSpeed = false;
       CoastDriveMotors();
+    } else { 
+      m_slowDriveSpeed = true;
+      BrakeDriveMotors();
     }
   } 
 

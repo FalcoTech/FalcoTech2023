@@ -17,7 +17,7 @@ public class Intake extends SubsystemBase {
   
   /** Creates a new Intake. */
   public Intake() {
-    rightIntakeMotor.follow(leftIntakeMotor, false); //change "false" to "true" if one set of motors need to be inverted. 
+    rightIntakeMotor.follow(leftIntakeMotor, true); //change "true" to "false" if one set of motors do not need to be inverted. 
   }
 
   public void RunIntake(double speed){

@@ -11,7 +11,9 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.VisionConstants;
+import frc.robot.commands.LEDs.BlinkGreen;
 import frc.robot.util.LimelightHelpers;
 
 
@@ -19,9 +21,6 @@ import frc.robot.util.LimelightHelpers;
 public class Vision extends SubsystemBase {
   //USB Camera(s)
   private final CvSink m_cvSink;
-  
-  public static double tx = LimelightHelpers.getTX("");
-
 
   public Vision() {
     CameraServer.startAutomaticCapture(); //start USB camera on RoboRIO
@@ -33,6 +32,8 @@ public class Vision extends SubsystemBase {
 
   @Override
   public void periodic() { // This method will be called once per scheduler run
-    
+    if (LimelightHelpers.getTV("") && RobotContainer.m_leds.getDefaultCommand() != new BlinkGreen()){
+      RobotContainer.m_leds.setDefaultCommand(new BlinkGreen());
+    } 
   }
 }

@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.LEDs;
 
-public class RunPurple extends CommandBase {
+public class SolidPurple extends CommandBase {
   /** Creates a new RainbowCommand. */
-  public RunPurple() {
+  public SolidPurple() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_leds);
   }
@@ -24,9 +24,7 @@ public class RunPurple extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (limelight has no target){
-    
-  // }
+
   }
 
   // Called once the command ends or is interrupted.

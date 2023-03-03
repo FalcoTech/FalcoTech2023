@@ -14,8 +14,9 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.LEDsConstants;
 import frc.robot.commands.*;
-import frc.robot.commands.LEDs.RunPurple;
-import frc.robot.commands.LEDs.RunYellow;
+import frc.robot.commands.LEDs.SolidPurple;
+import frc.robot.commands.LEDs.RunRainbow;
+import frc.robot.commands.LEDs.SolidYellow;
 
 public class LEDs extends SubsystemBase {
   // private final AddressableLED LEDStripLeft = new AddressableLED(LEDsConstants.LEDSTRIPLEFTPORT);
@@ -23,9 +24,7 @@ public class LEDs extends SubsystemBase {
   private final AddressableLED testLEDStrip = new AddressableLED(9);
   private final AddressableLEDBuffer LEDBuffer = new AddressableLEDBuffer(LEDsConstants.LEDSTRIPLENGTH);
 
-
   private int rainbowFirstPixelHue;
-  private String CurrentColor = "";
 
   /** Creates a new LEDs. */
   public LEDs() {
@@ -40,10 +39,15 @@ public class LEDs extends SubsystemBase {
     } 
     testLEDStrip.setData(LEDBuffer);
   }
-  
   public void ChangeLEDColorHSV(int hue){
     for (var i = 0; i < LEDBuffer.getLength(); i++){
       LEDBuffer.setHSV(i, hue, 255, 128);
+    } 
+    testLEDStrip.setData(LEDBuffer);
+  }
+  public void LEDOff(){
+    for (var i = 0; i < LEDBuffer.getLength(); i++){
+      LEDBuffer.setHSV(i, 0, 0, 0);
     } 
     testLEDStrip.setData(LEDBuffer);
   }
@@ -65,27 +69,28 @@ public class LEDs extends SubsystemBase {
     ChangeLEDColorHSV(60);
   }
 
-
+  public void Green(){
+    ChangeLEDColorHSV(130);
+  }
+  public void Red(){
+    ChangeLEDColorHSV(1);
+  }
 
   public void SwitchHPColor(){
-    switch (CurrentColor){
-      case "":
-        RobotContainer.m_leds.setDefaultCommand(new RunPurple());
-        CurrentColor = "Purple";
-        break;
-      case "Purple":
-        RobotContainer.m_leds.setDefaultCommand(new RunYellow());
-        CurrentColor = "Yellow";
-        break;
-      case "Yellow": 
-        RobotContainer.m_leds.setDefaultCommand(new RunPurple());
-        CurrentColor = "Purple";
-        break;
+    if (RobotContainer.m_leds.getDefaultCommand() == new RunRainbow()){ //if rainbow
+      RobotContainer.m_leds.setDefaultCommand(new SolidPurple()); //default to purple
+    } else if (RobotContainer.m_leds.getDefaultCommand() == new SolidPurple()){ //if purple
+      RobotContainer.m_leds.setDefaultCommand(new SolidYellow());
+    } else if (RobotContainer.m_leds.getDefaultCommand() == new SolidYellow()){ //if yellow
+      RobotContainer.m_leds.setDefaultCommand(new SolidPurple());
+    } else{
+      RobotContainer.m_leds.setDefaultCommand(new RunRainbow());
     }
   }
 
+
   @Override
   public void periodic() {// This method will be called once per scheduler run
-  
+    
   }
 }

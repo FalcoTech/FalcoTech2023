@@ -24,9 +24,6 @@ public class Arm extends SubsystemBase {
   private final VictorSPX rightArmMotor = new VictorSPX(ArmConstants.RIGHTARMMOTOR_ID);
   private final Encoder armEncoder = new Encoder(ArmConstants.ARMENCODER_A, ArmConstants.ARMENCODER_B);
 
-  private final VictorSPX wristMotor = new VictorSPX(ArmConstants.WRISTMOTOR_ID);
-  private final Encoder wristEncoder = new Encoder(ArmConstants.WRISTENCODER_A, ArmConstants.WRISTENCODER_B);
-
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
 
@@ -34,39 +31,29 @@ public class Arm extends SubsystemBase {
     rightArmMotor.follow(leftArmMotor);
     //START EXTENDER NOT EXTENDED
     ResetArmEncoder();
-    ResetWristEncoder();
   }
 
   public void MoveArm(double speed){
     leftArmMotor.set(ControlMode.PercentOutput, speed);
   }
-  public void MoveWrist(double speed){
-    wristMotor.set(ControlMode.PercentOutput, speed);
-  }
+
 
 
   public void ExtendArm(){
+
   }
   public void RetractArm(){
+  
   }
 
 
   public double GetArmEncoderPosition(){
     return armEncoder.getDistance();
   }
-  public double GetWristEncoderPosition(){
-    return wristEncoder.getDistance();
-  }
   public void ResetArmEncoder(){
     armEncoder.reset();
   }
-  public void ResetWristEncoder(){
-    wristEncoder.reset();
-  }
-  public void ResetArmAndWristEncoder(){
-    ResetArmEncoder();
-    ResetWristEncoder();
-  }
+
 
   @Override
   public void periodic() {

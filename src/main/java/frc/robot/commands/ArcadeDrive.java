@@ -34,7 +34,7 @@ public class ArcadeDrive extends CommandBase {
     double PilotLeftTrigger = RobotContainer.Pilot.getLeftTriggerAxis();
     double slowTriggerTurn = PilotRightX + (PilotRightTrigger*.1) - (PilotLeftTrigger*.1);
 
-    if (RobotContainer.m_drivetrain.arcadeDriveSpeed == "slow"){
+    if (RobotContainer.m_drivetrain.m_slowDriveSpeed){
       RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .15, (PilotRightX*.15) + (PilotRightTrigger*.1) - (PilotLeftTrigger*.1));
     } else{
       RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY, slowTriggerTurn);
