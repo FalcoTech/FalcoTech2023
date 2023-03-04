@@ -26,6 +26,7 @@ public class Arm extends SubsystemBase {
 
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
+  public final PIDController armPID = new PIDController(0, 0, 0);
 
   public Arm() {
     rightArmMotor.follow(leftArmMotor);
@@ -37,6 +38,9 @@ public class Arm extends SubsystemBase {
     leftArmMotor.set(ControlMode.PercentOutput, speed);
   }
 
+  public void SetArmToPoint(double setpoint){
+    leftArmMotor.set(ControlMode.PercentOutput, armPID.calculate(GetArmEncoderPosition(), setpoint));
+  }
 
 
   public void ExtendArm(){

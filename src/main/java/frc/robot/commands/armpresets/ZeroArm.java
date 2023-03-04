@@ -9,6 +9,7 @@ import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.commands.RunArm;
 
+
 public class ZeroArm extends CommandBase {
   public static double ArmEncoderPos = RobotContainer.m_arm.GetArmEncoderPosition();
   
@@ -25,13 +26,7 @@ public class ZeroArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (ArmEncoderPos >= -10){
-      RobotContainer.m_arm.MoveArm(.5);
-    } else if (ArmEncoderPos <= 10){
-      RobotContainer.m_arm.MoveArm(-.5);
-    } else {
-      RobotContainer.m_arm.MoveArm(0);
-    }
+    RobotContainer.m_arm.SetArmToPoint(0);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +39,6 @@ public class ZeroArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (ArmEncoderPos >= -10 && ArmEncoderPos <= 10);
+    return RobotContainer.m_arm.armPID.atSetpoint();
   }
 }
