@@ -12,6 +12,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -27,6 +28,7 @@ public class Arm extends SubsystemBase {
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
   public final PIDController armPID = new PIDController(0, 0, 0);
+
 
   public Arm() {
     rightArmMotor.follow(leftArmMotor);
@@ -44,7 +46,7 @@ public class Arm extends SubsystemBase {
 
 
   public void ExtendArm(){
-
+    
   }
   public void RetractArm(){
   
