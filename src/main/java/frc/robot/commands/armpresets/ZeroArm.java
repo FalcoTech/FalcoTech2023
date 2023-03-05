@@ -26,9 +26,9 @@ public class ZeroArm extends CommandBase {
   @Override
   public void execute() {
     if (ArmEncoderPos >= -10){
-      RobotContainer.m_arm.MoveArm(.5);
+      RobotContainer.m_arm.MoveArm(.2);
     } else if (ArmEncoderPos <= 10){
-      RobotContainer.m_arm.MoveArm(-.5);
+      RobotContainer.m_arm.MoveArm(-.2);
     } else {
       RobotContainer.m_arm.MoveArm(0);
     }
