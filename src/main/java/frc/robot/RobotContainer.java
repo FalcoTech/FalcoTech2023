@@ -87,7 +87,6 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(new ArcadeDrive()); 
     m_arm.setDefaultCommand(new RunArm());
     m_intake.setDefaultCommand(new RunIntake());
-    m_leds.setDefaultCommand(new RunRainbow());
   }
 
   /** Use this method to define your trigger->command mappings. Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@lin CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}. */

@@ -8,84 +8,56 @@ import java.sql.Time;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.LEDsConstants;
 import frc.robot.commands.*;
-import frc.robot.commands.LEDs.SolidPurple;
-import frc.robot.commands.LEDs.RunRainbow;
-import frc.robot.commands.LEDs.SolidYellow;
+
 
 public class LEDs extends SubsystemBase {
-  // private final AddressableLED LEDStripLeft = new AddressableLED(LEDsConstants.LEDSTRIPLEFTPORT);
-  // private final AddressableLED LEDStripRight = new AddressableLED(LEDsConstants.LEDSTRIPRIGHTPORT);
-  private final AddressableLED testLEDStrip = new AddressableLED(9);
-  private final AddressableLEDBuffer LEDBuffer = new AddressableLEDBuffer(LEDsConstants.LEDSTRIPLENGTH);
-
-  private int rainbowFirstPixelHue;
+  private final PWMSparkMax blinkin = new PWMSparkMax(9);
 
   /** Creates a new LEDs. */
   public LEDs() {
-    testLEDStrip.setLength(LEDBuffer.getLength());
-    testLEDStrip.setData(LEDBuffer);
-    testLEDStrip.start();
+    Rainbow(); //start in rainbow
   }
-
-  public void ChangeLEDColorRGB(int red, int green, int blue){
-    for (var i = 0; i < LEDBuffer.getLength(); i++){
-      LEDBuffer.setRGB(i, red, green, blue);
-    } 
-    testLEDStrip.setData(LEDBuffer);
-  }
-  public void ChangeLEDColorHSV(int hue){
-    for (var i = 0; i < LEDBuffer.getLength(); i++){
-      LEDBuffer.setHSV(i, hue, 255, 128);
-    } 
-    testLEDStrip.setData(LEDBuffer);
-  }
-  public void LEDOff(){
-    for (var i = 0; i < LEDBuffer.getLength(); i++){
-      LEDBuffer.setHSV(i, 0, 0, 0);
-    } 
-    testLEDStrip.setData(LEDBuffer);
-  }
-
-
+  
   public void Rainbow(){
-    for (var i = 0; i < LEDBuffer.getLength(); i++) {
-      final var hue = (rainbowFirstPixelHue + (i * 180 / LEDBuffer.getLength())) % 180;
-      LEDBuffer.setHSV(i, hue, 255, 128);
-    }
-    rainbowFirstPixelHue += 3;
-    rainbowFirstPixelHue %= 180;
-    testLEDStrip.setData(LEDBuffer);
+    blinkin.set(-.97); //RAINBOW: .99 rainbow palette, .97 party palette (PARTY MMODEDE YEAEAEAAAAHW WOAOOWOWOOOOOOOOOOOOOOOOOOOOOO ABABY LET'SD GOOOIIOOOO)
   }
+
   public void Purple(){
-    ChangeLEDColorHSV(295);
+    blinkin.set(.91);
   }
   public void Yellow(){
-    ChangeLEDColorHSV(60);
+    blinkin.set(.69);
   }
 
   public void Green(){
-    ChangeLEDColorHSV(130);
+    blinkin.set(.73);
+  }
+  public void BlinkGreen(){
+    blinkin.set(.05); //COLOR 1: .03 slow, .05 medium, .07 fast. 
   }
   public void Red(){
-    ChangeLEDColorHSV(1);
+    blinkin.set(.61);
+  }
+  public void BlinkRed(){
+    blinkin.set(-.25); //COLOR 2: .23 slow, .25 medium, .27 fast
   }
 
   public void SwitchHPColor(){
-    if (RobotContainer.m_leds.getDefaultCommand() == new RunRainbow()){ //if rainbow
-      RobotContainer.m_leds.setDefaultCommand(new SolidPurple()); //default to purple
-    } else if (RobotContainer.m_leds.getDefaultCommand() == new SolidPurple()){ //if purple
-      RobotContainer.m_leds.setDefaultCommand(new SolidYellow());
-    } else if (RobotContainer.m_leds.getDefaultCommand() == new SolidYellow()){ //if yellow
-      RobotContainer.m_leds.setDefaultCommand(new SolidPurple());
-    } else{
-      RobotContainer.m_leds.setDefaultCommand(new RunRainbow());
+    if (blinkin.get() == -.97){
+      Purple();
+    } else if (blinkin.get() == .91){
+      Yellow();
+    } else if (blinkin.get() == .69){
+      Purple();
     }
+    
   }
 
 
