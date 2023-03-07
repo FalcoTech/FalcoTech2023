@@ -20,49 +20,48 @@ import frc.robot.commands.*;
 public class LEDs extends SubsystemBase {
   private final PWMSparkMax blinkin = new PWMSparkMax(9);
 
+
   /** Creates a new LEDs. */
   public LEDs() {
     Rainbow(); //start in rainbow
   }
   
   public void Rainbow(){
-    blinkin.set(-.97); //RAINBOW: .99 rainbow palette, .97 party palette (PARTY MMODEDE YEAEAEAAAAHW WOAOOWOWOOOOOOOOOOOOOOOOOOOOOO ABABY LET'SD GOOOIIOOOO)
+    blinkin.set(LEDsConstants.RAINBOW_PARTYPAL); //RAINBOW: .99 rainbow palette, .97 party palette (PARTY MMODEDE YEAEAEAAAAHW WOAOOWOWOOOOOOOOOOOOOOOOOOOOOO ABABY LET'SD GOOOIIOOOO)
   }
 
   public void Purple(){
-    blinkin.set(.91);
+    blinkin.set(LEDsConstants.PURPLE);
   }
   public void Yellow(){
-    blinkin.set(.69);
+    blinkin.set(LEDsConstants.YELLOW);
   }
 
   public void Green(){
-    blinkin.set(.73);
+    blinkin.set(LEDsConstants.GREEN);
   }
   public void BlinkGreen(){
-    blinkin.set(.05); //COLOR 1: .03 slow, .05 medium, .07 fast. 
+    blinkin.set(LEDsConstants.BLINKGREEN); //COLOR 1: .03 slow, .05 medium, .07 fast. 
   }
   public void Red(){
-    blinkin.set(.61);
+    blinkin.set(LEDsConstants.RED);
   }
   public void BlinkRed(){
-    blinkin.set(-.25); //COLOR 2: .23 slow, .25 medium, .27 fast
+    blinkin.set(LEDsConstants.BLINKRED); //COLOR 2: .23 slow, .25 medium, .27 fast
   }
 
   public void SwitchHPColor(){
-    if (blinkin.get() == -.97){
+    if (blinkin.get() == LEDsConstants.RAINBOW_RAINBOWPAL || blinkin.get() == LEDsConstants.RAINBOW_PARTYPAL){
       Purple();
-    } else if (blinkin.get() == .91){
+    } else if (blinkin.get() == LEDsConstants.PURPLE){
       Yellow();
-    } else if (blinkin.get() == .69){
+    } else if (blinkin.get() == LEDsConstants.YELLOW){
       Purple();
     }
-    
   }
 
 
   @Override
   public void periodic() {// This method will be called once per scheduler run
-    
   }
 }

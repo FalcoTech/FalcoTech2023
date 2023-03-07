@@ -32,7 +32,7 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() { // This method will be called once per scheduler run
     if (LimelightHelpers.getTV("")){
-      RobotContainer.m_leds.Green();
+      RobotContainer.m_leds.BlinkGreen();
     } 
   }
 }

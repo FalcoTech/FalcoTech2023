@@ -63,9 +63,15 @@ public final class Constants {
   }
 
   public static class LEDsConstants{
-    public static final int LEDSTRIPLEFTPORT = 8;
-    public static final int LEDSTRIPRIGHTPORT = 9;
-    public static final int LEDSTRIPLENGTH = 180; //maybe 90 each, maybe 180 each? idk lol
+    public static double RAINBOW_RAINBOWPAL = -.99;
+    public static double RAINBOW_PARTYPAL = -.97;
+    public static double PURPLE = .91;
+    public static double YELLOW = .69;
+    public static double GREEN = .73;
+    public static double BLINKGREEN = .05;
+    public static double RED = .61;
+    public static double BLINKRED = -.25;
+    
   }
 
   public static class AutoConstants {

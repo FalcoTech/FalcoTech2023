@@ -21,7 +21,7 @@ public class RunWrist extends CommandBase {
   @Override
   public void execute() {
     double CoPilotLeftX = RobotContainer.CoPilot.getLeftX();
-    RobotContainer.m_wrist.TurnWrist(CoPilotLeftX * .3); //reverse sign for the other way
+    RobotContainer.m_wrist.TurnWrist(CoPilotLeftX * .15); //reverse sign for the other way
   }
 
   // Called once the command ends or is interrupted.
