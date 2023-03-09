@@ -5,7 +5,6 @@
 package frc.robot.commands.armpresets;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.commands.RunArm;
 
@@ -38,6 +37,6 @@ public class ZeroArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ((RobotContainer.m_arm.GetArmEncoderPosition() > -50 && RobotContainer.m_arm.GetArmEncoderPosition() < 50) || (RobotContainer.CoPilot.getRightY() > .9 || RobotContainer.CoPilot.getRightY() < -.9));
+    return ((RobotContainer.m_arm.GetArmEncoderPosition() > -25 && RobotContainer.m_arm.GetArmEncoderPosition() < 25) || (RobotContainer.CoPilot.getRightY() > .9 || RobotContainer.CoPilot.getRightY() < -.9));
   }
 }
