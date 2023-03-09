@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Intake;
 
 public class RunIntake extends CommandBase {
   /** Creates a new RunIntake. */
@@ -28,7 +29,7 @@ public class RunIntake extends CommandBase {
     double CoPilotRightTrigger = RobotContainer.CoPilot.getRightTriggerAxis();
     double IntakeTriggers = (CoPilotRightTrigger - CoPilotLeftTrigger); 
 
-    RobotContainer.m_intake.RunIntake(IntakeTriggers * .5); //multiply by negative if running wrong way
+    RobotContainer.m_intake.RunIntake(IntakeTriggers); //multiply by negative if running wrong way
   }
 
   // Called once the command ends or is interrupted.

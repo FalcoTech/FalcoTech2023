@@ -12,6 +12,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -24,7 +25,9 @@ public class Arm extends SubsystemBase {
   private final VictorSPX rightArmMotor = new VictorSPX(ArmConstants.RIGHTARMMOTOR_ID);
   private final Encoder armEncoder = new Encoder(ArmConstants.ARMENCODER_A, ArmConstants.ARMENCODER_B);
 
-  private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
+  private final PIDController m_armPID = new PIDController(.5, 0, 0);
+
+  // private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
 
   public Arm() {
@@ -37,6 +40,18 @@ public class Arm extends SubsystemBase {
     leftArmMotor.set(ControlMode.PercentOutput, speed);
   }
 
+  public double GetArmEncoderPosition(){
+    return armEncoder.getDistance();
+  }
+
+  public void SetArmToPoint(double setpoint){
+    leftArmMotor.set(ControlMode.PercentOutput, m_armPID.calculate(GetArmEncoderPosition(), setpoint));
+  }
+
+  public void ResetArmEncoder(){
+    armEncoder.reset();
+  }
+
 
 
   public void ExtendArm(){
@@ -45,15 +60,6 @@ public class Arm extends SubsystemBase {
   public void RetractArm(){
   
   }
-
-
-  public double GetArmEncoderPosition(){
-    return armEncoder.getDistance();
-  }
-  public void ResetArmEncoder(){
-    armEncoder.reset();
-  }
-
 
   @Override
   public void periodic() {

@@ -40,15 +40,17 @@ public final class Constants {
   public static class ArmConstants{
     public static final int LEFTARMMOTOR_ID = 10; 
     public static final int RIGHTARMMOTOR_ID = 11; 
-    public static final int ARMENCODER_A = 1; //tbd
-    public static final int ARMENCODER_B = 2; //tbd
-
-    public static final int WRISTMOTOR_ID = 12;
-    public static final int WRISTENCODER_A = 3;//tbd
-    public static final int WRISTENCODER_B = 4;//tbd
-    
+    public static final int ARMENCODER_A = 2; //tbd
+    public static final int ARMENCODER_B = 3; //tbd
     public static final int EXTENDERSOLFORWARD_ID = 2; //tbd
     public static final int EXTENDERSOLREVERSE_ID = 3; //tbd
+  }
+  public static class WristConsatnts{
+    public static final int WRISTMOTOR_ID = 12;
+    public static final int WRISTENCODER_A = 0;//tbd
+    public static final int WRISTENCODER_B = 1;//tbd
+    
+    
   }
 
   public static class IntakeConstants{

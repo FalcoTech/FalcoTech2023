@@ -11,6 +11,7 @@ public class RunWrist extends CommandBase {
   /** Creates a new RunWrist. */
   public RunWrist() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.m_wrist);
   }
 
   // Called when the command is initially scheduled.
@@ -21,7 +22,7 @@ public class RunWrist extends CommandBase {
   @Override
   public void execute() {
     double CoPilotLeftX = RobotContainer.CoPilot.getLeftX();
-    RobotContainer.m_wrist.TurnWrist(CoPilotLeftX * .15); //reverse sign for the other way
+    RobotContainer.m_wrist.TurnWrist(CoPilotLeftX); //reverse sign for the other way
 
   }
 

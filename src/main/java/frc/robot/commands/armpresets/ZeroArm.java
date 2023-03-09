@@ -25,13 +25,7 @@ public class ZeroArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (ArmEncoderPos >= -10){
-      RobotContainer.m_arm.MoveArm(.2);
-    } else if (ArmEncoderPos <= 10){
-      RobotContainer.m_arm.MoveArm(-.2);
-    } else {
-      RobotContainer.m_arm.MoveArm(0);
-    }
+    RobotContainer.m_arm.SetArmToPoint(0);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +38,6 @@ public class ZeroArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (ArmEncoderPos >= -10 && ArmEncoderPos <= 10);
+    return ((RobotContainer.m_arm.GetArmEncoderPosition() > -50 && RobotContainer.m_arm.GetArmEncoderPosition() < 50) || (RobotContainer.CoPilot.getRightY() > .9 || RobotContainer.CoPilot.getRightY() < -.9));
   }
 }

@@ -8,12 +8,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.WristConsatnts;
 
 public class Wrist extends SubsystemBase {
-  private final VictorSPX wristMotor = new VictorSPX(ArmConstants.WRISTMOTOR_ID);
-  private final Encoder wristEncoder = new Encoder(ArmConstants.WRISTENCODER_A, ArmConstants.WRISTENCODER_B);
+  private final VictorSPX wristMotor = new VictorSPX(WristConsatnts.WRISTMOTOR_ID);
+  private final Encoder wristEncoder = new Encoder(WristConsatnts.WRISTENCODER_A, WristConsatnts.WRISTENCODER_B);
 
 
   /** Creates a new Wrist. */
@@ -35,5 +37,6 @@ public class Wrist extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Wrist Encoder Value:", GetWristEncoderPosition());
   }
 }
