@@ -27,7 +27,7 @@ public class RunIntake extends CommandBase {
   public void execute() {
     double CoPilotLeftTrigger = RobotContainer.CoPilot.getLeftTriggerAxis();
     double CoPilotRightTrigger = RobotContainer.CoPilot.getRightTriggerAxis();
-    double IntakeTriggers = (CoPilotRightTrigger - CoPilotLeftTrigger); 
+    double IntakeTriggers = (CoPilotLeftTrigger - CoPilotRightTrigger); 
 
     RobotContainer.m_intake.RunIntake(IntakeTriggers); //multiply by negative if running wrong way
   }

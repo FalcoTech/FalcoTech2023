@@ -22,7 +22,7 @@ public class RunWrist extends CommandBase {
   @Override
   public void execute() {
     double CoPilotLeftX = RobotContainer.CoPilot.getLeftX();
-    RobotContainer.m_wrist.TurnWrist(CoPilotLeftX); //reverse sign for the other way
+    RobotContainer.m_wrist.TurnWrist(-CoPilotLeftX); //reverse sign for the other way
 
   }
 
@@ -33,6 +33,6 @@ public class RunWrist extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return RobotContainer.CoPilot.getYButton();
   }
 }
