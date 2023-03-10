@@ -42,8 +42,8 @@ public final class Constants {
     public static final int RIGHTARMMOTOR_ID = 11; 
     public static final int ARMENCODER_A = 2; //tbd
     public static final int ARMENCODER_B = 3; //tbd
-    public static final int EXTENDERSOLFORWARD_ID = 2; //tbd
-    public static final int EXTENDERSOLREVERSE_ID = 3; //tbd
+    public static final int EXTENDERSOLFORWARD_ID = 14; 
+    public static final int EXTENDERSOLREVERSE_ID = 15; 
   }
   public static class WristConsatnts{
     public static final int WRISTMOTOR_ID = 12;

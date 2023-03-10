@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -18,6 +19,8 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
     rightIntakeMotor.follow(leftIntakeMotor, true); //change "true" to "false" if one set of motors do not need to be inverted. 
+    leftIntakeMotor.setIdleMode(IdleMode.kBrake);
+    rightIntakeMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void RunIntake(double speed){

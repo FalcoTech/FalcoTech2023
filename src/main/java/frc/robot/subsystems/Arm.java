@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator.Validity;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -17,6 +18,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
@@ -27,7 +29,7 @@ public class Arm extends SubsystemBase {
 
   private final PIDController m_armPID = new PIDController(.5, 0, 0);
 
-  // private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
+  private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
 
   public Arm() {
@@ -55,10 +57,10 @@ public class Arm extends SubsystemBase {
 
 
   public void ExtendArm(){
-
+    extenderSolenoid.set(Value.kForward);
   }
   public void RetractArm(){
-  
+    extenderSolenoid.set(Value.kReverse);
   }
 
   @Override
