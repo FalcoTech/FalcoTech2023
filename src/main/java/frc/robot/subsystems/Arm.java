@@ -57,10 +57,10 @@ public class Arm extends SubsystemBase {
 
 
   public void ExtendArm(){
-    extenderSolenoid.set(Value.kForward);
+    extenderSolenoid.set(Value.kReverse);
   }
   public void RetractArm(){
-    extenderSolenoid.set(Value.kReverse);
+    extenderSolenoid.set(Value.kForward);
   }
 
   @Override

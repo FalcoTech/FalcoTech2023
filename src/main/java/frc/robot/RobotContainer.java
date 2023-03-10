@@ -10,6 +10,7 @@ import frc.robot.commands.*;
 import frc.robot.commands.armpresets.HumanPlayerPosArm;
 import frc.robot.commands.armpresets.ScoringPosArm;
 import frc.robot.commands.armpresets.ZeroArm;
+import frc.robot.commands.wristpresets.ZeroWrist;
 import frc.robot.subsystems.*;
 
 import java.util.HashMap;
@@ -97,15 +98,16 @@ public class RobotContainer {
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
   
     //Copilot Controls
-    new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
+    // new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
+    new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_wrist.ResetWristEncoder()));
 
     new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
     new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
 
-    new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
+    // new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
     new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ScoringPosArm())));
     new Trigger(() -> CoPilot.getXButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerPosArm())));
-    new Trigger(() -> CoPilot.getYButton()).onTrue(new InstantCommand(() -> m_arm.ResetArmEncoder()));
+    new Trigger(() -> CoPilot.getYButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new ZeroWrist())));
 
   }
 
