@@ -7,10 +7,8 @@ package frc.robot;
 //Import all (*) constants, subsystems and commands
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
-import frc.robot.commands.armpresets.HumanPlayerPosArm;
-import frc.robot.commands.armpresets.ScoringPosArm;
-import frc.robot.commands.armpresets.ZeroArm;
-import frc.robot.commands.wristpresets.ZeroWrist;
+import frc.robot.commands.armpresets.*;
+import frc.robot.commands.wristpresets.*;
 import frc.robot.subsystems.*;
 
 import java.util.HashMap;

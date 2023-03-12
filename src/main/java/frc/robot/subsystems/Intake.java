@@ -18,7 +18,7 @@ public class Intake extends SubsystemBase {
   
   /** Creates a new Intake. */
   public Intake() {
-    rightIntakeMotor.follow(leftIntakeMotor, true); //change "true" to "false" if one set of motors do not need to be inverted. 
+    rightIntakeMotor.follow(leftIntakeMotor, true);
     leftIntakeMotor.setIdleMode(IdleMode.kBrake);
     rightIntakeMotor.setIdleMode(IdleMode.kBrake);
   }

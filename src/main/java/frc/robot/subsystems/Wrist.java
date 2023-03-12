@@ -7,8 +7,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.WristConsatnts;
@@ -17,6 +19,7 @@ public class Wrist extends SubsystemBase {
   private final VictorSPX wristMotor = new VictorSPX(WristConsatnts.WRISTMOTOR_ID);
   private final Encoder wristEncoder = new Encoder(WristConsatnts.WRISTENCODER_A, WristConsatnts.WRISTENCODER_B);
 
+  private final PIDController m_wristPID = new PIDController(.5, 0, 0);
 
   /** Creates a new Wrist. */
   public Wrist() {
@@ -26,7 +29,11 @@ public class Wrist extends SubsystemBase {
   public void TurnWrist(double speed){
     wristMotor.set(ControlMode.PercentOutput, speed);
   }
-  
+  public void SetWristToPoint(double setpoint){
+    wristMotor.set(ControlMode.PercentOutput, m_wristPID.calculate(GetWristEncoderPosition(), setpoint));
+  }
+
+
   public double GetWristEncoderPosition(){
     return wristEncoder.getDistance();
   }

@@ -139,6 +139,20 @@ public class DriveTrain extends SubsystemBase {
   public Rotation2d GetRotation2d(){
     return Rotation2d.fromDegrees(gyro.getAngle());
   }
+
+  public double GetGyroYaw(){
+    return gyro.getAngle();
+  }
+  public double GetGyroPitch(){
+    return gyro.getYComplementaryAngle();
+  }
+  public double GetGyroPitchAcceleration(){
+    return gyro.getAccelY();
+  }
+  public double GetGyroRoll(){
+    return gyro.getXComplementaryAngle();
+  }
+
   public Pose2d GetPose2d(){
     return m_odometry.getPoseMeters();
   }

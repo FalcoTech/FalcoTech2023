@@ -34,6 +34,7 @@ public class ZeroWrist extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.m_wrist.TurnWrist(0);
+    RobotContainer.m_wrist.ResetWristEncoder();
     RobotContainer.m_wrist.setDefaultCommand(new RunWrist());
   }
 
