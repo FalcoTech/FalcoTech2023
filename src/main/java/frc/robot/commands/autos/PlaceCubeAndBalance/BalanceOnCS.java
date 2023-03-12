@@ -2,14 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.autos.PlaceAndBalance;
+package frc.robot.commands.autos.PlaceCubeAndBalance;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class BalanceOnChargeStation extends CommandBase {
+public class BalanceOnCS extends CommandBase {
   /** Creates a new BalanceOnChargeStation. */
-  public BalanceOnChargeStation() {
+  public BalanceOnCS() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_drivetrain);
   }
@@ -26,19 +26,23 @@ public class BalanceOnChargeStation extends CommandBase {
     double RobotPitch = RobotContainer.m_drivetrain.GetGyroPitch();
     double RobotPitchAccel = RobotContainer.m_drivetrain.GetGyroPitchAcceleration();
 
-    if (RobotPitch > 3 && RobotPitchAccel > 5){
-      RobotContainer.m_drivetrain.ArcadeDrive(-.05, 0);
-    } else if (RobotPitch < -3 && RobotPitchAccel < -5){
-      RobotContainer.m_drivetrain.ArcadeDrive(.05, 0);
-    } else if (RobotPitchAccel > 5){
-      RobotContainer.m_drivetrain.ArcadeDrive(.025, 0);
-    } else if (RobotPitchAccel < -5){
-      RobotContainer.m_drivetrain.ArcadeDrive(.025, 0);
+    if (RobotPitch > 3){
+      if (RobotPitchAccel < -5){
+        RobotContainer.m_drivetrain.ArcadeDrive(.02, 0);
+      } else{
+        RobotContainer.m_drivetrain.ArcadeDrive(-.05, 0);
+      } 
+    } else if (RobotPitch < -3){
+      if (RobotPitchAccel > 5){
+        RobotContainer.m_drivetrain.ArcadeDrive(-.02, 0);
+      } else{
+        RobotContainer.m_drivetrain.ArcadeDrive(.05, 0);
+      }
     } else{
       RobotContainer.m_drivetrain.ArcadeDrive(0, 0);
-      
     }
   }
+    
 
   // Called once the command ends or is interrupted.
   @Override
