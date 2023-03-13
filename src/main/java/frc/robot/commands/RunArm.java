@@ -36,5 +36,6 @@ public class RunArm extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
+    //return smart button presses
   }
 }

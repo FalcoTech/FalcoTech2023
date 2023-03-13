@@ -57,6 +57,8 @@ public class LEDs extends SubsystemBase {
       Yellow();
     } else if (blinkin.get() == LEDsConstants.YELLOW){
       Purple();
+    } else{
+      Purple();
     }
   }
 
