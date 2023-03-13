@@ -41,19 +41,16 @@ public class Arm extends SubsystemBase {
   public void MoveArm(double speed){
     leftArmMotor.set(ControlMode.PercentOutput, speed);
   }
+  public void SetArmToPoint(double currentpos, double setpoint){
+    leftArmMotor.set(ControlMode.PercentOutput, m_armPID.calculate(currentpos, setpoint));
+  }
 
   public double GetArmEncoderPosition(){
     return armEncoder.getDistance();
   }
-
-  public void SetArmToPoint(double setpoint){
-    leftArmMotor.set(ControlMode.PercentOutput, m_armPID.calculate(GetArmEncoderPosition(), setpoint));
-  }
-
   public void ResetArmEncoder(){
     armEncoder.reset();
   }
-
 
 
   public void ExtendArm(){
@@ -66,5 +63,8 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if (GetArmEncoderPosition() < 150 && GetArmEncoderPosition() > -200){
+      RetractArm();
+    }
   }
 }

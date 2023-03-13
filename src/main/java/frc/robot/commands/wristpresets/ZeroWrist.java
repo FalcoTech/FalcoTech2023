@@ -24,7 +24,7 @@ public class ZeroWrist extends CommandBase {
   public void execute() {
     double WristEncoderPos = RobotContainer.m_wrist.GetWristEncoderPosition();
 
-    if (WristEncoderPos > 20){
+    if (WristEncoderPos > 30){
       RobotContainer.m_wrist.TurnWrist(.7); //REVERSE IF WRONG WAY. TURN WRIST TO MIDDLE TO CHECK IF IT'S THE WRONG WAY BEFORE LETTING IT RUN FULLY
     }
   }
@@ -34,13 +34,13 @@ public class ZeroWrist extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.m_wrist.TurnWrist(0);
-    RobotContainer.m_wrist.ResetWristEncoder();
+    // RobotContainer.m_wrist.ResetWristEncoder();
     RobotContainer.m_wrist.setDefaultCommand(new RunWrist());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (RobotContainer.m_wrist.GetWristEncoderPosition() > -20 && RobotContainer.m_wrist.GetWristEncoderPosition() < 20);
+    return (RobotContainer.m_wrist.GetWristEncoderPosition() > -20 && RobotContainer.m_wrist.GetWristEncoderPosition() < 20) || RobotContainer.CoPilot.getLeftX() > .9 || RobotContainer.CoPilot.getLeftX() < -.9 || RobotContainer.m_wrist.GetWristMotorOutputVoltage() > 10;
   }
 }

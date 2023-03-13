@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.WristConsatnts;
+import frc.robot.commands.RunWrist;
 
 public class Wrist extends SubsystemBase {
   private final VictorSPX wristMotor = new VictorSPX(WristConsatnts.WRISTMOTOR_ID);
@@ -29,10 +31,12 @@ public class Wrist extends SubsystemBase {
   public void TurnWrist(double speed){
     wristMotor.set(ControlMode.PercentOutput, speed);
   }
-  public void SetWristToPoint(double setpoint){
-    wristMotor.set(ControlMode.PercentOutput, m_wristPID.calculate(GetWristEncoderPosition(), setpoint));
+  public void StopWrist(){
+    wristMotor.set(ControlMode.PercentOutput, 0);
   }
-
+  public void SetWristToPoint(double currentpos, double setpoint){
+    wristMotor.set(ControlMode.PercentOutput, m_wristPID.calculate(currentpos, setpoint));
+  }
 
   public double GetWristEncoderPosition(){
     return wristEncoder.getDistance();
@@ -41,11 +45,24 @@ public class Wrist extends SubsystemBase {
     wristEncoder.reset();
   }
 
+  public double GetWristMotorOutputPercent(){
+    return wristMotor.getMotorOutputPercent();
+  }
+  public double GetWristMotorOutputVoltage(){
+    return wristMotor.getMotorOutputVoltage();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Wrist Encoder Value:", GetWristEncoderPosition());
     SmartDashboard.putNumber("Wrist Motor Output Percent", wristMotor.getMotorOutputPercent()); //I think this does the output of the motor controller itself, not the actual motor. 
     SmartDashboard.putNumber("Wrist Motor Output Voltage", wristMotor.getMotorOutputVoltage()); //applied voltage to motor in volts
+  
+    if (GetWristMotorOutputVoltage() > 10){
+      StopWrist();
+      RobotContainer.m_wrist.getCurrentCommand().cancel();
+      RobotContainer.m_wrist.setDefaultCommand(new RunWrist());
+    }
   }
 }

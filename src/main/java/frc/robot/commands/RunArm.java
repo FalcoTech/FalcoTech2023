@@ -35,7 +35,6 @@ public class RunArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return RobotContainer.m_arm.getLeftEncoderPosition() > some value;
     return false;
   }
 }
