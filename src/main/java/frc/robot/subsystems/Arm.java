@@ -41,6 +41,9 @@ public class Arm extends SubsystemBase {
   public void MoveArm(double speed){
     leftArmMotor.set(ControlMode.PercentOutput, speed);
   }
+  public void StopArm(){
+    leftArmMotor.set(ControlMode.PercentOutput, 0);
+  }
   public void SetArmToPoint(double currentpos, double setpoint){
     leftArmMotor.set(ControlMode.PercentOutput, m_armPID.calculate(currentpos, setpoint));
   }

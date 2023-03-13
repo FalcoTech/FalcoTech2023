@@ -26,8 +26,13 @@ public class Intake extends SubsystemBase {
   public void RunIntake(double speed){
     leftIntakeMotor.set(speed);
   }
+  public void StopIntake(){
+    leftIntakeMotor.set(0);
+  }
 
-  
+  public double GetIntakeMotorVoltage(){
+ return leftIntakeMotor.getOutputCurrent();
+  }
 
   @Override
   public void periodic() {

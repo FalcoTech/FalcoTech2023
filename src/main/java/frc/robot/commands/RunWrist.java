@@ -22,7 +22,11 @@ public class RunWrist extends CommandBase {
   @Override
   public void execute() {
     double CoPilotLeftX = RobotContainer.CoPilot.getLeftX();
-    RobotContainer.m_wrist.TurnWrist(-CoPilotLeftX); //reverse sign for the other way
+    
+    if (RobotContainer.m_wrist.GetWristMotorOutputVoltage() < 5){
+      RobotContainer.m_wrist.TurnWrist(-CoPilotLeftX); //reverse sign for the other way
+    }
+    
 
   }
 
