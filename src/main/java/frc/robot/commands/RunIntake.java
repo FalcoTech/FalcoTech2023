@@ -30,7 +30,6 @@ public class RunIntake extends CommandBase {
     double IntakeTriggers = (CoPilotLeftTrigger - CoPilotRightTrigger); 
 
     RobotContainer.m_intake.RunIntake(IntakeTriggers); //multiply by negative if running wrong way
-    
   }
 
   // Called once the command ends or is interrupted.

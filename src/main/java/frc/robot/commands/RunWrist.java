@@ -33,6 +33,6 @@ public class RunWrist extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.CoPilot.getAButton() || RobotContainer.CoPilot.getBButton();
+    return RobotContainer.CoPilot.getAButton() || RobotContainer.CoPilot.getBButton(); //ANY BUTTON THAT YOU WANT A PRESET, CALL HERE SO THE MANUAL COMMAND ENDS
   }
 }

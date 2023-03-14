@@ -31,14 +31,13 @@ public class HalfTurnWrist extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.m_wrist.TurnWrist(0);
-    // RobotContainer.m_wrist.ResetWristEncoder();
     RobotContainer.m_wrist.setDefaultCommand(new RunWrist());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.CoPilot.getBackButton();
-    // return (RobotContainer.m_wrist.GetWristEncoderPosition() > 500 && RobotContainer.m_wrist.GetWristEncoderPosition() < 550);
+    // return RobotContainer.CoPilot.getBackButton();
+    return (RobotContainer.m_wrist.GetWristEncoderPosition() > 500 && RobotContainer.m_wrist.GetWristEncoderPosition() < 550);
   }
 }

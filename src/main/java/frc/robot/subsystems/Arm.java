@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
@@ -55,8 +56,17 @@ public class Arm extends SubsystemBase {
     armEncoder.reset();
   }
 
+  public double GetArmMotorOutputPercent(){
+    return leftArmMotor.getMotorOutputPercent();
+  }
+  public double GetArmMotorOutputVolts(){
+    return leftArmMotor.getMotorOutputVoltage();
+  }
 
   public void ExtendArm(){
+    // if (GetArmEncoderPosition() < -500 && GetArmEncoderPosition() > 200){
+    //   extenderSolenoid.set(Value.kReverse);
+    // }
     extenderSolenoid.set(Value.kReverse);
   }
   public void RetractArm(){
@@ -66,8 +76,12 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (GetArmEncoderPosition() < 150 && GetArmEncoderPosition() > -200){
-      RetractArm();
-    }
+    // if (GetArmEncoderPosition() < 150 && GetArmEncoderPosition() > -200){
+    //   RetractArm();
+    // }
+    SmartDashboard.putNumber("Arm Encoder Value:", GetArmEncoderPosition());
+    SmartDashboard.putNumber("Arm Motor Output Percent", GetArmMotorOutputPercent());
+    SmartDashboard.putNumber("Arm Motor Output Volts", GetArmMotorOutputVolts());
+    
   }
 }

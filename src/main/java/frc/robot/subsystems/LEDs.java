@@ -9,6 +9,7 @@ import java.sql.Time;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -18,8 +19,7 @@ import frc.robot.commands.*;
 
 
 public class LEDs extends SubsystemBase {
-  private final PWMSparkMax blinkin = new PWMSparkMax(9);
-
+  private final Spark blinkin = new Spark(9);
 
   /** Creates a new LEDs. */
   public LEDs() {
