@@ -24,7 +24,7 @@ public class HalfTurnWrist extends CommandBase {
   public void execute() {
     double WristEncoderPos = RobotContainer.m_wrist.GetWristEncoderPosition();
 
-    RobotContainer.m_wrist.SetWristToPoint(WristEncoderPos, 200);
+    RobotContainer.m_wrist.SetWristToPoint(WristEncoderPos, 525);
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +38,7 @@ public class HalfTurnWrist extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (RobotContainer.m_wrist.GetWristEncoderPosition() > 180 && RobotContainer.m_wrist.GetWristEncoderPosition() < 220) || RobotContainer.CoPilot.getLeftX() > .9 || RobotContainer.CoPilot.getLeftX() < -.9;
+    return RobotContainer.CoPilot.getBackButton();
+    // return (RobotContainer.m_wrist.GetWristEncoderPosition() > 500 && RobotContainer.m_wrist.GetWristEncoderPosition() < 550);
   }
 }

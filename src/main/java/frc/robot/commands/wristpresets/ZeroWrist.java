@@ -41,6 +41,6 @@ public class ZeroWrist extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (RobotContainer.m_wrist.GetWristEncoderPosition() > -20 && RobotContainer.m_wrist.GetWristEncoderPosition() < 20) || RobotContainer.CoPilot.getLeftX() > .9 || RobotContainer.CoPilot.getLeftX() < -.9 || RobotContainer.m_wrist.GetWristMotorOutputVoltage() > 10;
+    return (RobotContainer.m_wrist.GetWristEncoderPosition() > -20 && RobotContainer.m_wrist.GetWristEncoderPosition() < 20);
   }
 }

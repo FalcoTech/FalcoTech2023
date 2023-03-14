@@ -103,9 +103,8 @@ public class RobotContainer {
     new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
 
     // new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
-    new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ScoringPosArm())));
-    new Trigger(() -> CoPilot.getXButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerPosArm())));
-    new Trigger(() -> CoPilot.getYButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new ZeroWrist())));
+    new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new ZeroWrist())));
+    new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new HalfTurnWrist())));
 
   }
 

@@ -21,7 +21,8 @@ public class Wrist extends SubsystemBase {
   private final VictorSPX wristMotor = new VictorSPX(WristConsatnts.WRISTMOTOR_ID);
   private final Encoder wristEncoder = new Encoder(WristConsatnts.WRISTENCODER_A, WristConsatnts.WRISTENCODER_B);
 
-  private final PIDController m_wristPID = new PIDController(.5, 0, 0);
+  private final PIDController m_wristPID = new PIDController(.3, 0, 0);
+
 
   /** Creates a new Wrist. */
   public Wrist() {
@@ -35,7 +36,7 @@ public class Wrist extends SubsystemBase {
     wristMotor.set(ControlMode.PercentOutput, 0);
   }
   public void SetWristToPoint(double currentpos, double setpoint){
-    wristMotor.set(ControlMode.PercentOutput, m_wristPID.calculate(currentpos, setpoint));
+    wristMotor.set(ControlMode.PercentOutput, -m_wristPID.calculate(currentpos, setpoint));
   }
 
   public double GetWristEncoderPosition(){
@@ -58,11 +59,6 @@ public class Wrist extends SubsystemBase {
     SmartDashboard.putNumber("Wrist Encoder Value:", GetWristEncoderPosition());
     SmartDashboard.putNumber("Wrist Motor Output Percent", wristMotor.getMotorOutputPercent()); //I think this does the output of the motor controller itself, not the actual motor. 
     SmartDashboard.putNumber("Wrist Motor Output Voltage", wristMotor.getMotorOutputVoltage()); //applied voltage to motor in volts
-  
-    if (GetWristMotorOutputVoltage() > 10){
-      StopWrist();
-      RobotContainer.m_wrist.getCurrentCommand().cancel();
-      RobotContainer.m_wrist.setDefaultCommand(new RunWrist());
-    }
+
   }
 }
