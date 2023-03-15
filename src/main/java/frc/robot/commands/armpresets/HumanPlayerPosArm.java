@@ -18,7 +18,7 @@ public class HumanPlayerPosArm extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.m_arm.RetractArm();
+    // RobotContainer.m_arm.RetractArm(); may not need to if the subsystem periodic can keep up with a command scheduled. 
   }
 
   // Called every time the scheduler runs while the command is scheduled.

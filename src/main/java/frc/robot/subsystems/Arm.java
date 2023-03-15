@@ -76,7 +76,7 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // if (GetArmEncoderPosition() < 150 && GetArmEncoderPosition() > -200){
+    // if (GetArmEncoderPosition() > -500 && GetArmEncoderPosition() < 200){
     //   RetractArm();
     // }
     SmartDashboard.putNumber("Arm Encoder Value:", GetArmEncoderPosition());

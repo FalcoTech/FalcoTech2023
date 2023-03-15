@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
@@ -30,12 +31,18 @@ public class Intake extends SubsystemBase {
     leftIntakeMotor.set(0);
   }
 
-  public double GetIntakeMotorVoltage(){
- return leftIntakeMotor.getOutputCurrent();
+  public double GetLeftIntakeMotorVoltage(){
+    return leftIntakeMotor.getOutputCurrent();
   }
+  public double GetRightIntakeMotorVoltage(){
+    return rightIntakeMotor.getOutputCurrent();
+  }
+
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Left Intake Motor Voltage", GetLeftIntakeMotorVoltage());
+    SmartDashboard.putNumber("Right Intake Motor Voltage", GetRightIntakeMotorVoltage());
   }
 }

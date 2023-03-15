@@ -34,6 +34,7 @@ public class ZeroArm extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.m_arm.MoveArm(0);
+    // RobotContainer.m_arm.ResetArmEncoder();
     RobotContainer.m_arm.setDefaultCommand(new RunArm()); //set default command back to user control when command finishes
   }
 
