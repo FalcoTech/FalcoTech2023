@@ -20,6 +20,7 @@ import frc.robot.commands.*;
 
 public class LEDs extends SubsystemBase {
   private final Spark blinkin = new Spark(9);
+  private String LEDColor = "";
 
   /** Creates a new LEDs. */
   public LEDs() {
@@ -28,35 +29,38 @@ public class LEDs extends SubsystemBase {
   
   public void Rainbow(){
     blinkin.set(LEDsConstants.RAINBOW_PARTYPAL); //RAINBOW: .99 rainbow palette, .97 party palette (PARTY MMODEDE YEAEAEAAAAHW WOAOOWOWOOOOOOOOOOOOOOOOOOOOOO ABABY LET'SD GOOOIIOOOO)
+    LEDColor = "Rainbow";
   }
 
   public void Purple(){
     blinkin.set(LEDsConstants.PURPLE);
+    LEDColor = "Purple";
   }
   public void Yellow(){
     blinkin.set(LEDsConstants.YELLOW);
+    LEDColor = "Yellow";
   }
 
   public void Green(){
     blinkin.set(LEDsConstants.GREEN);
+    LEDColor = "Green";
   }
   public void BlinkGreen(){
     blinkin.set(LEDsConstants.BLINKGREEN); //COLOR 1: .03 slow, .05 medium, .07 fast. 
+    LEDColor = "BlinkGreen";
   }
   public void Red(){
     blinkin.set(LEDsConstants.RED);
+    LEDColor = "Red";
   }
   public void BlinkRed(){
     blinkin.set(LEDsConstants.BLINKRED); //COLOR 2: .23 slow, .25 medium, .27 fast
+    LEDColor = "BlinkRed";
   }
 
   public void SwitchHPColor(){
-    if (blinkin.get() == LEDsConstants.RAINBOW_RAINBOWPAL || blinkin.get() == LEDsConstants.RAINBOW_PARTYPAL){
-      Purple();
-    } else if (blinkin.get() == LEDsConstants.PURPLE){
+    if (LEDColor == "Purple"){
       Yellow();
-    } else if (blinkin.get() == LEDsConstants.YELLOW){
-      Purple();
     } else{
       Purple();
     }

@@ -96,15 +96,17 @@ public class RobotContainer {
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
   
     //Copilot Controls
-    // new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
-    new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_wrist.ResetWristEncoder()));
+    new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
+    // new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_wrist.ResetWristEncoder()));
 
     new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
     new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
 
-    // new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
-    new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new ZeroWrist())));
-    new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new HalfTurnWrist())));
+    new Trigger(() -> CoPilot.getXButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new ZeroWrist())));
+    new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new HalfTurnWrist())));
+    new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new FullTurnWrist())));
+
+    new Trigger(() -> CoPilot.getYButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new HalfTurnWrist())));
 
   }
 
@@ -112,8 +114,6 @@ public class RobotContainer {
     //Smartdashboard AutoChooser options
     m_autoChooser.setDefaultOption("No Auto Selected", new InstantCommand());
     m_autoChooser.addOption("Left Side Cube Run", null);
-    m_autoChooser.addOption("Right Side Cube Run", null);
-    m_autoChooser.addOption("First Test Path", ramAutoBuilder("First Test", AutoConstants.AUTOEVENTMAP));
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
 
   }
