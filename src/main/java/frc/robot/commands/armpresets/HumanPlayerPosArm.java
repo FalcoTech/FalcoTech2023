@@ -26,19 +26,19 @@ public class HumanPlayerPosArm extends CommandBase {
   public void execute() {
     double ArmEncoderPos = RobotContainer.m_arm.GetArmEncoderPosition();
 
-    RobotContainer.m_arm.SetArmToPoint(ArmEncoderPos, -300);
+    RobotContainer.m_arm.SetArmToPoint(ArmEncoderPos, 1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_arm.StopArm();
+    // RobotContainer.m_arm.StopArm();
     RobotContainer.m_arm.setDefaultCommand(new RunArm());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ((RobotContainer.m_arm.GetArmEncoderPosition() > -320 && RobotContainer.m_arm.GetArmEncoderPosition() < -280) || (RobotContainer.CoPilot.getRightY() > .9 || RobotContainer.CoPilot.getRightY() < -.9));
+    return (RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1) || RobotContainer.CoPilot.getPOV() == 270;
   }
 }

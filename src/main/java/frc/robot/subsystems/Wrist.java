@@ -21,7 +21,7 @@ public class Wrist extends SubsystemBase {
   private final VictorSPX wristMotor = new VictorSPX(WristConsatnts.WRISTMOTOR_ID);
   private final Encoder wristEncoder = new Encoder(WristConsatnts.WRISTENCODER_A, WristConsatnts.WRISTENCODER_B);
 
-  private final PIDController m_wristPID = new PIDController(.3, 0, 0);
+  private final PIDController m_wristPID = new PIDController(.017, 0, 0);
 
 
   /** Creates a new Wrist. */
@@ -36,14 +36,18 @@ public class Wrist extends SubsystemBase {
     wristMotor.set(ControlMode.PercentOutput, 0);
   }
   public void SetWristToPoint(double currentpos, double setpoint){
-    wristMotor.set(ControlMode.PercentOutput, -m_wristPID.calculate(currentpos, setpoint));
+    wristMotor.set(ControlMode.PercentOutput, -.5 * m_wristPID.calculate(currentpos, setpoint));
   }
 
   public double GetWristEncoderPosition(){
     return wristEncoder.getDistance();
   }
+  public boolean GetWristEncoderStopped(){
+    return wristEncoder.getStopped();
+  }
   public void ResetWristEncoder(){
     wristEncoder.reset();
+    RobotContainer.m_arm.ResetArmEncoder();
   }
 
   public double GetWristMotorOutputPercent(){

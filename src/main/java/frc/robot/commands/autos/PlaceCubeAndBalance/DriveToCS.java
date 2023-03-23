@@ -22,14 +22,7 @@ public class DriveToCS extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double RobotYaw = RobotContainer.m_drivetrain.GetGyroYaw();
-    if (RobotYaw > 2){
-      RobotContainer.m_drivetrain.ArcadeDrive(-.2, .05);
-    } else if (RobotYaw < 2){
-      RobotContainer.m_drivetrain.ArcadeDrive(-.2, -.05);
-    } else{
-      RobotContainer.m_drivetrain.ArcadeDrive(-.2, 0);
-    }
+    RobotContainer.m_drivetrain.ArcadeDrive(-.2, 0);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +32,6 @@ public class DriveToCS extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (RobotContainer.m_drivetrain.GetGyroPitch() > 15);
+    return (RobotContainer.m_drivetrain.GetGyroPitch() > 5);
   }
 }

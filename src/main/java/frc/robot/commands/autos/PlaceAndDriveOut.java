@@ -6,23 +6,19 @@ package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.armpresets.ScoringPosArm;
-import frc.robot.commands.autos.PlaceCubeAndBalance.BalanceOnCS;
-import frc.robot.commands.autos.PlaceCubeAndBalance.DriveToCS;
-import frc.robot.commands.autos.PlaceCubeAndBalance.DriveToCSAndZeroArm;
-import frc.robot.commands.autos.PlaceCubeAndBalance.PlaceCubeSequence;
+import frc.robot.commands.autos.PlaceDriveOut.SpitAndDrive;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class PlaceBalanceFullAuto extends SequentialCommandGroup {
-  /** Creates a new BalanceFullAuto. */
-  public PlaceBalanceFullAuto() {
+public class PlaceAndDriveOut extends SequentialCommandGroup {
+  /** Creates a new PlaceAndDriveOut. */
+  public PlaceAndDriveOut() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new PlaceCubeSequence(),
-      new DriveToCSAndZeroArm(),
-      new BalanceOnCS()
+      new ScoringPosArm(),
+      new SpitAndDrive()
     );
   }
 }

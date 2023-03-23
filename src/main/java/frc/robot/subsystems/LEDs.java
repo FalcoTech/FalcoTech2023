@@ -19,7 +19,7 @@ import frc.robot.commands.*;
 
 
 public class LEDs extends SubsystemBase {
-  private final Spark blinkin = new Spark(9);
+  private final Spark blinkin = new Spark(0);
   private String LEDColor = "";
 
   /** Creates a new LEDs. */

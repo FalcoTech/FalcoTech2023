@@ -60,6 +60,7 @@ public class DriveTrain extends SubsystemBase {
     //Motor follows
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
+    rightFrontMotor.setInverted(true);
 
     m_leftDriveGroup.setInverted(true); //Invert one side drive motors
     CoastDriveMotors(); //Start coasting drive motors
@@ -88,8 +89,8 @@ public class DriveTrain extends SubsystemBase {
     m_field2d.setRobotPose(GetPose2d());
     compressor.enableDigital();
 
-    SmartDashboard.putNumber("Left Encoder Value", leftFrontMotor.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Right Encoder Value", rightFrontMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Robot Pitch", GetGyroPitch());
+    SmartDashboard.putNumber("Ticks to meters value", GetLeftEncoderMeters());
   }
 
 
@@ -99,6 +100,9 @@ public class DriveTrain extends SubsystemBase {
   public void ArcadeDrive(double speed, double rotation, boolean isSquaredInputs){   //Secondary ArcadeDrive command. Has additional bool for squared inputs to increase controlability at low speeds. 
     m_drive.arcadeDrive(speed, rotation, isSquaredInputs);
   } 
+  public void TankDrive(double leftspeed, double rightspeed){
+    m_drive.tankDrive(leftspeed, rightspeed);
+  }
   public void TankDriveVolts(double leftVolts, double rightVolts){
     m_leftDriveGroup.setVoltage(leftVolts);
     m_rightDriveGroup.setVoltage(rightVolts);
@@ -162,6 +166,9 @@ public class DriveTrain extends SubsystemBase {
     double wheelRotations = motorRotations / DriveTrainConstants.GEARRATIO_LOW; //Only in low gear
     double positionMeters = wheelRotations * DriveTrainConstants.WHEELCIRCUMFERENCEMETERS;
     return positionMeters;
+  }
+  public double GetLeftEncoderMeters(){
+    return EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition());
   }
   public double GetLeftEncoderVelocity(){
     return EncoderTicksToMeters(leftFrontMotor.getSelectedSensorVelocity()) * 10;

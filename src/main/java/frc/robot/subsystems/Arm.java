@@ -28,7 +28,7 @@ public class Arm extends SubsystemBase {
   private final VictorSPX rightArmMotor = new VictorSPX(ArmConstants.RIGHTARMMOTOR_ID);
   private final Encoder armEncoder = new Encoder(ArmConstants.ARMENCODER_A, ArmConstants.ARMENCODER_B);
 
-  private final PIDController m_armPID = new PIDController(.5, 0, 0);
+  private final PIDController m_armPID = new PIDController(2, 0, .05);
 
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
@@ -46,11 +46,11 @@ public class Arm extends SubsystemBase {
     leftArmMotor.set(ControlMode.PercentOutput, 0);
   }
   public void SetArmToPoint(double currentpos, double setpoint){
-    leftArmMotor.set(ControlMode.PercentOutput, m_armPID.calculate(currentpos, setpoint));
+    leftArmMotor.set(ControlMode.PercentOutput, .25 * m_armPID.calculate(currentpos, setpoint));
   }
 
   public double GetArmEncoderPosition(){
-    return armEncoder.getDistance();
+    return armEncoder.getDistance() / 360;
   }
   public void ResetArmEncoder(){
     armEncoder.reset();

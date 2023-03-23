@@ -2,30 +2,27 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.autos.PlaceCubeAndBalance;
+package frc.robot.commands.autos.DriveOutOfCommunity;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class SpitCube extends CommandBase {
-  double step = 0;
-
-  /** Creates a new SpitCube. */
-  public SpitCube() {
+public class StopDriving extends CommandBase {
+  /** Creates a new StopDriving. */
+  public StopDriving() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_intake);
+    addRequirements(RobotContainer.m_drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    RobotContainer.m_drivetrain.ArcadeDrive(0, 0);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    step += 1;
-    RobotContainer.m_intake.RunIntake(.5);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -34,6 +31,6 @@ public class SpitCube extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (step > 30);
+    return false;
   }
 }

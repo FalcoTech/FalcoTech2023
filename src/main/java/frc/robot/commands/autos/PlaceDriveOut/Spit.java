@@ -2,16 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.autos.PlaceDriveOut;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class RunArm extends CommandBase {
-  /** Creates a new RunArm. */
-  public RunArm() {
+public class Spit extends CommandBase {
+  /** Creates a new Spit. */
+  public Spit() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_arm);
+    addRequirements(RobotContainer.m_intake);
   }
 
   // Called when the command is initially scheduled.
@@ -21,21 +21,16 @@ public class RunArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double CoPilotRightY = RobotContainer.CoPilot.getRightY();
-
-    RobotContainer.m_arm.MoveArm(CoPilotRightY * .4);
+    RobotContainer.m_intake.RunIntake(.2);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    //set default command back to user control
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180 || RobotContainer.CoPilot.getPOV() == 270;
-    return RobotContainer.CoPilot.getPOV() == 270 || RobotContainer.CoPilot.getPOV() == 180;
+    return false;
   }
 }

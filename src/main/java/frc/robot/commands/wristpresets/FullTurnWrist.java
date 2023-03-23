@@ -37,6 +37,6 @@ public class FullTurnWrist extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (RobotContainer.m_wrist.GetWristEncoderPosition() > 1020);
+    return RobotContainer.m_wrist.GetWristEncoderPosition() > 1000 || RobotContainer.CoPilot.getLeftX() > .9 || RobotContainer.CoPilot.getLeftX() < -.9 || RobotContainer.CoPilot.getAButton() || RobotContainer.CoPilot.getXButton();
   }
 }

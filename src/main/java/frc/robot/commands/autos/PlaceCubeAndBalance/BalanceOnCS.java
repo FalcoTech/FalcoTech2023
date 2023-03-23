@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
 public class BalanceOnCS extends CommandBase {
+  private double chargingspeed = -.25;
   /** Creates a new BalanceOnChargeStation. */
   public BalanceOnCS() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,22 +25,27 @@ public class BalanceOnCS extends CommandBase {
   @Override
   public void execute() {
     double RobotPitch = RobotContainer.m_drivetrain.GetGyroPitch();
-    double RobotPitchAccel = RobotContainer.m_drivetrain.GetGyroPitchAcceleration();
-
+    
     if (RobotPitch > 3){
-      if (RobotPitchAccel < -5){
-        RobotContainer.m_drivetrain.ArcadeDrive(.02, 0);
-      } else{
-        RobotContainer.m_drivetrain.ArcadeDrive(-.05, 0);
-      } 
+      chargingspeed -= .005;
+      RobotContainer.m_drivetrain.ArcadeDrive(chargingspeed, 0);
     } else if (RobotPitch < -3){
-      if (RobotPitchAccel > 5){
-        RobotContainer.m_drivetrain.ArcadeDrive(-.02, 0);
-      } else{
-        RobotContainer.m_drivetrain.ArcadeDrive(.05, 0);
+      chargingspeed += .005;
+      RobotContainer.m_drivetrain.ArcadeDrive(chargingspeed, 0);
+    } else {
+      if (chargingspeed > 0){
+        chargingspeed -= .005;
       }
-    } else{
-      RobotContainer.m_drivetrain.ArcadeDrive(0, 0);
+      else if (chargingspeed < 0){
+        chargingspeed += .005;
+      }
+      RobotContainer.m_drivetrain.ArcadeDrive(chargingspeed, 0);
+    }
+
+    if (chargingspeed >= .2){
+      chargingspeed = .2;
+    } else if (chargingspeed <= -.2){
+      chargingspeed = -.2;
     }
   }
     
