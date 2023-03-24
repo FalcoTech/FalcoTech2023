@@ -29,12 +29,12 @@ public class ArcadeDrive extends CommandBase {
     double PilotRightX = RobotContainer.Pilot.getRightX();
     double PilotRightY = RobotContainer.Pilot.getRightY();
 
-    double PilotRightTrigger = RobotContainer.Pilot.getR2Axis();
-    double PilotLeftTrigger = RobotContainer.Pilot.getL2Axis();
-    double slowTriggerTurn = (PilotRightX*.75) + (PilotRightTrigger*.1) - (PilotLeftTrigger*.1);
+    double PilotRightTrigger = RobotContainer.Pilot.getRightTriggerAxis();
+    double PilotLeftTrigger = RobotContainer.Pilot.getLeftTriggerAxis();
+    double slowTriggerTurn = (PilotRightX*.75) + (PilotRightTrigger*.2) - (PilotLeftTrigger*.2);
     
     if (RobotContainer.m_drivetrain.m_slowDriveSpeed){
-      RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .15, (PilotRightX*.15) + (PilotRightTrigger*.1) - (PilotLeftTrigger*.1));
+      RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .15, (PilotRightX*.15) + (PilotRightTrigger*.2) - (PilotLeftTrigger*.2));
     } else{
       RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .75, slowTriggerTurn);
     }  

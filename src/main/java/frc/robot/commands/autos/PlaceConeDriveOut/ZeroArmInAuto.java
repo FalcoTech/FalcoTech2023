@@ -2,17 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.autos.PlaceCubeAndBalance;
+package frc.robot.commands.autos.PlaceConeDriveOut;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
-public class DriveToCS extends CommandBase {
-  /** Creates a new DriveToChargeStation. */
-  public DriveToCS() {
+public class ZeroArmInAuto extends CommandBase {
+  /** Creates a new ZeroArmInAuto. */
+  public ZeroArmInAuto() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_drivetrain);
+    addRequirements(RobotContainer.m_arm);
   }
 
   // Called when the command is initially scheduled.
@@ -22,7 +21,8 @@ public class DriveToCS extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_drivetrain.ArcadeDrive(-.2, 0);
+    double ArmEncoderPos = RobotContainer.m_arm.GetArmEncoderPosition();
+    RobotContainer.m_arm.SetArmToPoint(ArmEncoderPos, 0);
   }
 
   // Called once the command ends or is interrupted.
@@ -32,6 +32,6 @@ public class DriveToCS extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (RobotContainer.m_drivetrain.GetGyroPitch() > 5);
+    return RobotContainer.m_arm.GetArmEncoderPosition() > -.05 && RobotContainer.m_arm.GetArmEncoderPosition() < .05;
   }
 }

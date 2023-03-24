@@ -8,10 +8,7 @@ package frc.robot;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.armpresets.*;
-import frc.robot.commands.autos.BalanceAuto;
-import frc.robot.commands.autos.DriveOutCommunity;
-import frc.robot.commands.autos.PlaceAndDriveOut;
-import frc.robot.commands.autos.DriveOutOfCommunity.DriveForward;
+import frc.robot.commands.autos.*;
 import frc.robot.commands.wristpresets.*;
 import frc.robot.subsystems.*;
 
@@ -46,8 +43,8 @@ public class RobotContainer {
   public static Vision m_vision = new Vision();
   public static LEDs m_leds = new LEDs();
 
-  // public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
-  public static final PS4Controller Pilot = new PS4Controller(OperatorConstants.PILOTCONTROLLERPORT);
+  public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
+  // public static final PS4Controller Pilot = new PS4Controller(OperatorConstants.PILOTCONTROLLERPORT);
   public static final XboxController CoPilot = new XboxController(OperatorConstants.COPILOTCONTROLLERPORT);
 
   //Smartdashboard choosers/data
@@ -97,10 +94,12 @@ public class RobotContainer {
   /** Use this method to define your trigger->command mappings. Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@lin CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}. */
   private void configureBindings() {
     //Pilot Controls
-    new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
-    new Trigger(() -> Pilot.getCircleButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
-    new Trigger(() -> Pilot.getOptionsButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
-  
+    // new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
+    // new Trigger(() -> Pilot.getCircleButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
+    // new Trigger(() -> Pilot.getOptionsButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
+    new Trigger(() -> Pilot.getXButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
+    new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
+    new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
     //Copilot Controls
     new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
     new Trigger(() -> CoPilot.getBackButton()).onTrue(new InstantCommand(() -> m_wrist.ResetWristEncoder()));
@@ -121,8 +120,7 @@ public class RobotContainer {
   private void configureSmartdashboard(){
     //Smartdashboard AutoChooser options
     m_autoChooser.setDefaultOption("No Auto Selected", new InstantCommand());
-    m_autoChooser.addOption("Drive Out of Community", new DriveOutCommunity());
-    m_autoChooser.addOption("Place And Drive Out", new PlaceAndDriveOut());
+
     m_autoChooser.addOption("Balance (TESTING)", new BalanceAuto());
 
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto

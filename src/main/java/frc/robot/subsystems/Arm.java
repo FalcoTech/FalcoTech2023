@@ -72,7 +72,13 @@ public class Arm extends SubsystemBase {
   public void RetractArm(){
     extenderSolenoid.set(Value.kForward);
   }
-
+  public boolean GetArmExtended(){
+    if (extenderSolenoid.get() == Value.kReverse){
+      return true;
+    } else{
+      return false;
+    }
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
