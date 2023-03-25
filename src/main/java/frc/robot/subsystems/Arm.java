@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
@@ -28,7 +29,7 @@ public class Arm extends SubsystemBase {
   private final VictorSPX rightArmMotor = new VictorSPX(ArmConstants.RIGHTARMMOTOR_ID);
   private final Encoder armEncoder = new Encoder(ArmConstants.ARMENCODER_A, ArmConstants.ARMENCODER_B);
 
-  private final PIDController m_armPID = new PIDController(2, 0, .05);
+  private final PIDController m_armPID = new PIDController(.2, 0, .05);
 
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
@@ -50,7 +51,7 @@ public class Arm extends SubsystemBase {
   }
 
   public double GetArmEncoderPosition(){
-    return armEncoder.getDistance() / 360;
+    return armEncoder.getDistance() / -360;
   }
   public void ResetArmEncoder(){
     armEncoder.reset();
@@ -64,10 +65,11 @@ public class Arm extends SubsystemBase {
   }
 
   public void ExtendArm(){
-    // if (GetArmEncoderPosition() < -500 && GetArmEncoderPosition() > 200){
-    //   extenderSolenoid.set(Value.kReverse);
-    // }
-    extenderSolenoid.set(Value.kReverse);
+    if (GetArmEncoderPosition() <= .6 && GetArmEncoderPosition() >= -.6){
+      RobotContainer.m_leds.BlinkRed();
+    } else {
+      extenderSolenoid.set(Value.kReverse);
+    }
   }
   public void RetractArm(){
     extenderSolenoid.set(Value.kForward);
@@ -82,12 +84,12 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // if (GetArmEncoderPosition() > -500 && GetArmEncoderPosition() < 200){
-    //   RetractArm();
-    // }
     SmartDashboard.putNumber("Arm Encoder Value:", GetArmEncoderPosition());
     SmartDashboard.putNumber("Arm Motor Output Percent", GetArmMotorOutputPercent());
     SmartDashboard.putNumber("Arm Motor Output Volts", GetArmMotorOutputVolts());
     
+    if (GetArmEncoderPosition() > -.5 && GetArmEncoderPosition() < .5 && GetArmExtended()){
+      RetractArm();
+    }
   }
 }

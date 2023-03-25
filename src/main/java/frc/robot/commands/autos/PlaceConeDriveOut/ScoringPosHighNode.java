@@ -23,19 +23,19 @@ public class ScoringPosHighNode extends CommandBase {
   @Override
   public void execute() {
     double ArmEncoderPos = RobotContainer.m_arm.GetArmEncoderPosition();
-    RobotContainer.m_arm.MoveArm(.3);
+    RobotContainer.m_arm.MoveArm(-.225);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.m_arm.StopArm();
-    new WaitCommand(1);
+    new WaitCommand(5);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_arm.GetArmEncoderPosition() > 1.3; //tbd
+    return RobotContainer.m_arm.GetArmEncoderPosition() > 1.4; //roughly, tbd
   }
 }

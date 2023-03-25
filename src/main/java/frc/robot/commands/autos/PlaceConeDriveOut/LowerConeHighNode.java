@@ -31,6 +31,6 @@ public class LowerConeHighNode extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_arm.GetArmEncoderPosition() < 1;
+    return RobotContainer.m_arm.GetArmEncoderPosition() < 1.1;
   }
 }

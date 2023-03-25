@@ -21,7 +21,7 @@ public class DriveToGrid extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_drivetrain.ArcadeDrive(0, 0);
+    RobotContainer.m_drivetrain.ArcadeDrive(-.15, 0);
   }
 
   // Called once the command ends or is interrupted.
@@ -31,6 +31,7 @@ public class DriveToGrid extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_drivetrain.GetLeftEncoderMeters() > .5;
+    return RobotContainer.m_drivetrain.GetLeftEncoderMeters() > .1;
+    // return false;
   }
 }

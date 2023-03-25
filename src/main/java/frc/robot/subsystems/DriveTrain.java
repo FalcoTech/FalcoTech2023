@@ -111,10 +111,10 @@ public class DriveTrain extends SubsystemBase {
 
 
   public void ShiftLowGear(){
-    shiftSolenoid.set(Value.kForward);
+    shiftSolenoid.set(Value.kReverse);
   }
   public void ShiftHighGear(){
-    shiftSolenoid.set(Value.kReverse);
+    shiftSolenoid.set(Value.kForward);
   }
 
 

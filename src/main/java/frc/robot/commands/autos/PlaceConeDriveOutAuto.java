@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.autos.PlaceConeDriveOut.DriveOutOfCommunity;
 import frc.robot.commands.autos.PlaceConeDriveOut.DriveToGrid;
-import frc.robot.commands.autos.PlaceConeDriveOut.ExtendArm;
+import frc.robot.commands.autos.PlaceConeDriveOut.ExtendAndHoldArm;
 import frc.robot.commands.autos.PlaceConeDriveOut.LowerConeHighNode;
 import frc.robot.commands.autos.PlaceConeDriveOut.RetractArm;
 import frc.robot.commands.autos.PlaceConeDriveOut.ScoringPosHighNode;
@@ -24,10 +24,10 @@ public class PlaceConeDriveOutAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ScoringPosHighNode(),
-      new ParallelCommandGroup(new ExtendArm(), new DriveToGrid()),
-      new LowerConeHighNode(),
-      new RetractArm(),
-      new ParallelCommandGroup(new ZeroArmInAuto(), new DriveOutOfCommunity())
+      new ParallelCommandGroup(new ExtendAndHoldArm(), new DriveToGrid())
+      // new LowerConeHighNode(),
+      // new RetractArm(),
+      // new ParallelCommandGroup(new ZeroArmInAuto(), new DriveOutOfCommunity())
     );
   }
 }

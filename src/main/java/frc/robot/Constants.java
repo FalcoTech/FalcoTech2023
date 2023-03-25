@@ -72,7 +72,7 @@ public final class Constants {
     public static double GREEN = .73;
     public static double BLINKGREEN = .05;
     public static double RED = .61;
-    public static double BLINKRED = -.25;
+    public static double BLINKRED = -.27;
     
   }
 
