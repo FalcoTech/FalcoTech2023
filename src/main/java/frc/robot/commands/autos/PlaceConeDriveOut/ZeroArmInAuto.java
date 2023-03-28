@@ -27,11 +27,13 @@ public class ZeroArmInAuto extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.m_arm.StopArm();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_arm.GetArmEncoderPosition() > -.05 && RobotContainer.m_arm.GetArmEncoderPosition() < .05;
+    return RobotContainer.m_arm.GetArmEncoderPosition() > -.1 && RobotContainer.m_arm.GetArmEncoderPosition() < .1;
   }
 }

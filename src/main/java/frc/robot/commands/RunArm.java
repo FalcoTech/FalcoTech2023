@@ -36,6 +36,6 @@ public class RunArm extends CommandBase {
   @Override
   public boolean isFinished() {
     // return RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180 || RobotContainer.CoPilot.getPOV() == 270;
-    return RobotContainer.CoPilot.getPOV() == 270 || RobotContainer.CoPilot.getPOV() == 180;
+    return RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180 || RobotContainer.CoPilot.getPOV() == 270;
   }
 }

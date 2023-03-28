@@ -90,6 +90,7 @@ public class Arm extends SubsystemBase {
     
     if (GetArmEncoderPosition() > -.5 && GetArmEncoderPosition() < .5 && GetArmExtended()){
       RetractArm();
+      RobotContainer.m_leds.BlinkRed();
     }
   }
 }

@@ -114,15 +114,16 @@ public class RobotContainer {
     new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new FullTurnWrist())));
 
     new Trigger(() -> CoPilot.getPOV() == 270).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
-    new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerPosArm())));
-    // new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ScoringPosArm())));
+    new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerArm())));
+
 
   }
 
   private void configureSmartdashboard(){
     //Smartdashboard AutoChooser options
     m_autoChooser.setDefaultOption("No Auto Selected", new InstantCommand());
-    m_autoChooser.addOption("Place Cone & Drive Out", new PlaceConeDriveOutAuto());
+    m_autoChooser.addOption("Place Cone & Drive Out", new PlaceConeMidDriveOutAuto());
+
     m_autoChooser.addOption("Balance (TESTING)", new BalanceAuto());
 
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
@@ -131,9 +132,5 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return m_autoChooser.getSelected(); //Gets the autonomous mode selected on smartdashboard
-  }
-
-  public boolean GetAnyWristButtonPressed(){
-    return CoPilot.getXButton() || CoPilot.getAButton() || CoPilot.getBButton();
   }
 }

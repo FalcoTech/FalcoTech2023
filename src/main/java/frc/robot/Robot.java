@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    RobotContainer.m_drivetrain.ShiftLowGear();
   }
 
   @Override

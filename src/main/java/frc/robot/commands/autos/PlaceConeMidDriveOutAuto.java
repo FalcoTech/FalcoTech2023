@@ -6,28 +6,23 @@ package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.autos.PlaceConeDriveOut.DriveOutOfCommunity;
 import frc.robot.commands.autos.PlaceConeDriveOut.DriveToGrid;
-import frc.robot.commands.autos.PlaceConeDriveOut.ExtendAndHoldArm;
-import frc.robot.commands.autos.PlaceConeDriveOut.LowerConeHighNode;
-import frc.robot.commands.autos.PlaceConeDriveOut.RetractArm;
-import frc.robot.commands.autos.PlaceConeDriveOut.ScoringPosHighNode;
+import frc.robot.commands.autos.PlaceConeDriveOut.ScoringPosMidNode;
 import frc.robot.commands.autos.PlaceConeDriveOut.ZeroArmInAuto;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class PlaceConeDriveOutAuto extends SequentialCommandGroup {
+public class PlaceConeMidDriveOutAuto extends SequentialCommandGroup {
   /** Creates a new PlaceConeDriveOutAuto. */
-  public PlaceConeDriveOutAuto() {
+  public PlaceConeMidDriveOutAuto() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ScoringPosHighNode(),
-      new ParallelCommandGroup(new ExtendAndHoldArm(), new DriveToGrid())
-      // new LowerConeHighNode(),
-      // new RetractArm(),
-      // new ParallelCommandGroup(new ZeroArmInAuto(), new DriveOutOfCommunity())
+      new ScoringPosMidNode(),
+      new WaitCommand(1)
     );
   }
 }
