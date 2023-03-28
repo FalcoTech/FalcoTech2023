@@ -33,14 +33,12 @@ public class ZeroArm extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // RobotContainer.m_arm.MoveArm(0);
-    // RobotContainer.m_arm.ResetArmEncoder();
     RobotContainer.m_arm.setDefaultCommand(new RunArm()); //set default command back to user control when command finishes
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1) || RobotContainer.CoPilot.getPOV() == 180;
+    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 || RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 270;
   }
 }

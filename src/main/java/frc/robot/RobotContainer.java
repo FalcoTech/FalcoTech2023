@@ -113,8 +113,11 @@ public class RobotContainer {
     new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new HalfTurnWrist())));
     new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new FullTurnWrist())));
 
-    new Trigger(() -> CoPilot.getPOV() == 270).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
-    new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerArm())));
+    new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
+    new Trigger(() -> CoPilot.getPOV() == 270).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerArm())));
+    new Trigger(() -> CoPilot.getPOV() == 90).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new MidNodeArm())));
+    new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HighNodeArm())));
+
 
 
   }
