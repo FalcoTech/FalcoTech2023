@@ -26,8 +26,8 @@ public class ZeroArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ArmEncoderPos = RobotContainer.m_arm.GetArmEncoderPosition();
-    RobotContainer.m_arm.SetArmToPoint(ArmEncoderPos, 0);
+    double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
+    
   }
 
   // Called once the command ends or is interrupted.
