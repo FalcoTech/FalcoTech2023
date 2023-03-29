@@ -6,10 +6,11 @@ package frc.robot.commands.autos.PlaceConeDriveOut;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.commands.RunArm;
 
-public class ZeroArmInAuto extends CommandBase {
-  /** Creates a new ZeroArmInAuto. */
-  public ZeroArmInAuto() {
+public class MidNodeArmAuto extends CommandBase {
+  /** Creates a new MidNodeArmAuto. */
+  public MidNodeArmAuto() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_arm);
   }
@@ -21,8 +22,14 @@ public class ZeroArmInAuto extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ArmEncoderPos = RobotContainer.m_arm.GetArmEncoderPosition();
-    RobotContainer.m_arm.SetArmToPoint(ArmEncoderPos, 0);
+    double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
+    if (ArmPos < 1){
+      RobotContainer.m_arm.MoveArm(-.3);
+    } else if (ArmPos > 1 && ArmPos < 1.35){
+      RobotContainer.m_arm.MoveArm(-.175);
+    } else if (ArmPos > 1.35){
+      RobotContainer.m_arm.StopArm();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -34,6 +41,6 @@ public class ZeroArmInAuto extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_arm.GetArmEncoderPosition() > -.1 && RobotContainer.m_arm.GetArmEncoderPosition() < .1;
+    return RobotContainer.m_arm.GetArmEncoderPosition() > 1.35;
   }
 }

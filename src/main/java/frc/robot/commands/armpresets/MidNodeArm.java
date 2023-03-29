@@ -26,9 +26,9 @@ public class MidNodeArm extends CommandBase {
     double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
     if (ArmPos < 1){
       RobotContainer.m_arm.MoveArm(-.3);
-    } else if (ArmPos > 1 && ArmPos < 1.3){
+    } else if (ArmPos > 1 && ArmPos < 1.35){
       RobotContainer.m_arm.MoveArm(-.175);
-    } else if (ArmPos > 1.3){
+    } else if (ArmPos > 1.35){
       RobotContainer.m_arm.StopArm();
     }
   }

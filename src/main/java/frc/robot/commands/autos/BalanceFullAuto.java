@@ -11,9 +11,9 @@ import frc.robot.commands.autos.Balance.DriveToCS;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class BalanceAuto extends SequentialCommandGroup {
+public class BalanceFullAuto extends SequentialCommandGroup {
   /** Creates a new BalanceAuto. */
-  public BalanceAuto() {
+  public BalanceFullAuto() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

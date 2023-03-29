@@ -5,24 +5,29 @@
 package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.autos.PlaceConeDriveOut.DriveOutOfCommunity;
-import frc.robot.commands.autos.PlaceConeDriveOut.DriveToGrid;
-import frc.robot.commands.autos.PlaceConeDriveOut.ScoringPosMidNode;
-import frc.robot.commands.autos.PlaceConeDriveOut.ZeroArmInAuto;
+import frc.robot.commands.armpresets.MidNodeArm;
+import frc.robot.commands.autos.PlaceConeDriveOut.DriveOffGrid;
+import frc.robot.commands.autos.PlaceConeDriveOut.LowerArmMidNode;
+import frc.robot.commands.autos.PlaceConeDriveOut.MidNodeArmAuto;
+import frc.robot.commands.autos.PlaceConeDriveOut.Spit;
+import frc.robot.commands.autos.PlaceConeDriveOut.ZeroArmAuto;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class PlaceConeMidDriveOutAuto extends SequentialCommandGroup {
+public class PlaceConeMidDriveOutFullAuto extends SequentialCommandGroup {
   /** Creates a new PlaceConeDriveOutAuto. */
-  public PlaceConeMidDriveOutAuto() {
+  public PlaceConeMidDriveOutFullAuto() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ScoringPosMidNode(),
-      new WaitCommand(1)
-    );
+      new MidNodeArmAuto(),
+      new LowerArmMidNode(),
+      new ParallelDeadlineGroup(new DriveOffGrid(), new Spit()), //does DriveOffGrid need to go with spit command?
+      new ZeroArmAuto()
+      );
   }
 }

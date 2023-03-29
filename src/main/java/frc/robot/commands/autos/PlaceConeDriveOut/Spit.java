@@ -5,14 +5,13 @@
 package frc.robot.commands.autos.PlaceConeDriveOut;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 
-public class ScoringPosMidNode extends CommandBase {
-  /** Creates a new ScoringPosHighNode. */
-  public ScoringPosMidNode() {
+public class Spit extends CommandBase {
+  /** Creates a new Spit. */
+  public Spit() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_arm);
+    addRequirements(RobotContainer.m_intake);
   }
 
   // Called when the command is initially scheduled.
@@ -22,19 +21,18 @@ public class ScoringPosMidNode extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ArmEncoderPos = RobotContainer.m_arm.GetArmEncoderPosition();
-    RobotContainer.m_arm.MoveArm(-.175);
+    RobotContainer.m_intake.RunIntake(.3);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_arm.StopArm();
+    RobotContainer.m_intake.RunIntake(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_arm.GetArmEncoderPosition() > 1.3; //roughly, tbd
+    return false;
   }
 }

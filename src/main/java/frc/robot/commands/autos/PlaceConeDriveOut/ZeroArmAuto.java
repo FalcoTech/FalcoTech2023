@@ -7,11 +7,11 @@ package frc.robot.commands.autos.PlaceConeDriveOut;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class DriveToGrid extends CommandBase {
-  /** Creates a new DriveToGrid. */
-  public DriveToGrid() {
+public class ZeroArmAuto extends CommandBase {
+  /** Creates a new ZeroArmInAuto. */
+  public ZeroArmAuto() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_drivetrain);
+    addRequirements(RobotContainer.m_arm);
   }
 
   // Called when the command is initially scheduled.
@@ -21,17 +21,29 @@ public class DriveToGrid extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_drivetrain.ArcadeDrive(-.15, 0);
+    double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
+    if (ArmPos < -.3){
+      RobotContainer.m_arm.MoveArm(-.3);
+    } else if (ArmPos > -.3 && ArmPos < -.1){
+      RobotContainer.m_arm.MoveArm(-.125);
+    } else if (ArmPos > .3){
+      RobotContainer.m_arm.MoveArm(.3);
+    } else if (ArmPos < .3 && ArmPos > .1){
+      RobotContainer.m_arm.MoveArm(.125);
+    } else {
+      RobotContainer.m_arm.StopArm();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.m_arm.StopArm();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_drivetrain.GetLeftEncoderMeters() > .1;
-    // return false;
+    return RobotContainer.m_arm.GetArmEncoderPosition() > -.1 && RobotContainer.m_arm.GetArmEncoderPosition() < .1;
   }
 }

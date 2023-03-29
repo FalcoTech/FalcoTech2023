@@ -113,10 +113,10 @@ public class RobotContainer {
     new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new HalfTurnWrist())));
     new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new FullTurnWrist())));
 
+    new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HighNodeArm())));
+    new Trigger(() -> CoPilot.getPOV() == 90).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new MidNodeArm())));
     new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
     new Trigger(() -> CoPilot.getPOV() == 270).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerArm())));
-    new Trigger(() -> CoPilot.getPOV() == 90).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new MidNodeArm())));
-    new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HighNodeArm())));
 
 
 
@@ -125,9 +125,9 @@ public class RobotContainer {
   private void configureSmartdashboard(){
     //Smartdashboard AutoChooser options
     m_autoChooser.setDefaultOption("No Auto Selected", new InstantCommand());
-    m_autoChooser.addOption("Place Cone & Drive Out", new PlaceConeMidDriveOutAuto());
+    m_autoChooser.addOption("Place Cone & Drive Out", new PlaceConeMidDriveOutFullAuto());
 
-    m_autoChooser.addOption("Balance (TESTING)", new BalanceAuto());
+    m_autoChooser.addOption("Balance (TESTING OUIWHACTNOEWTB)", new BalanceFullAuto());
 
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
 

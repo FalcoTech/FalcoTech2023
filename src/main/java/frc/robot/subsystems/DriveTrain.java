@@ -116,7 +116,13 @@ public class DriveTrain extends SubsystemBase {
   public void ShiftHighGear(){
     shiftSolenoid.set(Value.kForward);
   }
-
+  public boolean GetLowGear(){
+    if (shiftSolenoid.get() == Value.kReverse){
+      return true;
+    } else{
+      return false;
+    }
+  }
 
   public void BrakeDriveMotors(){
     leftFrontMotor.setNeutralMode(NeutralMode.Brake);
@@ -167,6 +173,7 @@ public class DriveTrain extends SubsystemBase {
     double positionMeters = wheelRotations * DriveTrainConstants.WHEELCIRCUMFERENCEMETERS;
     return positionMeters;
   }
+
   public double GetLeftEncoderMeters(){
     return EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition());
   }

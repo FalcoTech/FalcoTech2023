@@ -7,11 +7,11 @@ package frc.robot.commands.autos.PlaceConeDriveOut;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class LowerArm extends CommandBase {
-  /** Creates a new LowerArm. */
-  public LowerArm() {
+public class DriveOffGrid extends CommandBase {
+  /** Creates a new DriveOffGrid. */
+  public DriveOffGrid() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_arm);
+    addRequirements(RobotContainer.m_drivetrain);
   }
 
   // Called when the command is initially scheduled.
@@ -21,16 +21,18 @@ public class LowerArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_arm.MoveArm(.075);
+    RobotContainer.m_drivetrain.ArcadeDrive(.25, 0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.m_drivetrain.ArcadeDrive(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return RobotContainer.m_drivetrain.GetLeftEncoderMeters() < -.25;
   }
 }

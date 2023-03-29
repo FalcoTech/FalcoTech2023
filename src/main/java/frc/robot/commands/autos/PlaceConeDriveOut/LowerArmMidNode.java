@@ -2,16 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.armpresets;
+package frc.robot.commands.autos.PlaceConeDriveOut;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.commands.RunArm;
-import frc.robot.subsystems.Arm;
 
-public class HighNodeArm extends CommandBase {
-  /** Creates a new ScoreLowNodeArm. */
-  public HighNodeArm() {
+public class LowerArmMidNode extends CommandBase {
+  /** Creates a new LowerArmMidNode. */
+  public LowerArmMidNode() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_arm);
   }
@@ -24,24 +22,18 @@ public class HighNodeArm extends CommandBase {
   @Override
   public void execute() {
     double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
-    if (ArmPos < 1.3){
-      RobotContainer.m_arm.MoveArm(-.3);
-    } else if (ArmPos > 1.3 && ArmPos < 1.525){
-      RobotContainer.m_arm.MoveArm(-.15);
-    } else {
-      RobotContainer.m_arm.StopArm();
-    }
+    RobotContainer.m_arm.MoveArm(.075);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_arm.setDefaultCommand(new RunArm());
+    RobotContainer.m_arm.StopArm();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180 || RobotContainer.CoPilot.getPOV() == 270;
+    return RobotContainer.m_arm.GetArmEncoderPosition() < 1.25;
   }
 }
