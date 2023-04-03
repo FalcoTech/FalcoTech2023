@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator.Validity;
 import com.revrobotics.CANSparkMax;
@@ -38,6 +39,8 @@ public class Arm extends SubsystemBase {
     rightArmMotor.follow(leftArmMotor);
     //START EXTENDER NOT EXTENDED
     ResetArmEncoder();
+    leftArmMotor.setNeutralMode(NeutralMode.Brake);
+    rightArmMotor.setNeutralMode(NeutralMode.Brake); //I might cry if this works
   }
 
   public void MoveArm(double speed){

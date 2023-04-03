@@ -5,13 +5,11 @@
 package frc.robot.commands.armpresets;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.commands.RunArm;
 
-public class HumanPlayerArm extends CommandBase {
-  /** Creates a new HumanPlayerArm. */
-  public HumanPlayerArm() {
+public class GroundPickupArm extends CommandBase {
+  /** Creates a new GroundPickupArm. */
+  public GroundPickupArm() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_arm);
   }
@@ -24,28 +22,24 @@ public class HumanPlayerArm extends CommandBase {
   @Override
   public void execute() {
     double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
-    if (ArmPos > -1){ //too far forward
+    if (ArmPos > -.3){
       RobotContainer.m_arm.MoveArm(.3);
-    } else if (ArmPos < -1 && ArmPos > -1.275){ // almost there
-      RobotContainer.m_arm.MoveArm(.25);
-    } else if (ArmPos > -1.5 && ArmPos < -1.4){ //too high
-      RobotContainer.m_arm.MoveArm(0); //might need to be < -1.4 or have it run the other way if causes problems
-    } else{ //hold?
-      RobotContainer.m_arm.MoveArm(.05);
+    } else if (ArmPos < -.3 && ArmPos > -.5){
+      RobotContainer.m_arm.MoveArm(.15);
+    } else if (ArmPos < -.9){
+      RobotContainer.m_arm.MoveArm(-.3);
+    } else if (ArmPos > -.9 && ArmPos <-.5){
+      RobotContainer.m_arm.MoveArm(-.15);
     }
-  
-  
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    RobotContainer.m_arm.setDefaultCommand(new RunArm());
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 || RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180;
+    return RobotContainer.m_arm.GetArmEncoderPosition() == -.6;
   }
 }
