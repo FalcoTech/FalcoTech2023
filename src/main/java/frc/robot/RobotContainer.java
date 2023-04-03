@@ -11,6 +11,7 @@ import frc.robot.commands.armpresets.*;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.wristpresets.*;
 import frc.robot.subsystems.*;
+import pabeles.concurrency.ConcurrencyOps.Reset;
 
 import java.util.HashMap;
 import java.util.List;
@@ -132,9 +133,17 @@ public class RobotContainer {
     SmartDashboard.putData("Reset Wrist", new InstantCommand(() -> m_wrist.ResetWristEncoder()));
     SmartDashboard.putData("Reset Drive", new InstantCommand(() -> m_drivetrain.ResetDriveEncoders()));
     SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> m_drivetrain.ResetGyro()));
+    SmartDashboard.putData("RESET ALL", new InstantCommand(() -> ResetAllSubsystems()));
   }
 
   public Command getAutonomousCommand() {
     return m_autoChooser.getSelected(); //Gets the autonomous mode selected on smartdashboard
+  }
+
+  public void ResetAllSubsystems(){
+    m_arm.ResetArmEncoder();
+    m_wrist.ResetWristEncoder();
+    m_drivetrain.ResetDriveEncoders();
+    m_drivetrain.ResetGyro();
   }
 }

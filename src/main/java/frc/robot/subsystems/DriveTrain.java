@@ -90,7 +90,11 @@ public class DriveTrain extends SubsystemBase {
     compressor.enableDigital();
 
     SmartDashboard.putNumber("Robot Pitch", GetGyroPitch());
-    SmartDashboard.putNumber("Ticks to meters value", GetLeftEncoderMeters());
+    SmartDashboard.putNumber("Robot Angle", GetGyroYaw());
+
+    SmartDashboard.putNumber("Left Drive Meters", GetLeftEncoderMeters());
+    SmartDashboard.putNumber("Right Drive Meters", GetRightEncoderMeters());
+
   }
 
 
@@ -176,6 +180,9 @@ public class DriveTrain extends SubsystemBase {
 
   public double GetLeftEncoderMeters(){
     return EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition());
+  }
+  public double GetRightEncoderMeters(){
+    return EncoderTicksToMeters(rightFrontMotor.getSelectedSensorPosition());
   }
   public double GetLeftEncoderVelocity(){
     return EncoderTicksToMeters(leftFrontMotor.getSelectedSensorVelocity()) * 10;

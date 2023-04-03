@@ -58,14 +58,7 @@ public class Arm extends SubsystemBase {
   }
   public void ResetArmEncoder(){
     armEncoder.reset();
-  }
-
-  public double GetArmMotorOutputPercent(){
-    return leftArmMotor.getMotorOutputPercent();
-  }
-  public double GetArmMotorOutputVolts(){
-    return leftArmMotor.getMotorOutputVoltage();
-}              
+  }    
 
   public void ExtendArm(){
     if (GetArmEncoderPosition() <= .6 && GetArmEncoderPosition() >= -.6){
@@ -84,12 +77,25 @@ public class Arm extends SubsystemBase {
       return false;
     }
   }
+
+  public double GetArmMotorOutputPercent(){
+    return leftArmMotor.getMotorOutputPercent();
+  }
+  public double GetArmMotorOutputVolts(){
+    return leftArmMotor.getMotorOutputVoltage();
+  }          
+
+  public boolean GetArmMoving(){
+    return GetArmMotorOutputPercent() == 0;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Arm Encoder Value:", GetArmEncoderPosition());
     SmartDashboard.putNumber("Arm Motor Output Percent", GetArmMotorOutputPercent());
     SmartDashboard.putNumber("Arm Motor Output Volts", GetArmMotorOutputVolts());
+    SmartDashboard.putBoolean("Arm Moving", GetArmMoving());
     
     if (GetArmEncoderPosition() > -.5 && GetArmEncoderPosition() < .5 && GetArmExtended()){
       RetractArm();
