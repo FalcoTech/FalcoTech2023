@@ -47,7 +47,6 @@ public class Wrist extends SubsystemBase {
   }
   public void ResetWristEncoder(){
     wristEncoder.reset();
-    RobotContainer.m_arm.ResetArmEncoder();
   }
 
   public double GetWristMotorOutputPercent(){

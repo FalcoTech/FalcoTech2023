@@ -6,6 +6,7 @@ package frc.robot.commands.armpresets;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.commands.RunArm;
 
 public class GroundPickupArm extends CommandBase {
   /** Creates a new GroundPickupArm. */
@@ -25,17 +26,30 @@ public class GroundPickupArm extends CommandBase {
     if (ArmPos > -.3){
       RobotContainer.m_arm.MoveArm(.3);
     } else if (ArmPos < -.3 && ArmPos > -.5){
-      RobotContainer.m_arm.MoveArm(.15);
-    } else if (ArmPos < -.9){
+      RobotContainer.m_arm.MoveArm(.2);
+    } else if (ArmPos < -.5 && ArmPos > -.6){
+      RobotContainer.m_arm.MoveArm(.125);
+    } else{
+      RobotContainer.m_arm.StopArm();
+    }
+
+    if (ArmPos < -.9){
       RobotContainer.m_arm.MoveArm(-.3);
-    } else if (ArmPos > -.9 && ArmPos <-.5){
-      RobotContainer.m_arm.MoveArm(-.15);
+    } else if (ArmPos > -.9 && ArmPos < -.7){
+      RobotContainer.m_arm.MoveArm(-.2);
+    } else if (ArmPos > -.7 && ArmPos < -.6){
+      RobotContainer.m_arm.MoveArm(-.125);
+    } else{
+      RobotContainer.m_arm.StopArm();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.m_arm.setDefaultCommand(new RunArm());
+    RobotContainer.m_arm.ExtendArm();
+  }
 
   // Returns true when the command should end.
   @Override

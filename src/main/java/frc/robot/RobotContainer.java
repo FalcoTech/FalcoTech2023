@@ -100,11 +100,10 @@ public class RobotContainer {
     new Trigger(() -> Pilot.getAButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
     new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
-    new Trigger(() -> Pilot.getBackButton()).onTrue(new InstantCommand(() -> m_drivetrain.ResetEncoders())); //Pilot's "Start" button toggles driver speed (charging pad)
+    // new Trigger(() -> Pilot.getBackButton()).onTrue(new InstantCommand(() -> m_drivetrain.ResetEncoders())); //Pilot's "Start" button toggles driver speed (charging pad)
 
     //Copilot Controls
     new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
-    new Trigger(() -> CoPilot.getBackButton()).onTrue(new InstantCommand(() -> m_wrist.ResetWristEncoder()));
 
     new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
     new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
@@ -117,20 +116,22 @@ public class RobotContainer {
     new Trigger(() -> CoPilot.getPOV() == 90).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new MidNodeArm())));
     new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
     new Trigger(() -> CoPilot.getPOV() == 270).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerArm())));
-
-
-
+    new Trigger(() -> CoPilot.getBackButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new GroundPickupArm())));
   }
 
   private void configureSmartdashboard(){
     //Smartdashboard AutoChooser options
     m_autoChooser.setDefaultOption("No Auto Selected", new InstantCommand());
     m_autoChooser.addOption("Place Cone & Drive Out", new PlaceConeMidDriveOutFullAuto());
-
     m_autoChooser.addOption("Balance (TESTING OUIWHACTNOEWTB)", new BalanceFullAuto());
 
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
 
+    //Resets
+    SmartDashboard.putData("Reset Arm", new InstantCommand(() -> m_arm.ResetArmEncoder()));
+    SmartDashboard.putData("Reset Wrist", new InstantCommand(() -> m_wrist.ResetWristEncoder()));
+    SmartDashboard.putData("Reset Drive", new InstantCommand(() -> m_drivetrain.ResetDriveEncoders()));
+    SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> m_drivetrain.ResetGyro()));
   }
 
   public Command getAutonomousCommand() {

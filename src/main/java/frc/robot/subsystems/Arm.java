@@ -65,7 +65,7 @@ public class Arm extends SubsystemBase {
   }
   public double GetArmMotorOutputVolts(){
     return leftArmMotor.getMotorOutputVoltage();
-  }
+}              
 
   public void ExtendArm(){
     if (GetArmEncoderPosition() <= .6 && GetArmEncoderPosition() >= -.6){

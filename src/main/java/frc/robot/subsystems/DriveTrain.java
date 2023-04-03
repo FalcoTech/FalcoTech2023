@@ -67,7 +67,7 @@ public class DriveTrain extends SubsystemBase {
   
     leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     rightFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-    ResetEncoders();
+    ResetDriveEncoders();
     ResetGyro();
 
     m_odometry = new DifferentialDriveOdometry(
@@ -188,7 +188,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
 
-  public void ResetEncoders(){
+  public void ResetDriveEncoders(){
     leftFrontMotor.setSelectedSensorPosition(0);
     leftBackMotor.setSelectedSensorPosition(0);
     rightFrontMotor.setSelectedSensorPosition(0);
@@ -198,7 +198,7 @@ public class DriveTrain extends SubsystemBase {
     gyro.reset();
   }
   public void ResetOdometry(Pose2d pose){
-    ResetEncoders();
+    ResetDriveEncoders();
     m_odometry.resetPosition(
       GetRotation2d(), 
       EncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition()), 
