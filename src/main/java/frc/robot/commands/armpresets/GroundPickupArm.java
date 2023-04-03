@@ -54,6 +54,6 @@ public class GroundPickupArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_arm.GetArmEncoderPosition() == -.6;
+    return RobotContainer.m_arm.GetArmEncoderPosition() == -.6 || RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1;
   }
 }
