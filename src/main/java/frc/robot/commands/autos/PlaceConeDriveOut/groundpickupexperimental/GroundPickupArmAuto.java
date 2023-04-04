@@ -2,15 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.armpresets;
+package frc.robot.commands.autos.PlaceConeDriveOut.groundpickupexperimental;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.commands.RunArm;
 
-public class GroundPickupArm extends CommandBase {
-  /** Creates a new GroundPickupArm. */
-  public GroundPickupArm() {
+public class GroundPickupArmAuto extends CommandBase {
+  /** Creates a new GroundPickupArmAuto. */
+  public GroundPickupArmAuto() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_arm);
   }
@@ -47,13 +46,12 @@ public class GroundPickupArm extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_arm.setDefaultCommand(new RunArm());
+    RobotContainer.m_arm.StopArm();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 
-    || RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180 || RobotContainer.CoPilot.getPOV() == 270;
+    return RobotContainer.m_arm.GetArmExtended() && (RobotContainer.m_arm.GetArmEncoderPosition() > -.625 && RobotContainer.m_arm.GetArmEncoderPosition() < -.575);
   }
 }

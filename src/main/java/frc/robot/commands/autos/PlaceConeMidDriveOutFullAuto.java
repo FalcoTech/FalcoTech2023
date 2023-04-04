@@ -9,11 +9,15 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.armpresets.MidNodeArm;
+import frc.robot.commands.autos.PlaceConeDriveOut.DriveBackToGrid;
 import frc.robot.commands.autos.PlaceConeDriveOut.DriveOffGrid;
+import frc.robot.commands.autos.PlaceConeDriveOut.DriveOutOfCommunity;
 import frc.robot.commands.autos.PlaceConeDriveOut.LowerArmMidNode;
 import frc.robot.commands.autos.PlaceConeDriveOut.MidNodeArmAuto;
 import frc.robot.commands.autos.PlaceConeDriveOut.Spit;
 import frc.robot.commands.autos.PlaceConeDriveOut.ZeroArmAuto;
+import frc.robot.commands.autos.PlaceConeDriveOut.groundpickupexperimental.GroundPickupArmAuto;
+import frc.robot.commands.autos.PlaceConeDriveOut.groundpickupexperimental.TurnToPiece;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -24,10 +28,12 @@ public class PlaceConeMidDriveOutFullAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MidNodeArmAuto(),
+      new ParallelCommandGroup(new DriveOffGrid(), new MidNodeArmAuto()),
+      new DriveBackToGrid(),
       new LowerArmMidNode(),
-      new ParallelDeadlineGroup(new DriveOffGrid(), new Spit()), //does DriveOffGrid need to go with spit command?
-      new ZeroArmAuto()
+      new ParallelDeadlineGroup(new DriveOffGrid(), new Spit()), //does DriveOffGrid need to go with spit command (again, not just in deadline param)?
+      new ParallelCommandGroup(new ZeroArmAuto(), new DriveOutOfCommunity())
+      // new ParallelCommandGroup(new GroundPickupArmAuto(), new TurnToPiece())
       );
   }
 }

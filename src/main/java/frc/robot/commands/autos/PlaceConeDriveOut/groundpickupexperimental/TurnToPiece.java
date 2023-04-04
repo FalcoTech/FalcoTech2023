@@ -2,14 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.autos.PlaceConeDriveOut;
+package frc.robot.commands.autos.PlaceConeDriveOut.groundpickupexperimental;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class DriveOffGrid extends CommandBase {
-  /** Creates a new DriveOffGrid. */
-  public DriveOffGrid() {
+public class TurnToPiece extends CommandBase {
+  /** Creates a new TurnToPiece. */
+  public TurnToPiece() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_drivetrain);
   }
@@ -21,7 +21,7 @@ public class DriveOffGrid extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_drivetrain.ArcadeDrive(.25, 0);
+    RobotContainer.m_drivetrain.ArcadeDrive(0, .15);
   }
 
   // Called once the command ends or is interrupted.
@@ -33,6 +33,6 @@ public class DriveOffGrid extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_drivetrain.GetLeftEncoderMeters() < -.2;
+    return RobotContainer.m_drivetrain.GetGyroYaw() > 15;
   }
 }
