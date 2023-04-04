@@ -130,20 +130,13 @@ public class RobotContainer {
     m_autoChooser.addOption("Balance (TESTING OUIWHACTNOEWTB)", new BalanceFullAuto());
 
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
-
-    //Resets
-    SmartDashboard.putData("Reset Arm", new InstantCommand(() -> m_arm.ResetArmEncoder()));
-    SmartDashboard.putData("Reset Wrist", new InstantCommand(() -> m_wrist.ResetWristEncoder()));
-    SmartDashboard.putData("Reset Drive", new InstantCommand(() -> m_drivetrain.ResetDriveEncoders()));
-    SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> m_drivetrain.ResetGyro()));
-    SmartDashboard.putData("RESET ALL", new InstantCommand(() -> ResetAllSubsystems()));
   }
 
   public Command getAutonomousCommand() {
     return m_autoChooser.getSelected(); //Gets the autonomous mode selected on smartdashboard
   }
 
-  public void ResetAllSubsystems(){
+  public static void ResetAllSubsystems(){
     m_arm.ResetArmEncoder();
     m_wrist.ResetWristEncoder();
     m_drivetrain.ResetDriveEncoders();
