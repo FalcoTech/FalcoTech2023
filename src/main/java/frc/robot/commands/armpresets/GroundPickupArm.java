@@ -42,18 +42,20 @@ public class GroundPickupArm extends CommandBase {
     } else{
       RobotContainer.m_arm.StopArm();
     }
+    if (ArmPos == .6){
+      RobotContainer.m_arm.ExtendArm();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.m_arm.setDefaultCommand(new RunArm());
-    RobotContainer.m_arm.ExtendArm();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_arm.GetArmEncoderPosition() == -.6 || RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1;
+    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1;
   }
 }

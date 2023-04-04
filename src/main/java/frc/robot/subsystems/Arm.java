@@ -61,7 +61,7 @@ public class Arm extends SubsystemBase {
   }    
 
   public void ExtendArm(){
-    if (GetArmEncoderPosition() <= .6 && GetArmEncoderPosition() >= -.6){
+    if (GetArmEncoderPosition() < .6 && GetArmEncoderPosition() > -.6){
       RobotContainer.m_leds.BlinkRed();
     } else {
       extenderSolenoid.set(Value.kReverse);

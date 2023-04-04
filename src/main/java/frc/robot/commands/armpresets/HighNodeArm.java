@@ -20,7 +20,7 @@ public class HighNodeArm extends CommandBase {
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // Called every time the scheduler runs while the command is scheduled.  
   @Override
   public void execute() {
     double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
@@ -28,9 +28,9 @@ public class HighNodeArm extends CommandBase {
       RobotContainer.m_arm.MoveArm(-.3);
     } else if (ArmPos > 1.3 && ArmPos < 1.55){ //almost there
       if (RobotContainer.m_arm.GetArmExtended()){ //if extended, more force needed to hold
-        RobotContainer.m_arm.MoveArm(-.5);
-      } else{
         RobotContainer.m_arm.MoveArm(-.25);
+      } else{
+        RobotContainer.m_arm.MoveArm(-.15);
       }
     } else if (ArmPos > 1.55){
       RobotContainer.m_arm.StopArm();
