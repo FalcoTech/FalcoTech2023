@@ -35,11 +35,6 @@ public class HighNodeArm extends CommandBase {
     } else if (ArmPos > 1.55){
       RobotContainer.m_arm.StopArm();
     }
-    // if (RobotContainer.CoPilot.getLeftBumper()){
-    //   RobotContainer.m_arm.ExtendArm();
-    // } else if (RobotContainer.CoPilot.getRightBumper()){
-    //   RobotContainer.m_arm.RetractArm();
-    // }
   }
 
   // Called once the command ends or is interrupted.

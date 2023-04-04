@@ -97,10 +97,13 @@ public class RobotContainer {
     //Pilot Controls
     // new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
     // new Trigger(() -> Pilot.getCircleButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
-    // new Trigger(() -> Pilot.getOptionsButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
     new Trigger(() -> Pilot.getAButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
     new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
+    
+    new Trigger(() -> Pilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_drivetrain.SlowArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
+    new Trigger(() -> Pilot.getRightBumper()).onTrue(new InstantCommand(() -> m_drivetrain.NormalArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
     new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
+    // new Trigger(() -> Pilot.getOptionsButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
     // new Trigger(() -> Pilot.getBackButton()).onTrue(new InstantCommand(() -> m_drivetrain.ResetEncoders())); //Pilot's "Start" button toggles driver speed (charging pad)
 
     //Copilot Controls

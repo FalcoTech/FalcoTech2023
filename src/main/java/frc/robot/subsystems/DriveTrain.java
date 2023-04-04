@@ -142,13 +142,19 @@ public class DriveTrain extends SubsystemBase {
   }  
   public void ToggleArcadeDriveSpeed(){
     if (m_slowDriveSpeed){
-      m_slowDriveSpeed = false;
-      CoastDriveMotors();
+      NormalArcadeDriveSpeed();
     } else { 
-      m_slowDriveSpeed = true;
-      BrakeDriveMotors();
+      SlowArcadeDriveSpeed();
     }
   } 
+  public void SlowArcadeDriveSpeed(){
+    m_slowDriveSpeed = true;
+    BrakeDriveMotors();
+  }
+  public void NormalArcadeDriveSpeed(){
+    m_slowDriveSpeed = false;
+    CoastDriveMotors();
+  }
 
   public Rotation2d GetRotation2d(){
     return Rotation2d.fromDegrees(gyro.getAngle());
