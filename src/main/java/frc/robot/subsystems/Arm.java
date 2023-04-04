@@ -61,7 +61,7 @@ public class Arm extends SubsystemBase {
   }    
 
   public void ExtendArm(){
-    if (GetArmEncoderPosition() < .5 && GetArmEncoderPosition() > -.5){
+    if (GetArmEncoderPosition() < .55 && GetArmEncoderPosition() > -.55){
       RobotContainer.m_leds.BlinkRed();
     } else {
       extenderSolenoid.set(Value.kReverse);
@@ -97,7 +97,7 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber("Arm Motor Output Volts", GetArmMotorOutputVolts());
     SmartDashboard.putBoolean("Arm Moving", GetArmMoving());
     
-    if (GetArmEncoderPosition() > -.5 && GetArmEncoderPosition() < .5 && GetArmExtended()){
+    if (GetArmEncoderPosition() > -.55 && GetArmEncoderPosition() < .55 && GetArmExtended()){
       RetractArm();
       RobotContainer.m_leds.BlinkRed();
     }

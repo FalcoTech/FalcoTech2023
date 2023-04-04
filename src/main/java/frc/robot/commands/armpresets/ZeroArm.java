@@ -4,12 +4,14 @@
 
 package frc.robot.commands.armpresets;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.commands.RunArm;
 
 public class ZeroArm extends CommandBase {
-  public static double ArmEncoderPos = RobotContainer.m_arm.GetArmEncoderPosition();
+  public static Timer armTimer = new Timer();
   
   /** Creates a new ZeroArm. */
   public ZeroArm() {
@@ -43,12 +45,14 @@ public class ZeroArm extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.m_arm.StopArm();
     RobotContainer.m_arm.setDefaultCommand(new RunArm()); //set default command back to user control when command finishes
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 || RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 270;
+    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 
+    || RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 270 || RobotContainer.CoPilot.getBackButton();
   }
 }

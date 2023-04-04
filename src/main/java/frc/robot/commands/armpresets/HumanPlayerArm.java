@@ -33,8 +33,6 @@ public class HumanPlayerArm extends CommandBase {
     } else{ //hold?
       RobotContainer.m_arm.MoveArm(.05);
     }
-  
-  
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +44,7 @@ public class HumanPlayerArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 || RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180;
+    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 
+    || RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180 || RobotContainer.CoPilot.getBackButton();
   }
 }

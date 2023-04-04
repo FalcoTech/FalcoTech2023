@@ -38,6 +38,8 @@ public class HalfTurnWrist extends CommandBase {
   @Override
   public boolean isFinished() {
     // return RobotContainer.CoPilot.getBackButton();
-    return (RobotContainer.m_wrist.GetWristEncoderPosition() > 500 && RobotContainer.m_wrist.GetWristEncoderPosition() < 550);
+    return (RobotContainer.m_wrist.GetWristEncoderPosition() > 500 && RobotContainer.m_wrist.GetWristEncoderPosition() < 550) 
+    || RobotContainer.CoPilot.getLeftX() < -.1 || RobotContainer.CoPilot.getLeftX() > .1 
+    || RobotContainer.CoPilot.getXButton() || RobotContainer.CoPilot.getBButton();
   }
 }
