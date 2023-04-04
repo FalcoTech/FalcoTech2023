@@ -5,12 +5,11 @@
 package frc.robot.commands.autos.Balance;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
-public class DriveToCS extends CommandBase {
-  /** Creates a new DriveToChargeStation. */
-  public DriveToCS() {
+public class DriveDownCS extends CommandBase {
+  /** Creates a new DriveDownCS. */
+  public DriveDownCS() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_drivetrain);
   }
@@ -22,16 +21,18 @@ public class DriveToCS extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_drivetrain.ArcadeDrive(-.2, 0);
+    RobotContainer.m_drivetrain.ArcadeDrive(.2, 0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.m_drivetrain.ArcadeDrive(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (RobotContainer.m_drivetrain.GetGyroPitch() > 5);
+    return RobotContainer.m_drivetrain.GetGyroPitch() > .5 && RobotContainer.m_drivetrain.GetGyroPitch() < -.5;
   }
 }

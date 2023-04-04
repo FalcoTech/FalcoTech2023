@@ -98,7 +98,9 @@ public class RobotContainer {
   private void configureSmartdashboard(){
     //Smartdashboard AutoChooser options
     m_autoChooser.setDefaultOption("No Auto Selected", new InstantCommand());
-    m_autoChooser.addOption("Place Cone & Drive Out", new PlaceConeMidDriveOutFullAuto());
+    m_autoChooser.addOption("Place Cone Mid & Drive Out", new PlaceConeMidDriveOutFullAuto());
+    m_autoChooser.addOption("Place Cone Mid", new PlaceConeMidOnlyFullAuto());
+
     m_autoChooser.addOption("Balance", new BalanceFullAuto());
 
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto

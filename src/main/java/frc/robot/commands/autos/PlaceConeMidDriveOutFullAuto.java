@@ -18,6 +18,7 @@ import frc.robot.commands.autos.PlaceConeDriveOut.Spit;
 import frc.robot.commands.autos.PlaceConeDriveOut.ZeroArmAuto;
 import frc.robot.commands.autos.PlaceConeDriveOut.groundpickupexperimental.GroundPickupArmAuto;
 import frc.robot.commands.autos.PlaceConeDriveOut.groundpickupexperimental.TurnToPiece;
+import frc.robot.commands.wristpresets.HalfTurnWrist;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -34,6 +35,7 @@ public class PlaceConeMidDriveOutFullAuto extends SequentialCommandGroup {
       new ParallelDeadlineGroup(new DriveOffGrid(), new Spit()), //does DriveOffGrid need to go with spit command (again, not just in deadline param)?
       new ParallelCommandGroup(new ZeroArmAuto(), new DriveOutOfCommunity())
       // new ParallelCommandGroup(new GroundPickupArmAuto(), new TurnToPiece())
+      // new HalfTurnWrist()
       );
   }
 }

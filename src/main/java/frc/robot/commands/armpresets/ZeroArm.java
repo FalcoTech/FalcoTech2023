@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.commands.RunArm;
+import frc.robot.commands.wristpresets.ZeroWrist;
 
 public class ZeroArm extends CommandBase {
   public static Timer armTimer = new Timer();
@@ -23,6 +24,7 @@ public class ZeroArm extends CommandBase {
   @Override
   public void initialize() {
     RobotContainer.m_arm.RetractArm();
+    // new ZeroWrist();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

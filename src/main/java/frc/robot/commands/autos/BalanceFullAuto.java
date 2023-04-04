@@ -5,8 +5,6 @@
 package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.autos.Balance.BalanceOnCS;
-import frc.robot.commands.autos.Balance.DriveToCS;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -16,9 +14,6 @@ public class BalanceFullAuto extends SequentialCommandGroup {
   public BalanceFullAuto() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new DriveToCS(),
-      new BalanceOnCS()
-    );
+    addCommands();
   }
 }

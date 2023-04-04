@@ -6,13 +6,10 @@ package frc.robot.commands.autos.Balance;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.AutoConstants;
 
-public class BalanceOnCS extends CommandBase {
-  private double prevPitch;
-
-  /** Creates a new BalanceOnCS. */
-  public BalanceOnCS() {
+public class DriveBackUpCS extends CommandBase {
+  /** Creates a new DriveBackUpCS. */
+  public DriveBackUpCS() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_drivetrain);
   }
@@ -24,30 +21,18 @@ public class BalanceOnCS extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double Pitch = RobotContainer.m_drivetrain.GetGyroPitch();
-
-    if (Pitch <= AutoConstants.BALANCE_FULL_TILT){
-      double error = Math.copySign(Math.abs(Pitch), Pitch);
-      double power = Math.min(Math.abs(AutoConstants.BALANCE_KP * error), AutoConstants.BALANCE_MAX_POWER);
-      power = Math.copySign(power, error) * 1;  //maybe -1?
-  
-      power /= (1 + (Math.abs(prevPitch - Pitch) * AutoConstants.BALANCE_DENOMINATOR_MULTIPLIER));
-
-      RobotContainer.m_drivetrain.ArcadeDrive(power, 0);
-    }
-    
-    double prevPitch = Pitch;
+    RobotContainer.m_drivetrain.ArcadeDrive(-.2, 0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    RobotContainer.m_drivetrain.ArcadeDrive(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return RobotContainer.m_drivetrain.GetGyroPitch() < 3;
   }
 }
