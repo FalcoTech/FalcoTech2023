@@ -38,11 +38,11 @@ public class Robot extends TimedRobot {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled commands, running already-scheduled commands, removing finished or interrupted commands, and running subsystem periodic() methods.  This must be called from the robot's periodic block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     //Resets
-    SmartDashboard.putData("Reset Arm", new InstantCommand(() -> RobotContainer.m_arm.ResetArmEncoder()));
-    SmartDashboard.putData("Reset Wrist", new InstantCommand(() -> RobotContainer.m_wrist.ResetWristEncoder()));
-    SmartDashboard.putData("Reset Drive", new InstantCommand(() -> RobotContainer.m_drivetrain.ResetDriveEncoders()));
-    SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> RobotContainer.m_drivetrain.ResetGyro()));
-    SmartDashboard.putData("RESET ALL", new InstantCommand(() -> RobotContainer.ResetAllSubsystems()).ignoringDisable(true));
+    // SmartDashboard.putData("Reset Arm", new InstantCommand(() -> RobotContainer.m_arm.ResetArmEncoder()).ignoringDisable(true));
+    // SmartDashboard.putData("Reset Wrist", new InstantCommand(() -> RobotContainer.m_wrist.ResetWristEncoder()).ignoringDisable(true));
+    // SmartDashboard.putData("Reset Drive", new InstantCommand(() -> RobotContainer.m_drivetrain.ResetDriveEncoders()).ignoringDisable(true));
+    // SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> RobotContainer.m_drivetrain.ResetGyro()).ignoringDisable(true));
+    // SmartDashboard.putData("RESET ALL", new InstantCommand(() -> RobotContainer.ResetAllSubsystems()).ignoringDisable(true));
   }
 
   @Override

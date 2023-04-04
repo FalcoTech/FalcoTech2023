@@ -40,6 +40,6 @@ public class ZeroWrist extends CommandBase {
   @Override
   public boolean isFinished() {
     // return RobotContainer.m_wrist.GetWristEncoderPosition() < 20 || RobotContainer.CoPilot.getLeftX() > .9 || RobotContainer.CoPilot.getLeftX() < -.9 || RobotContainer.m_wrist.GetWristMotorOutputVoltage() < -9 || RobotContainer.m_wrist.GetWristMotorOutputVoltage() > 9;
-    return RobotContainer.m_wrist.GetWristEncoderPosition() < 50 || RobotContainer.CoPilot.getLeftX() > .9 || RobotContainer.CoPilot.getLeftX() < -.9 || RobotContainer.CoPilot.getAButton() || RobotContainer.CoPilot.getBButton();
+    return RobotContainer.m_wrist.GetWristEncoderPosition() < 50 || RobotContainer.CoPilot.getLeftX() > .1 || RobotContainer.CoPilot.getLeftX() < -.1 || RobotContainer.CoPilot.getAButton() || RobotContainer.CoPilot.getBButton();
   }
 }

@@ -50,34 +50,6 @@ public class RobotContainer {
 
   //Smartdashboard choosers/data
   SendableChooser<Command> m_autoChooser = new SendableChooser<>();
-  
-  //Pathplanner
-  public static HashMap<Command, String> autoMap = new HashMap<>();
-  public Command ramAutoBuilder(String pathName, HashMap<String, Command> eventMap){
-    RamseteAutoBuilder pathBuilder = new RamseteAutoBuilder(
-      m_drivetrain::GetPose2d, 
-      m_drivetrain::ResetOdometry, 
-      new RamseteController(2, .7),//TBD
-      DriveTrainConstants.DRIVEKINEMATICS, 
-      new SimpleMotorFeedforward(
-        0.032, //these 
-        .48, //change
-        .07 //speed
-      ), 
-      m_drivetrain::GetWheelSpeeds, 
-      new PIDConstants(.033, 0, 0), //this prob doesn't idk
-      m_drivetrain::TankDriveVolts,
-      eventMap,
-      true,
-      m_drivetrain
-    );
-    List<PathPlannerTrajectory> pathToFollow = PathPlanner.loadPathGroup(pathName, PathPlanner.getConstraintsFromPath(pathName));
-    final Command auto = pathBuilder.fullAuto(pathToFollow);
-    autoMap.put(auto, pathName);
-    return auto;
-  }
-  
-
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */ //Things that should happen when the robot first initializes
   public RobotContainer() {
@@ -127,9 +99,16 @@ public class RobotContainer {
     //Smartdashboard AutoChooser options
     m_autoChooser.setDefaultOption("No Auto Selected", new InstantCommand());
     m_autoChooser.addOption("Place Cone & Drive Out", new PlaceConeMidDriveOutFullAuto());
-    m_autoChooser.addOption("Balance (TESTING OUIWHACTNOEWTB)", new BalanceFullAuto());
+    m_autoChooser.addOption("Balance", new BalanceFullAuto());
 
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
+    
+    //Resets
+    SmartDashboard.putData("Reset Arm", new InstantCommand(() -> m_arm.ResetArmEncoder()).ignoringDisable(true));
+    SmartDashboard.putData("Reset Wrist", new InstantCommand(() -> m_wrist.ResetWristEncoder()).ignoringDisable(true));
+    SmartDashboard.putData("Reset Drive", new InstantCommand(() -> m_drivetrain.ResetDriveEncoders()).ignoringDisable(true));
+    SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> m_drivetrain.ResetGyro()).ignoringDisable(true));
+    SmartDashboard.putData("RESET ALL", new InstantCommand(() -> ResetAllSubsystems()).ignoringDisable(true));
   }
 
   public Command getAutonomousCommand() {

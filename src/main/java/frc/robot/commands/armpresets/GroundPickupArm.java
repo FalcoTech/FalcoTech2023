@@ -58,7 +58,7 @@ public class GroundPickupArm extends CommandBase {
   @Override
   public boolean isFinished() {
     return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 
-    || (RobotContainer.m_arm.GetArmEncoderPosition() > -.625 && RobotContainer.m_arm.GetArmEncoderPosition() < -.575 && RobotContainer.m_arm.GetArmExtended()
-    || RobotContainer.CoPilot.getPOV() == 0) || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180 || RobotContainer.CoPilot.getPOV() == 270;
+    // || (RobotContainer.m_arm.GetArmEncoderPosition() > -.625 && RobotContainer.m_arm.GetArmEncoderPosition() < -.575 && RobotContainer.m_arm.GetArmExtended())
+    || RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180 || RobotContainer.CoPilot.getPOV() == 270;
   }
 }
