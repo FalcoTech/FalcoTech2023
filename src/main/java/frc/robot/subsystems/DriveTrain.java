@@ -39,7 +39,7 @@ public class DriveTrain extends SubsystemBase {
 
   //Odometry
   private final DifferentialDriveOdometry m_odometry; 
-  private final ADIS16470_IMU gyro = new ADIS16470_IMU();
+  public final ADIS16470_IMU gyro = new ADIS16470_IMU();
   public final Field2d m_field2d = new Field2d();
 
   //Compressor/Solenoids Inits

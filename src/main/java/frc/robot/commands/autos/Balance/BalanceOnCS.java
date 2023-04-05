@@ -38,7 +38,7 @@ public class BalanceOnCS extends CommandBase {
     
     double prevPitch = Pitch;
   }
-
+ 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
