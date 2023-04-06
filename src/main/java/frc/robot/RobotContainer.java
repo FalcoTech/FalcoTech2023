@@ -9,6 +9,11 @@ import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.armpresets.*;
 import frc.robot.commands.autos.*;
+import frc.robot.commands.resets.ResetAll;
+import frc.robot.commands.resets.ResetArm;
+import frc.robot.commands.resets.ResetDrive;
+import frc.robot.commands.resets.ResetGyro;
+import frc.robot.commands.resets.ResetWrist;
 import frc.robot.commands.wristpresets.*;
 import frc.robot.subsystems.*;
 import pabeles.concurrency.ConcurrencyOps.Reset;
@@ -28,6 +33,7 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -50,6 +56,7 @@ public class RobotContainer {
 
   //Smartdashboard choosers/data
   SendableChooser<Command> m_autoChooser = new SendableChooser<>();
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */ //Things that should happen when the robot first initializes
   public RobotContainer() {
@@ -105,11 +112,14 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
     
     //Resets
-    SmartDashboard.putData("Reset Arm", new InstantCommand(() -> m_arm.ResetArmEncoder()).ignoringDisable(true));
-    SmartDashboard.putData("Reset Wrist", new InstantCommand(() -> m_wrist.ResetWristEncoder()).ignoringDisable(true));
-    SmartDashboard.putData("Reset Drive", new InstantCommand(() -> m_drivetrain.ResetDriveEncoders()).ignoringDisable(true));
-    SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> m_drivetrain.ResetGyro()).ignoringDisable(true));
-    SmartDashboard.putData("RESET ALL", new InstantCommand(() -> ResetAllSubsystems()).ignoringDisable(true));
+    SmartDashboard.putData("Reset Arm", new ResetArm());
+    SmartDashboard.putData("Reset Wrist", new ResetWrist());
+    SmartDashboard.putData("Reset Drive", new ResetDrive());
+    SmartDashboard.putData("Reset Gyro", new ResetGyro());
+    SmartDashboard.putData("RESET ALL", new ResetAll());
+
+    //Gyro
+    SmartDashboard.putData("Gyro", m_drivetrain.gyro);
   }
 
   public Command getAutonomousCommand() {

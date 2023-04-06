@@ -18,6 +18,7 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Auto Mode": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/RESET ALL": "Command",
       "/SmartDashboard/Reset Arm": "Command",
       "/SmartDashboard/Reset Drive": "Command",
       "/SmartDashboard/Reset Gyro": "Command",
