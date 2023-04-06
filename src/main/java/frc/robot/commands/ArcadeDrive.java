@@ -34,14 +34,14 @@ public class ArcadeDrive extends CommandBase {
     double PilotLeftTrigger = RobotContainer.Pilot.getL2Axis();
     double slowTriggerTurn = (PilotRightX*.6) + (PilotRightTrigger*.25) - (PilotLeftTrigger*.25);
     
-    boolean PilotGetYButton = RobotContainer.Pilot.getYButton();
+    boolean PilotGetYButton = RobotContainer.Pilot.getTriangleButton();
     double RobotYaw = RobotContainer.m_drivetrain.GetGyroYaw();
 
     if (RobotContainer.m_drivetrain.m_slowDriveSpeed){
       if (PilotGetYButton){
         if (RobotYaw > 1.5){
           RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) - .15);
-        } else if (RobotYaw < -.15){
+        } else if (RobotYaw < -1.5){
           RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) + .15);
         }
       } else{
