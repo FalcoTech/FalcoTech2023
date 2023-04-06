@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
@@ -33,8 +34,19 @@ public class ArcadeDrive extends CommandBase {
     double PilotLeftTrigger = RobotContainer.Pilot.getLeftTriggerAxis();
     double slowTriggerTurn = (PilotRightX*.6) + (PilotRightTrigger*.25) - (PilotLeftTrigger*.25);
     
+    boolean PilotGetYButton = RobotContainer.Pilot.getYButton();
+    double RobotYaw = RobotContainer.m_drivetrain.GetGyroYaw();
+
     if (RobotContainer.m_drivetrain.m_slowDriveSpeed){
-      RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) + (PilotRightTrigger*.2) - (PilotLeftTrigger*.2));
+      if (PilotGetYButton){
+        if (RobotYaw > 1.5){
+          RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) - .15);
+        } else if (RobotYaw < -.15){
+          RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) + .15);
+        }
+      } else{
+        RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) + (PilotRightTrigger*.2) - (PilotLeftTrigger*.2));
+      }
     } else{
       RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .75, slowTriggerTurn);
     }  

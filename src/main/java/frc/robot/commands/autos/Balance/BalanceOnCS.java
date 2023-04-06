@@ -29,14 +29,14 @@ public class BalanceOnCS extends CommandBase {
     if (Pitch <= AutoConstants.BALANCE_FULL_TILT){
       double error = Math.copySign(Math.abs(Pitch), Pitch);
       double power = Math.min(Math.abs(AutoConstants.BALANCE_KP * error), AutoConstants.BALANCE_MAX_POWER);
-      power = Math.copySign(power, error) * 1;  //maybe -1?
+      power = Math.copySign(power, error) * -1;  //maybe 1?
   
       power /= (1 + (Math.abs(prevPitch - Pitch) * AutoConstants.BALANCE_DENOMINATOR_MULTIPLIER));
 
       RobotContainer.m_drivetrain.ArcadeDrive(power, 0);
     }
     
-    double prevPitch = Pitch;
+    prevPitch = Pitch;
   }
  
   // Called once the command ends or is interrupted.
