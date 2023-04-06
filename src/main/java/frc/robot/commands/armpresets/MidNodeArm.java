@@ -26,19 +26,13 @@ public class MidNodeArm extends CommandBase {
   @Override
   public void execute() {
     double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
-    // if (ArmPos < 1){ //too far forward
-    //   RobotContainer.m_arm.MoveArm(-.3);
-    // } else if (ArmPos > 1 && ArmPos < 1.35){ 
-    //   RobotContainer.m_arm.MoveArm(-.175);
-    // } else if (ArmPos > 1.35){
-    //   RobotContainer.m_arm.StopArm();
-    // }
+
     if (ArmPos < 1){ //too far back
       RobotContainer.m_arm.MoveArm(-.3);
     } else if (ArmPos > 1 && ArmPos < 1.35){ //almost there
-      RobotContainer.m_arm.MoveArm(-.175);
-    } else if (ArmPos > 1.45){ //too high
-      RobotContainer.m_arm.MoveArm(.1);; //might need to run back
+      RobotContainer.m_arm.MoveArm(-.2);
+    } else if (ArmPos > 1.5){ //too high
+      RobotContainer.m_arm.MoveArm(.05);; //might need to run back
     } else{ //hold?
       RobotContainer.m_arm.MoveArm(-.05);
     }

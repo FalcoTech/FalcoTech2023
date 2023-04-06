@@ -27,7 +27,7 @@ public class MidNodeArmAuto extends CommandBase {
     if (ArmPos < 1){ //too far back
       RobotContainer.m_arm.MoveArm(-.3);
     } else if (ArmPos > 1 && ArmPos < 1.35){ //almost there
-      RobotContainer.m_arm.MoveArm(-.175);
+      RobotContainer.m_arm.MoveArm(-.2);
     } else if (ArmPos > 1.45){ //too high
       RobotContainer.m_arm.MoveArm(.1);; //might need to run back
     } else{ //hold?

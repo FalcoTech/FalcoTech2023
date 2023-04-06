@@ -28,9 +28,9 @@ public class HighNodeArm extends CommandBase {
       RobotContainer.m_arm.MoveArm(-.3);
     } else if (ArmPos > 1.3 && ArmPos < 1.55){ //almost there
       if (RobotContainer.m_arm.GetArmExtended()){ //if extended, more force needed to hold
-        RobotContainer.m_arm.MoveArm(-.25);
+        RobotContainer.m_arm.MoveArm(-.275);
       } else{
-        RobotContainer.m_arm.MoveArm(-.15);
+        RobotContainer.m_arm.MoveArm(-.2);
       }
     } else if (ArmPos > 1.55){
       RobotContainer.m_arm.StopArm();

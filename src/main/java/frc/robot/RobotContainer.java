@@ -44,8 +44,8 @@ public class RobotContainer {
   public static Vision m_vision = new Vision();
   public static LEDs m_leds = new LEDs();
 
-  public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
-  // public static final PS4Controller Pilot = new PS4Controller(OperatorConstants.PILOTCONTROLLERPORT);
+  // public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
+  public static final PS4Controller Pilot = new PS4Controller(OperatorConstants.PILOTCONTROLLERPORT);
   public static final XboxController CoPilot = new XboxController(OperatorConstants.COPILOTCONTROLLERPORT);
 
   //Smartdashboard choosers/data
@@ -67,16 +67,15 @@ public class RobotContainer {
   /** Use this method to define your trigger->command mappings. Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@lin CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}. */
   private void configureBindings() {
     //Pilot Controls
-    // new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
-    // new Trigger(() -> Pilot.getCircleButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
-    new Trigger(() -> Pilot.getAButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
-    new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
+    new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
+    new Trigger(() -> Pilot.getCircleButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
+    // new Trigger(() -> Pilot.getAButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
+    // new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
     
-    new Trigger(() -> Pilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_drivetrain.SlowArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
-    new Trigger(() -> Pilot.getRightBumper()).onTrue(new InstantCommand(() -> m_drivetrain.NormalArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
-    new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
-    // new Trigger(() -> Pilot.getOptionsButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
-    // new Trigger(() -> Pilot.getBackButton()).onTrue(new InstantCommand(() -> m_drivetrain.ResetEncoders())); //Pilot's "Start" button toggles driver speed (charging pad)
+    new Trigger(() -> Pilot.getL1Button()).onTrue(new InstantCommand(() -> m_drivetrain.SlowArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
+    new Trigger(() -> Pilot.getR1Button()).onTrue(new InstantCommand(() -> m_drivetrain.NormalArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
+    // new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
+    new Trigger(() -> Pilot.getOptionsButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
 
     //Copilot Controls
     new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
