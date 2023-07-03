@@ -164,7 +164,7 @@ public class DriveTrain extends SubsystemBase {
     return gyro.getAngle();
   }
   public double GetGyroPitch(){
-    return gyro.getYComplementaryAngle();
+    return gyro.getYComplementaryAngle() + 1;
   }
   public double GetGyroPitchAcceleration(){
     return gyro.getAccelY();

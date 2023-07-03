@@ -22,7 +22,7 @@ public class LowerArmMidNode extends CommandBase {
   @Override
   public void execute() {
     double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
-    RobotContainer.m_arm.MoveArm(.075);
+    RobotContainer.m_arm.MoveArm(.65);
   }
 
   // Called once the command ends or is interrupted.
@@ -34,6 +34,6 @@ public class LowerArmMidNode extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_arm.GetArmEncoderPosition() < 1.25;
+    return RobotContainer.m_arm.GetArmEncoderPosition() < 1.225;
   }
 }

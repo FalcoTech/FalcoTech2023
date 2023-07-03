@@ -79,9 +79,9 @@ public final class Constants {
   public static class AutoConstants {
     public static final HashMap<String, Command> AUTOEVENTMAP = new HashMap<>();
     public static final double BALANCE_FULL_TILT = 15;
-    public static final double BALANCE_KP = .01;
+    public static final double BALANCE_KP = .02;
     public static final double BALANCE_MAX_POWER = .25;
-    public static final double BALANCE_DENOMINATOR_MULTIPLIER = 1; //2.5 in example
+    public static final double BALANCE_DENOMINATOR_MULTIPLIER = 2; //2.5 in example
   }
   
 }

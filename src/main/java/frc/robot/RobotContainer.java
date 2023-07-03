@@ -48,6 +48,7 @@ public class RobotContainer {
 
   // public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
   public static final PS4Controller Pilot = new PS4Controller(OperatorConstants.PILOTCONTROLLERPORT);
+  //public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
   public static final XboxController CoPilot = new XboxController(OperatorConstants.COPILOTCONTROLLERPORT);
 
   //Smartdashboard choosers/data
@@ -70,14 +71,14 @@ public class RobotContainer {
   /** Use this method to define your trigger->command mappings. Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@lin CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}. */
   private void configureBindings() {
     //Pilot Controls
-    new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
+    //new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
+    //new Trigger(() -> Pilot.getCircleButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
+    new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear  
     new Trigger(() -> Pilot.getCircleButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
-    // new Trigger(() -> Pilot.getAButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
-    // new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
     
     new Trigger(() -> Pilot.getL1Button()).onTrue(new InstantCommand(() -> m_drivetrain.SlowArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
-    new Trigger(() -> Pilot.getR1Button()).onTrue(new InstantCommand(() -> m_drivetrain.NormalArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
-    // new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
+    new Trigger(() -> Pilot.getR1Button()).onTrue(new InstantCommand(() -> m_drivetrain.NormalArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear    new Trigger(() -> Pilot.getL1Button()).onTrue(new InstantCommand(() -> m_drivetrain.SlowArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
+
     new Trigger(() -> Pilot.getOptionsButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
 
     //Copilot Controls
@@ -108,11 +109,11 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
     
     //Resets
-    SmartDashboard.putData("Reset Arm", new ResetArm());
-    SmartDashboard.putData("Reset Wrist", new ResetWrist());
-    SmartDashboard.putData("Reset Drive", new ResetDrive());
-    SmartDashboard.putData("Reset Gyro", new ResetGyro());
-    SmartDashboard.putData("RESET ALL", new ResetAll());
+    SmartDashboard.putData("Reset Arm", new ResetArm().ignoringDisable(true));
+    SmartDashboard.putData("Reset Wrist", new ResetWrist().ignoringDisable(true));
+    SmartDashboard.putData("Reset Drive", new ResetDrive().ignoringDisable(true));
+    SmartDashboard.putData("Reset Gyro", new ResetGyro().ignoringDisable(true));
+    SmartDashboard.putData("RESET ALL", new ResetAll().ignoringDisable(true));
 
     //Gyro
     SmartDashboard.putData("Gyro", m_drivetrain.gyro);

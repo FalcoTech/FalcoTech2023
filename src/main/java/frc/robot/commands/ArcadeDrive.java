@@ -40,15 +40,15 @@ public class ArcadeDrive extends CommandBase {
     if (RobotContainer.m_drivetrain.m_slowDriveSpeed){
       if (PilotGetYButton){
         if (RobotYaw > 1.5){
-          RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) - .15);
-        } else if (RobotYaw < -1.5){
           RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) + .15);
+        } else if (RobotYaw < -1.5){
+          RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) - .15);
         }
       } else{
-        RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) + (PilotRightTrigger*.2) - (PilotLeftTrigger*.2));
+        RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.3) + (PilotRightTrigger*.2) - (PilotLeftTrigger*.2));
       }
     } else{
-      RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .75, slowTriggerTurn);
+      RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .8, slowTriggerTurn);
     }  
   }
 

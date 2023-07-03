@@ -25,13 +25,13 @@ public class MidNodeArmAuto extends CommandBase {
     double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
 
     if (ArmPos < 1){ //too far back
-      RobotContainer.m_arm.MoveArm(-.3);
+      RobotContainer.m_arm.MoveArm(-.35);
     } else if (ArmPos > 1 && ArmPos < 1.35){ //almost there
-      RobotContainer.m_arm.MoveArm(-.2);
+      RobotContainer.m_arm.MoveArm(-.25);
     } else if (ArmPos > 1.45){ //too high
-      RobotContainer.m_arm.MoveArm(.1);; //might need to run back
+      RobotContainer.m_arm.MoveArm(.05);; //might need to run back
     } else{ //hold?
-      RobotContainer.m_arm.MoveArm(-.05);
+      RobotContainer.m_arm.MoveArm(-.175);
     }
   }
 

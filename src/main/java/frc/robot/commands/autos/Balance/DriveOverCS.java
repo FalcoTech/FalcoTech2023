@@ -31,6 +31,6 @@ public class DriveOverCS extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_drivetrain.GetGyroPitch() > 3;
+    return RobotContainer.m_drivetrain.GetGyroPitch() < -5;
   }
 }

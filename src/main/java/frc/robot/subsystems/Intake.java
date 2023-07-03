@@ -19,6 +19,7 @@ public class Intake extends SubsystemBase {
   
   /** Creates a new Intake. */
   public Intake() {
+    //leftIntakeMotor.follow(rightIntakeMotor, true);
     rightIntakeMotor.follow(leftIntakeMotor, true);
     leftIntakeMotor.setIdleMode(IdleMode.kBrake);
     rightIntakeMotor.setIdleMode(IdleMode.kBrake);
@@ -26,9 +27,11 @@ public class Intake extends SubsystemBase {
 
   public void RunIntake(double speed){
     leftIntakeMotor.set(speed);
+    //rightIntakeMotor.set(speed);
   }
   public void StopIntake(){
     leftIntakeMotor.set(0);
+    rightIntakeMotor.set(0);
   }
 
   public double GetLeftIntakeMotorVoltage(){

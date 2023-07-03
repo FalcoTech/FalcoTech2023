@@ -38,19 +38,12 @@ public class GroundPickupArm extends CommandBase {
     } else if (ArmPos > -.7 && ArmPos < -.65){
       RobotContainer.m_arm.MoveArm(-.05);
     }
-
-    if (ArmPos > -.675 && ArmPos < -.575){
-      if (!RobotContainer.m_arm.GetArmExtended()){
-        RobotContainer.m_arm.ExtendArm();
-      }
-      RobotContainer.m_arm.MoveArm(.1);
-    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_arm.MoveArm(.5);
+    RobotContainer.m_arm.MoveArm(0);
     RobotContainer.m_arm.setDefaultCommand(new RunArm());
   }
 
@@ -59,6 +52,6 @@ public class GroundPickupArm extends CommandBase {
   public boolean isFinished() {
     return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 
     || RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180 || RobotContainer.CoPilot.getPOV() == 270
-    || (RobotContainer.m_arm.GetArmEncoderPosition() > -.675 && RobotContainer.m_arm.GetArmEncoderPosition() < -.575 && RobotContainer.m_arm.GetArmExtended());
+    || (RobotContainer.m_arm.GetArmEncoderPosition() > -.675 && RobotContainer.m_arm.GetArmEncoderPosition() < -.575);
   }
 }

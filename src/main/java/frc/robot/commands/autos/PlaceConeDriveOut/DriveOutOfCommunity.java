@@ -33,6 +33,6 @@ public class DriveOutOfCommunity extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.m_drivetrain.GetLeftEncoderMeters() < -1.25;
+    return RobotContainer.m_drivetrain.GetLeftEncoderMeters() < -3.5;
   }
 }
