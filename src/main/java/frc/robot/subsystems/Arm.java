@@ -33,15 +33,14 @@ public class Arm extends SubsystemBase {
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
   private final PIDController m_armPID = new PIDController(.2, 0, .05);
-  
 
 
   public Arm() {
     rightArmMotor.follow(leftArmMotor);
-    //START EXTENDER NOT EXTENDED
+
     ResetArmEncoder();
     leftArmMotor.setIdleMode(IdleMode.kBrake);
-    rightArmMotor.setIdleMode(IdleMode.kBrake); //I might cry if this works
+    rightArmMotor.setIdleMode(IdleMode.kBrake); 
   }
 
   public void MoveArm(double speed){
@@ -51,6 +50,12 @@ public class Arm extends SubsystemBase {
     leftArmMotor.set(0);
   }
 
+  public double ArmEncoderRawValue(){
+    return armEncoder.getDistance();
+  }
+  public double GetArmEncoderDegrees(){ //8196 encoder ticks per rotation (full 360), 8196/360 = 22.76666, 22.76666 encoder ticks per degree (maybe?)
+    return ArmEncoderRawValue() / (1138333/50000); //22.76666
+  } //the math makes sense to me idk 
 
   public void ResetArmEncoder(){
     armEncoder.reset();
