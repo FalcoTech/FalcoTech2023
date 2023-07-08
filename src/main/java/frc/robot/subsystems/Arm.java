@@ -51,10 +51,10 @@ public class Arm extends SubsystemBase {
   }
 
   public double ArmEncoderRawValue(){
-    return armEncoder.getDistance();
+    return armEncoder.getRaw();
   }
-  public double GetArmEncoderDegrees(){ //8196 encoder ticks per rotation (full 360), 8196/360 = 22.76666, 22.76666 encoder ticks per degree (maybe?)
-    return ArmEncoderRawValue() / (1138333/50000); //22.76666
+  public double GetArmEncoderDegrees(){ //8192 raw encoder ticks per rotation (full 360)
+    return ArmEncoderRawValue() / (8192/360);
   } //the math makes sense to me idk 
 
   public void ResetArmEncoder(){
