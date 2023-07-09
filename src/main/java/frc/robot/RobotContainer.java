@@ -100,8 +100,6 @@ public class RobotContainer {
     SmartDashboard.putData("Reset Gyro", new ResetGyro().ignoringDisable(true));
     SmartDashboard.putData("RESET ALL", new ResetAll().ignoringDisable(true));
 
-    //Gyro
-    SmartDashboard.putData("Gyro", m_drivetrain.gyro);
   }
 
   public Command getAutonomousCommand() {
@@ -113,5 +111,9 @@ public class RobotContainer {
     m_wrist.ResetWristEncoder();
     m_drivetrain.ResetDriveEncoders();
     m_drivetrain.ResetGyro();
+  }
+
+  public static boolean CoPilotArmOverride(){
+    return CoPilot.getRightY() > .15 || CoPilot.getRightY() < -.15;
   }
 }

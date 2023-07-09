@@ -32,15 +32,16 @@ public class Arm extends SubsystemBase {
 
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
-  private final PIDController m_armPID = new PIDController(.2, 0, .05);
-
+  private final PIDController m_armPID = new PIDController(.1, 0, 0);
 
   public Arm() {
     rightArmMotor.follow(leftArmMotor);
-
-    ResetArmEncoder();
     leftArmMotor.setIdleMode(IdleMode.kBrake);
     rightArmMotor.setIdleMode(IdleMode.kBrake); 
+
+    ResetArmEncoder();
+
+    m_armPID.setSetpoint(0);
   }
 
   public void MoveArm(double speed){
@@ -51,15 +52,22 @@ public class Arm extends SubsystemBase {
   }
 
   public double ArmEncoderRawValue(){
-    return armEncoder.getRaw();
+    return armEncoder.getRaw(); //8192 raw encoder ticks per rotation (full 360)
   }
-  public double GetArmEncoderDegrees(){ //8192 raw encoder ticks per rotation (full 360)
-    return ArmEncoderRawValue() / (8192/360);
+  public double GetArmEncoderDegrees(){ 
+    return ArmEncoderRawValue() / (8192/360); // X many tpr / 360 = ~22.755 ticks per degree 
   } //the math makes sense to me idk 
-
   public void ResetArmEncoder(){
     armEncoder.reset();
   }    
+
+  public void SetArmToPoint(double desiredsetpoint, double currentpos){
+    m_armPID.setSetpoint(desiredsetpoint);
+    double PIDOutput = m_armPID.calculate(currentpos);
+
+    leftArmMotor.set(PIDOutput);
+  }
+
 
   public void ExtendArm(){
     extenderSolenoid.set(Value.kReverse);
@@ -72,8 +80,10 @@ public class Arm extends SubsystemBase {
   }
        
 
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Arm Degrees", GetArmEncoderDegrees());
   }
 }

@@ -57,9 +57,7 @@ public class Wrist extends SubsystemBase {
     return wristMotor.getMotorOutputVoltage();
   }
 
-  public boolean GetWristMoving(){
-    return GetWristMotorOutputPercent() == 0;
-  }
+
 
   @Override
   public void periodic() {
@@ -67,6 +65,5 @@ public class Wrist extends SubsystemBase {
     // SmartDashboard.putNumber("Wrist Encoder Value:", GetWristEncoderPosition());
     SmartDashboard.putNumber("Wrist Motor Output Percent", wristMotor.getMotorOutputPercent()); //I think this does the output of the motor controller itself, not the actual motor. 
     SmartDashboard.putNumber("Wrist Motor Output Voltage", wristMotor.getMotorOutputVoltage()); //applied voltage to motor in volts
-    SmartDashboard.putBoolean("Wrist Moving", GetWristMoving());
   }
 }
