@@ -41,7 +41,7 @@ public class Arm extends SubsystemBase {
 
     ResetArmEncoder();
 
-    m_armPID.setSetpoint(0);
+    SetArmSetpoint(0);
   }
 
   public void MoveArm(double speed){
@@ -61,8 +61,11 @@ public class Arm extends SubsystemBase {
     armEncoder.reset();
   }    
 
-  public void SetArmToPoint(double desiredsetpoint, double currentpos){
+  public void SetArmSetpoint(double desiredsetpoint){
     m_armPID.setSetpoint(desiredsetpoint);
+  }
+  public void SetArmToPoint(double desiredsetpoint, double currentpos){
+    SetArmSetpoint(desiredsetpoint);
     double PIDOutput = m_armPID.calculate(currentpos);
 
     leftArmMotor.set(PIDOutput);
