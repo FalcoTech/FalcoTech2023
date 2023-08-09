@@ -121,11 +121,7 @@ public class DriveTrain extends SubsystemBase {
     shiftSolenoid.set(Value.kForward);
   }
   public boolean GetLowGear(){
-    if (shiftSolenoid.get() == Value.kReverse){
-      return true;
-    } else{
-      return false;
-    }
+    return (shiftSolenoid.get() == Value.kReverse);
   }
 
   public void BrakeDriveMotors(){
