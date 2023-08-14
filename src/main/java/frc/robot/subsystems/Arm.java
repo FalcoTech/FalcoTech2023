@@ -32,7 +32,7 @@ public class Arm extends SubsystemBase {
 
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
-  private final PIDController m_armPID = new PIDController(.1, 0, 0);
+  private final PIDController m_armPID = new PIDController(.09, 0, 0);
 
   public Arm() {
     rightArmMotor.follow(leftArmMotor);
