@@ -38,6 +38,6 @@ public class ZeroArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (armposition > -2 && armposition < 2);
+    return (armposition > -3.5 && armposition < 3.5);
   }
 }

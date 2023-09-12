@@ -82,7 +82,7 @@ public class RobotContainer {
 
 
 
-    new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new ZeroArm());
+    new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new ZeroArm());
   }
 
   private void configureSmartdashboard(){

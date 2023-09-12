@@ -23,7 +23,7 @@ public class RunArm extends CommandBase {
   public void execute() {
     double CoPilotRightY = RobotContainer.CoPilot.getRightY();
 
-    RobotContainer.m_arm.MoveArm(CoPilotRightY * .4);
+    RobotContainer.m_arm.MoveArm(CoPilotRightY * .25);
   }
 
   // Called once the command ends or is interrupted.

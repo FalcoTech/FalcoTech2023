@@ -32,10 +32,10 @@ public class Arm extends SubsystemBase {
 
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 
-  private final PIDController m_armPID = new PIDController(.09, 0, 0);
+  private final PIDController m_armPID = new PIDController(.006, 0, 0);
 
   public Arm() {
-    rightArmMotor.follow(leftArmMotor);
+    rightArmMotor.follow(leftArmMotor, true);
     leftArmMotor.setIdleMode(IdleMode.kBrake);
     rightArmMotor.setIdleMode(IdleMode.kBrake); 
 
@@ -45,7 +45,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void MoveArm(double speed){
-    leftArmMotor.set(speed);
+    leftArmMotor.set(-speed);
   }
   public void StopArm(){
     leftArmMotor.set(0);
@@ -68,7 +68,7 @@ public class Arm extends SubsystemBase {
     SetArmSetpoint(desiredsetpoint);
     double PIDOutput = m_armPID.calculate(currentpos);
 
-    leftArmMotor.set(PIDOutput);
+    leftArmMotor.set(-PIDOutput);
   }
 
 
@@ -88,5 +88,6 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Arm Degrees", GetArmEncoderDegrees());
+    SmartDashboard.putNumber("Arm Encoder Raw Value", ArmEncoderRawValue());
   }
 }

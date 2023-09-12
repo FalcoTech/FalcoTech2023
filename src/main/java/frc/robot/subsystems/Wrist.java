@@ -65,5 +65,8 @@ public class Wrist extends SubsystemBase {
     // SmartDashboard.putNumber("Wrist Encoder Value:", GetWristEncoderPosition());
     SmartDashboard.putNumber("Wrist Motor Output Percent", wristMotor.getMotorOutputPercent()); //I think this does the output of the motor controller itself, not the actual motor. 
     SmartDashboard.putNumber("Wrist Motor Output Voltage", wristMotor.getMotorOutputVoltage()); //applied voltage to motor in volts
+    SmartDashboard.putNumber("Wrist Degrees", GetWristEncoderDegrees());
+    SmartDashboard.putNumber("Wrist Raw Value", WristEncoderRawValue());
+
   }
 }
