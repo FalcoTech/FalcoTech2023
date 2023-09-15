@@ -6,15 +6,14 @@ package frc.robot.commands.armpresets;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.RobotContainer;
 
-public class ZeroArm extends CommandBase {
-  private static Timer armTimer = new Timer();
+public class HighNodeArm extends CommandBase {
   private static double armposition;
+  private static Timer armTimer = new Timer();
 
-  /** Creates a new ZeroArm. */
-  public ZeroArm() {
+  /** Creates a new HighNodeArm. */
+  public HighNodeArm() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_arm);
   }
@@ -22,7 +21,6 @@ public class ZeroArm extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.m_arm.RetractArm();
     armTimer.reset();
     armTimer.start();
   }
@@ -32,7 +30,7 @@ public class ZeroArm extends CommandBase {
   public void execute() {
     armposition = RobotContainer.m_arm.GetArmEncoderDegrees();
 
-    RobotContainer.m_arm.SetArmToPoint(0, armposition);
+    RobotContainer.m_arm.SetArmToPoint(95, armposition); //not sure how pid values will effect this but just tune them lol
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +44,6 @@ public class ZeroArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (armposition > -3 && armposition < 3) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
+    return (armposition > 94 && armposition < 96) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
   }
 }

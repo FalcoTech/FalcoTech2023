@@ -31,8 +31,9 @@ public class Arm extends SubsystemBase {
   private final Encoder armEncoder = new Encoder(ArmConstants.ARMENCODER_A, ArmConstants.ARMENCODER_B);
 
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
-
+//.006
   private final PIDController m_armPID = new PIDController(.006, 0, 0);
+  
 
   public Arm() {
     rightArmMotor.follow(leftArmMotor, true);
@@ -42,6 +43,7 @@ public class Arm extends SubsystemBase {
     ResetArmEncoder();
 
     SetArmSetpoint(0);
+
   }
 
   public void MoveArm(double speed){
