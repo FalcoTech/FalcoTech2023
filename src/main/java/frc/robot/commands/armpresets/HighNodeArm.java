@@ -4,13 +4,15 @@
 
 package frc.robot.commands.armpresets;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.commands.RunArm;
-import frc.robot.subsystems.Arm;
 
 public class HighNodeArm extends CommandBase {
-  /** Creates a new ScoreLowNodeArm. */
+  private static double armposition;
+  private static Timer armTimer = new Timer();
+
+  /** Creates a new HighNodeArm. */
   public HighNodeArm() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_arm);
@@ -18,35 +20,30 @@ public class HighNodeArm extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    armTimer.reset();
+    armTimer.start();
+  }
 
-  // Called every time the scheduler runs while the command is scheduled.  
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
-    if (ArmPos < 1.3){ //too far back
-      RobotContainer.m_arm.MoveArm(-.3);
-    } else if (ArmPos > 1.3 && ArmPos < 1.55){ //almost there
-      if (RobotContainer.m_arm.GetArmExtended()){ //if extended, more force needed to hold
-        RobotContainer.m_arm.MoveArm(-.275);
-      } else{
-        RobotContainer.m_arm.MoveArm(-.2);
-      }
-    } else if (ArmPos > 1.55){
-      RobotContainer.m_arm.StopArm();
-    }
+    armposition = RobotContainer.m_arm.GetArmEncoderDegrees();
+
+    RobotContainer.m_arm.SetArmToPoint(95, armposition); //not sure how pid values will effect this but just tune them lol
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_arm.setDefaultCommand(new RunArm());
+    RobotContainer.m_arm.StopArm();
+    armTimer.stop();
+    armTimer.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 
-    || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 180 || RobotContainer.CoPilot.getPOV() == 270 || RobotContainer.CoPilot.getBackButton();
+    return (armposition > 94 && armposition < 96) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
   }
 }

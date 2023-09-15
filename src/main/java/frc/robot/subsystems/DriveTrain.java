@@ -88,6 +88,7 @@ public class DriveTrain extends SubsystemBase {
     
     m_field2d.setRobotPose(GetPose2d());
     compressor.enableDigital();
+    SmartDashboard.putNumber("Pneumatics PSI", compressor.getPressure());
 
     SmartDashboard.putNumber("Robot Pitch", GetGyroPitch());
     SmartDashboard.putNumber("Robot Angle", GetGyroYaw());
@@ -121,11 +122,7 @@ public class DriveTrain extends SubsystemBase {
     shiftSolenoid.set(Value.kForward);
   }
   public boolean GetLowGear(){
-    if (shiftSolenoid.get() == Value.kReverse){
-      return true;
-    } else{
-      return false;
-    }
+    return (shiftSolenoid.get() == Value.kReverse);
   }
 
   public void BrakeDriveMotors(){

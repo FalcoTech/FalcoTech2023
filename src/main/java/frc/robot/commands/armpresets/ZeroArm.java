@@ -6,14 +6,13 @@ package frc.robot.commands.armpresets;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.RobotContainer;
-import frc.robot.commands.RunArm;
-import frc.robot.commands.wristpresets.ZeroWrist;
 
 public class ZeroArm extends CommandBase {
-  public static Timer armTimer = new Timer();
-  
+  private static Timer armTimer = new Timer();
+  private static double armposition;
+
   /** Creates a new ZeroArm. */
   public ZeroArm() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,37 +23,29 @@ public class ZeroArm extends CommandBase {
   @Override
   public void initialize() {
     RobotContainer.m_arm.RetractArm();
-    // new ZeroWrist();
+    armTimer.reset();
+    armTimer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ArmPos = RobotContainer.m_arm.GetArmEncoderPosition();
-    if (ArmPos < -.3){
-      RobotContainer.m_arm.MoveArm(-.3);
-    } else if (ArmPos > -.3 && ArmPos < -.1){
-      RobotContainer.m_arm.MoveArm(-.125);
-    } else if (ArmPos > .3){
-      RobotContainer.m_arm.MoveArm(.3);
-    } else if (ArmPos < .3 && ArmPos > .1){
-      RobotContainer.m_arm.MoveArm(.125);
-    } else {
-      RobotContainer.m_arm.StopArm();
-    }
+    armposition = RobotContainer.m_arm.GetArmEncoderDegrees();
+
+    RobotContainer.m_arm.SetArmToPoint(0, armposition);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.m_arm.StopArm();
-    RobotContainer.m_arm.setDefaultCommand(new RunArm()); //set default command back to user control when command finishes
+    armTimer.stop();
+    armTimer.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.CoPilot.getRightY() > .1 || RobotContainer.CoPilot.getRightY() < -.1 
-    || RobotContainer.CoPilot.getPOV() == 0 || RobotContainer.CoPilot.getPOV() == 90 || RobotContainer.CoPilot.getPOV() == 270 || RobotContainer.CoPilot.getBackButton();
+    return (armposition > -3 && armposition < 3) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
   }
 }

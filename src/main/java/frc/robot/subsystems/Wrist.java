@@ -39,8 +39,12 @@ public class Wrist extends SubsystemBase {
     wristMotor.set(ControlMode.PercentOutput, -.5 * m_wristPID.calculate(currentpos, setpoint));
   }
 
-  public double GetWristEncoderPosition(){
-    return wristEncoder.getDistance();
+  public double WristEncoderRawValue(){
+    return wristEncoder.getRaw();
+  }
+  public double GetWristEncoderDegrees(){
+    return WristEncoderRawValue() / (8192/360);
+
   }
   public void ResetWristEncoder(){
     wristEncoder.reset();
@@ -53,16 +57,16 @@ public class Wrist extends SubsystemBase {
     return wristMotor.getMotorOutputVoltage();
   }
 
-  public boolean GetWristMoving(){
-    return GetWristMotorOutputPercent() == 0;
-  }
+
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Wrist Encoder Value:", GetWristEncoderPosition());
+    // SmartDashboard.putNumber("Wrist Encoder Value:", GetWristEncoderPosition());
     SmartDashboard.putNumber("Wrist Motor Output Percent", wristMotor.getMotorOutputPercent()); //I think this does the output of the motor controller itself, not the actual motor. 
     SmartDashboard.putNumber("Wrist Motor Output Voltage", wristMotor.getMotorOutputVoltage()); //applied voltage to motor in volts
-    SmartDashboard.putBoolean("Wrist Moving", GetWristMoving());
+    SmartDashboard.putNumber("Wrist Degrees", GetWristEncoderDegrees());
+    SmartDashboard.putNumber("Wrist Raw Value", WristEncoderRawValue());
+
   }
 }

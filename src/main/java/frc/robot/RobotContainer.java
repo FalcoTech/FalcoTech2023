@@ -8,14 +8,8 @@ package frc.robot;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.armpresets.*;
-import frc.robot.commands.autos.*;
 import frc.robot.commands.resets.*;
-import frc.robot.commands.wristpresets.*;
 import frc.robot.subsystems.*;
-import pabeles.concurrency.ConcurrencyOps.Reset;
-
-import java.util.HashMap;
-import java.util.List;
 
 import javax.print.attribute.standard.Copies;
 
@@ -82,24 +76,15 @@ public class RobotContainer {
     new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
     new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
 
-    new Trigger(() -> CoPilot.getXButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new ZeroWrist())));
-    new Trigger(() -> CoPilot.getAButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new HalfTurnWrist())));
-    new Trigger(() -> CoPilot.getBButton()).onTrue(new InstantCommand(() -> m_wrist.setDefaultCommand(new FullTurnWrist())));
 
-    new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HighNodeArm())));
-    new Trigger(() -> CoPilot.getPOV() == 90).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new MidNodeArm())));
-    new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new ZeroArm())));
-    new Trigger(() -> CoPilot.getPOV() == 270).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new HumanPlayerArm())));
-    new Trigger(() -> CoPilot.getBackButton()).onTrue(new InstantCommand(() -> m_arm.setDefaultCommand(new GroundPickupArm())));
+
+    new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new ZeroArm());
   }
 
   private void configureSmartdashboard(){
     //Smartdashboard AutoChooser options
     m_autoChooser.setDefaultOption("No Auto Selected", new InstantCommand());
-    m_autoChooser.addOption("Place Cone Mid & Drive Out", new PlaceConeMidDriveOutFullAuto());
-    m_autoChooser.addOption("Place Cone Mid", new PlaceConeMidOnlyFullAuto());
-
-    m_autoChooser.addOption("Balance", new BalanceFullAuto());
+    m_autoChooser.addOption("New Option", new InstantCommand());
 
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
     
@@ -110,8 +95,6 @@ public class RobotContainer {
     SmartDashboard.putData("Reset Gyro", new ResetGyro().ignoringDisable(true));
     SmartDashboard.putData("RESET ALL", new ResetAll().ignoringDisable(true));
 
-    //Gyro
-    SmartDashboard.putData("Gyro", m_drivetrain.gyro);
   }
 
   public Command getAutonomousCommand() {
@@ -123,5 +106,9 @@ public class RobotContainer {
     m_wrist.ResetWristEncoder();
     m_drivetrain.ResetDriveEncoders();
     m_drivetrain.ResetGyro();
+  }
+
+  public static boolean CoPilotArmOverride(){
+    return CoPilot.getRightY() > .15 || CoPilot.getRightY() < -.15;
   }
 }

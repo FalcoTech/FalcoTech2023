@@ -26,80 +26,70 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
-  private final VictorSPX leftArmMotor = new VictorSPX(ArmConstants.LEFTARMMOTOR_ID);
-  private final VictorSPX rightArmMotor = new VictorSPX(ArmConstants.RIGHTARMMOTOR_ID);
+  private final CANSparkMax leftArmMotor = new CANSparkMax(ArmConstants.LEFTARMMOTOR_ID, MotorType.kBrushless);
+  private final CANSparkMax rightArmMotor = new CANSparkMax(ArmConstants.RIGHTARMMOTOR_ID, MotorType.kBrushless);
   private final Encoder armEncoder = new Encoder(ArmConstants.ARMENCODER_A, ArmConstants.ARMENCODER_B);
 
-  private final PIDController m_armPID = new PIDController(.2, 0, .05);
-
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
-
+//.006
+  private final PIDController m_armPID = new PIDController(.006, 0, 0);
+  
 
   public Arm() {
-    rightArmMotor.follow(leftArmMotor);
-    //START EXTENDER NOT EXTENDED
+    rightArmMotor.follow(leftArmMotor, true);
+    leftArmMotor.setIdleMode(IdleMode.kBrake);
+    rightArmMotor.setIdleMode(IdleMode.kBrake); 
+
     ResetArmEncoder();
-    leftArmMotor.setNeutralMode(NeutralMode.Brake);
-    rightArmMotor.setNeutralMode(NeutralMode.Brake); //I might cry if this works
+
+    SetArmSetpoint(0);
+
   }
 
   public void MoveArm(double speed){
-    leftArmMotor.set(ControlMode.PercentOutput, speed);
+    leftArmMotor.set(-speed);
   }
   public void StopArm(){
-    leftArmMotor.set(ControlMode.PercentOutput, 0);
-  }
-  public void SetArmToPoint(double currentpos, double setpoint){
-    leftArmMotor.set(ControlMode.PercentOutput, .25 * m_armPID.calculate(currentpos, setpoint));
+    leftArmMotor.set(0);
   }
 
-  public double GetArmEncoderPosition(){
-    return armEncoder.getDistance() / -360;
+  public double ArmEncoderRawValue(){
+    return armEncoder.getRaw(); //8192 raw encoder ticks per rotation (full 360)
   }
+  public double GetArmEncoderDegrees(){ 
+    return ArmEncoderRawValue() / (8192/360); // X many tpr / 360 = ~22.755 ticks per degree 
+  } //the math makes sense to me idk 
   public void ResetArmEncoder(){
     armEncoder.reset();
   }    
 
+  public void SetArmSetpoint(double desiredsetpoint){
+    m_armPID.setSetpoint(desiredsetpoint);
+  }
+  public void SetArmToPoint(double desiredsetpoint, double currentpos){
+    SetArmSetpoint(desiredsetpoint);
+    double PIDOutput = m_armPID.calculate(currentpos);
+
+    leftArmMotor.set(-PIDOutput);
+  }
+
+
   public void ExtendArm(){
-    if (GetArmEncoderPosition() < .5 && GetArmEncoderPosition() > -.5){
-      RobotContainer.m_leds.BlinkRed();
-    } else {
-      extenderSolenoid.set(Value.kReverse);
-    }
+    extenderSolenoid.set(Value.kReverse);
   }
   public void RetractArm(){
     extenderSolenoid.set(Value.kForward);
   }
   public boolean GetArmExtended(){
-    if (extenderSolenoid.get() == Value.kReverse){
-      return true;
-    } else{
-      return false;
-    }
+    return (extenderSolenoid.get() == Value.kReverse);
   }
+       
 
-  public double GetArmMotorOutputPercent(){
-    return leftArmMotor.getMotorOutputPercent();
-  }
-  public double GetArmMotorOutputVolts(){
-    return leftArmMotor.getMotorOutputVoltage();
-  }          
-
-  public boolean GetArmMoving(){
-    return GetArmMotorOutputPercent() == 0;
-  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Arm Encoder Value:", GetArmEncoderPosition());
-    SmartDashboard.putNumber("Arm Motor Output Percent", GetArmMotorOutputPercent());
-    SmartDashboard.putNumber("Arm Motor Output Volts", GetArmMotorOutputVolts());
-    SmartDashboard.putBoolean("Arm Moving", GetArmMoving());
-    
-    if (GetArmEncoderPosition() > -.5 && GetArmEncoderPosition() < .5 && GetArmExtended()){
-      RetractArm();
-      RobotContainer.m_leds.BlinkRed();
-    }
+    SmartDashboard.putNumber("Arm Degrees", GetArmEncoderDegrees());
+    SmartDashboard.putNumber("Arm Encoder Raw Value", ArmEncoderRawValue());
   }
 }
