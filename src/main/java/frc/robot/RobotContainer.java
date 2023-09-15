@@ -10,10 +10,6 @@ import frc.robot.commands.*;
 import frc.robot.commands.armpresets.*;
 import frc.robot.commands.resets.*;
 import frc.robot.subsystems.*;
-import pabeles.concurrency.ConcurrencyOps.Reset;
-
-import java.util.HashMap;
-import java.util.List;
 
 import javax.print.attribute.standard.Copies;
 
