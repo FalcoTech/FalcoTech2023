@@ -24,6 +24,8 @@ public class RunArm extends CommandBase {
     double CoPilotRightY = RobotContainer.CoPilot.getRightY();
 
     RobotContainer.m_arm.MoveArm(CoPilotRightY * .25);
+
+    //todo: add feedforward if arm is extended
   }
 
   // Called once the command ends or is interrupted.

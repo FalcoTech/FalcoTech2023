@@ -2,49 +2,47 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.armpresets;
+package frc.robot.commands.wristpresets;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class HighNodeArm extends CommandBase {
-  private static double armposition;
-  private static Timer armTimer = new Timer();
-
-  /** Creates a new HighNodeArm. */
-  public HighNodeArm() {
+public class HalfTurnWrist extends CommandBase {
+  private static Timer wristTimer = new Timer();
+  private static double wristposition;
+  /** Creates a new HalfTurnWrist. */
+  public HalfTurnWrist() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_arm);
+    addRequirements(RobotContainer.m_wrist);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    armTimer.reset();
-    armTimer.start();
+    wristTimer.reset();
+    wristTimer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    armposition = RobotContainer.m_arm.GetArmEncoderDegrees();
+    wristposition = RobotContainer.m_wrist.GetWristEncoderDegrees();
 
-    RobotContainer.m_arm.SetArmToPoint(95, armposition); //not sure how pid values will effect this but just tune them lol
-    //TODO add feedforward for arm extension
+    RobotContainer.m_wrist.SetWristToPoint(95, wristposition);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_arm.StopArm();
-    armTimer.stop();
-    armTimer.reset();
+    RobotContainer.m_wrist.StopWrist();
+    wristTimer.stop();
+    wristTimer.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (armposition > 94 && armposition < 96) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
+    return (wristposition > 94 && wristposition < 96) || RobotContainer.CoPilotWristOverride() || wristTimer.get() > 5;
   }
 }

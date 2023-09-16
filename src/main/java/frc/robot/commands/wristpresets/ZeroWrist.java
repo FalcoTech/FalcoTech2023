@@ -10,7 +10,7 @@ import frc.robot.RobotContainer;
 
 public class ZeroWrist extends CommandBase {
   private static Timer wristTimer = new Timer();
-  private double wristEncoderDegrees;
+  private static double wristposition;
   /** Creates a new ZeroWrist. */
   public ZeroWrist() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,9 +27,9 @@ public class ZeroWrist extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    wristEncoderDegrees = RobotContainer.m_wrist.GetWristEncoderDegrees();
+    wristposition = RobotContainer.m_wrist.GetWristEncoderDegrees();
 
-    RobotContainer.m_wrist.SetWristToPoint(wristEncoderDegrees, 0);
+    RobotContainer.m_wrist.SetWristToPoint(0, wristposition);
   }
 
   // Called once the command ends or is interrupted.
@@ -43,6 +43,6 @@ public class ZeroWrist extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return wristTimer.hasElapsed(4) || wristEncoderDegrees < 3 || RobotContainer.CoPilot.getLeftX() > .1 || RobotContainer.CoPilot.getLeftX() < -.1;
+    return wristposition < 1 || RobotContainer.CoPilotWristOverride() || wristTimer.get() > 5;
   }
 }

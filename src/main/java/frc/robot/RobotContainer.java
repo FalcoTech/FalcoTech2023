@@ -109,6 +109,11 @@ public class RobotContainer {
   }
 
   public static boolean CoPilotArmOverride(){
-    return CoPilot.getRightY() > .15 || CoPilot.getRightY() < -.15;
+    double CoPilotRightY = CoPilot.getRightY();
+    return CoPilotRightY > .15 || CoPilotRightY < -.15;
+  }
+  public static boolean CoPilotWristOverride(){
+    double CoPilotLeftX = CoPilot.getLeftX();
+    return CoPilotLeftX > .15 || CoPilotLeftX < -.15;
   }
 }
