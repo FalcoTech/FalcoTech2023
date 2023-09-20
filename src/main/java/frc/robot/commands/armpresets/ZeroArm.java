@@ -32,7 +32,20 @@ public class ZeroArm extends CommandBase {
   public void execute() {
     armposition = RobotContainer.m_arm.GetArmEncoderDegrees();
 
-    RobotContainer.m_arm.SetArmToPoint(0, armposition);
+    if (armposition > 30){
+      RobotContainer.m_arm.MoveArm(.25);
+    } else if (armposition < -30){
+      RobotContainer.m_arm.MoveArm(-.25);
+
+    } else if (armposition <= 30 && armposition >= 2){
+      RobotContainer.m_arm.MoveArm(.1);
+    } else if (armposition >= -30 && armposition <= -2){
+      RobotContainer.m_arm.MoveArm(-.1);
+    }
+    
+    else{
+      RobotContainer.m_arm.StopArm();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +59,6 @@ public class ZeroArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (armposition > -3 && armposition < 3) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
+    return (armposition > -2 && armposition < 2) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
   }
 }

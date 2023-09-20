@@ -30,7 +30,13 @@ public class HighNodeArm extends CommandBase {
   public void execute() {
     armposition = RobotContainer.m_arm.GetArmEncoderDegrees();
 
-    RobotContainer.m_arm.SetArmToPoint(95, armposition); //not sure how pid values will effect this but just tune them lol
+    if (armposition < 80){
+      RobotContainer.m_arm.MoveArm(-.4);
+    } else if (armposition >= 80 && armposition <107){
+      RobotContainer.m_arm.MoveArm(-.2);      
+    } else{
+      RobotContainer.m_arm.StopArm();
+    }
     //TODO add feedforward for arm extension
   }
 
@@ -45,6 +51,6 @@ public class HighNodeArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (armposition > 94 && armposition < 96) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
+    return (armposition > 107 && armposition < 110) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 3;
   }
 }

@@ -29,7 +29,15 @@ public class MidNodeArm extends CommandBase {
   public void execute() {
     armposition = RobotContainer.m_arm.GetArmEncoderDegrees();
 
-    RobotContainer.m_arm.SetArmToPoint(80, armposition); //not sure how pid values will effect this but just tune them lol
+    if (armposition <= 75){
+      RobotContainer.m_arm.MoveArm(-.4);
+    } else if (armposition > 75 && armposition < 95){
+      RobotContainer.m_arm.MoveArm(-.2);
+    } else if (armposition >= 95){
+      RobotContainer.m_arm.MoveArm(.1);
+    } else {
+      RobotContainer.m_arm.StopArm();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -43,6 +51,6 @@ public class MidNodeArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (armposition > 79 && armposition < 81) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
+    return (armposition > 94 && armposition < 96) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
   }
 }

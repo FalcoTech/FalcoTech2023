@@ -9,6 +9,9 @@ import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.armpresets.*;
 import frc.robot.commands.resets.*;
+import frc.robot.commands.wristpresets.FullTurnWrist;
+import frc.robot.commands.wristpresets.HalfTurnWrist;
+import frc.robot.commands.wristpresets.ZeroWrist;
 import frc.robot.subsystems.*;
 
 import javax.print.attribute.standard.Copies;
@@ -35,7 +38,6 @@ public class RobotContainer {
   public static Vision m_vision = new Vision();
   public static LEDs m_leds = new LEDs();
 
-  // public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
   public static final PS4Controller Pilot = new PS4Controller(OperatorConstants.PILOTCONTROLLERPORT);
   //public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
   public static final XboxController CoPilot = new XboxController(OperatorConstants.COPILOTCONTROLLERPORT);
@@ -79,6 +81,14 @@ public class RobotContainer {
 
 
     new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new ZeroArm());
+    new Trigger(() -> CoPilot.getPOV() == 90).onTrue(new MidNodeArm());
+    new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new HighNodeArm());
+    new Trigger(() -> CoPilot.getPOV() == 270).onTrue(new HumanPlayerArm());
+
+    new Trigger(() -> CoPilot.getXButton()).onTrue(new ZeroWrist());
+    new Trigger(() -> CoPilot.getAButton()).onTrue(new HalfTurnWrist());
+    new Trigger(() -> CoPilot.getBButton()).onTrue(new FullTurnWrist());
+
   }
 
   private void configureSmartdashboard(){

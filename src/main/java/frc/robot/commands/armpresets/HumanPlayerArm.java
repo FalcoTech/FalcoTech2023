@@ -30,7 +30,15 @@ public class HumanPlayerArm extends CommandBase {
   public void execute() {
     armposition = RobotContainer.m_arm.GetArmEncoderDegrees();
 
-    RobotContainer.m_arm.SetArmToPoint(-70, armposition); //not sure how pid values will effect this but just tune them lol
+    if (armposition > -70){
+      RobotContainer.m_arm.MoveArm(.4);
+    } else if (armposition <= -70 && armposition >= -90){
+      RobotContainer.m_arm.MoveArm(.2);
+    } else if (armposition < -90){
+      RobotContainer.m_arm.MoveArm(-.1);
+    } else {
+      RobotContainer.m_arm.StopArm();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +52,6 @@ public class HumanPlayerArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (armposition > -71 && armposition < -69) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
+    return (armposition > -90 && armposition < -89) || RobotContainer.CoPilotArmOverride() || armTimer.get() > 5;
   }
 }

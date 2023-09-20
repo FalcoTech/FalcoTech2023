@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -32,7 +34,7 @@ public class Arm extends SubsystemBase {
 
   private final DoubleSolenoid extenderSolenoid = new DoubleSolenoid(2, PneumaticsModuleType.REVPH, ArmConstants.EXTENDERSOLFORWARD_ID, ArmConstants.EXTENDERSOLREVERSE_ID);
 //.006
-  private final PIDController m_armPID = new PIDController(.006, 0, 0);
+  private final PIDController m_armPID = new PIDController(.007, 0, 0);
   
 
   public Arm() {
@@ -57,7 +59,7 @@ public class Arm extends SubsystemBase {
     return armEncoder.getRaw(); //8192 raw encoder ticks per rotation (full 360)
   }
   public double GetArmEncoderDegrees(){ 
-    return ArmEncoderRawValue() / (8192/360); // X many tpr / 360 = ~22.755 ticks per degree 
+    return ArmEncoderRawValue() / (8192/360) * -1; // X many tpr / 360 = ~22.755 ticks per degree 
   } //the math makes sense to me idk 
   public void ResetArmEncoder(){
     armEncoder.reset();
@@ -70,7 +72,7 @@ public class Arm extends SubsystemBase {
     SetArmSetpoint(desiredsetpoint);
     double PIDOutput = m_armPID.calculate(currentpos);
 
-    leftArmMotor.set(-PIDOutput);
+    leftArmMotor.set(PIDOutput);
   }
 
 
@@ -83,6 +85,9 @@ public class Arm extends SubsystemBase {
   public boolean GetArmExtended(){
     return (extenderSolenoid.get() == Value.kReverse);
   }
+  public double GetArmOutput(){
+    return leftArmMotor.getAppliedOutput();
+  }
        
 
 
@@ -91,5 +96,6 @@ public class Arm extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Arm Degrees", GetArmEncoderDegrees());
     SmartDashboard.putNumber("Arm Encoder Raw Value", ArmEncoderRawValue());
+    SmartDashboard.putNumber("Arm Moving", GetArmOutput());
   }
 }

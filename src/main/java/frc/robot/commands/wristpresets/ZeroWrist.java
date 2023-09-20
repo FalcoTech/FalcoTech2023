@@ -29,7 +29,9 @@ public class ZeroWrist extends CommandBase {
   public void execute() {
     wristposition = RobotContainer.m_wrist.GetWristEncoderDegrees();
 
-    RobotContainer.m_wrist.SetWristToPoint(0, wristposition);
+    if (wristposition > 3){
+      RobotContainer.m_wrist.TurnWrist(.5);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -43,6 +45,6 @@ public class ZeroWrist extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return wristposition < 1 || RobotContainer.CoPilotWristOverride() || wristTimer.get() > 5;
+    return wristposition < 3; //|| RobotContainer.CoPilotWristOverride() || wristTimer.get() > 5;
   }
 }
