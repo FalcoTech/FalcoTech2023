@@ -45,6 +45,6 @@ public class ZeroWrist extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return wristposition < 3; //|| RobotContainer.CoPilotWristOverride() || wristTimer.get() > 5;
+    return wristposition < 3 || RobotContainer.CoPilotWristOverride() || wristTimer.get() > 4;
   }
 }

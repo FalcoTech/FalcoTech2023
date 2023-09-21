@@ -28,25 +28,19 @@ public class ArcadeDrive extends CommandBase {
   public void execute() {
     double PilotLeftY = RobotContainer.Pilot.getLeftY();
     double PilotRightX = RobotContainer.Pilot.getRightX();
-    double PilotRightY = RobotContainer.Pilot.getRightY();
 
+    //PS4 CONTROLLER
     double PilotRightTrigger = RobotContainer.Pilot.getR2Axis();
     double PilotLeftTrigger = RobotContainer.Pilot.getL2Axis();
+    //XBOX CONTROLLER
+    // double PilotRightTrigger = RobotContainer.Pilot.getRightTriggerAxis();
+    // double PilotLeftTrigger = RobotContainer.Pilot.getLeftTriggerAxis();
+
     double slowTriggerTurn = (PilotRightX*.6) + (PilotRightTrigger*.25) - (PilotLeftTrigger*.25);
     
-    boolean PilotGetYButton = RobotContainer.Pilot.getTriangleButton();
-    double RobotYaw = RobotContainer.m_drivetrain.GetGyroYaw();
-
     if (RobotContainer.m_drivetrain.m_slowDriveSpeed){
-      if (PilotGetYButton){
-        if (RobotYaw > 1.5){
-          RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) + .15);
-        } else if (RobotYaw < -1.5){
-          RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.25) - .15);
-        }
-      } else{
-        RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.3) + (PilotRightTrigger*.2) - (PilotLeftTrigger*.2));
-      }
+      RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .35, (PilotRightX*.3) + (PilotRightTrigger*.2) - (PilotLeftTrigger*.2));
+    
     } else{
       RobotContainer.m_drivetrain.ArcadeDrive(PilotLeftY * .8, slowTriggerTurn);
     }  

@@ -39,8 +39,10 @@ public class RobotContainer {
   public static LEDs m_leds = new LEDs();
 
   public static final PS4Controller Pilot = new PS4Controller(OperatorConstants.PILOTCONTROLLERPORT);
-  //public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
+  // public static final XboxController Pilot = new XboxController(OperatorConstants.PILOTCONTROLLERPORT);
+
   public static final XboxController CoPilot = new XboxController(OperatorConstants.COPILOTCONTROLLERPORT);
+
 
   //Smartdashboard choosers/data
   SendableChooser<Command> m_autoChooser = new SendableChooser<>();
@@ -62,23 +64,38 @@ public class RobotContainer {
   /** Use this method to define your trigger->command mappings. Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@lin CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}. */
   private void configureBindings() {
     //Pilot Controls
-    //new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
-    //new Trigger(() -> Pilot.getCircleButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
-    new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear  
-    new Trigger(() -> Pilot.getCircleButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
+
+    //------------------------------------------------------------------------------------------------------
+    //PLAYSTATION CONTROLLER ONLY
     
-    new Trigger(() -> Pilot.getL1Button()).onTrue(new InstantCommand(() -> m_drivetrain.SlowArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
-    new Trigger(() -> Pilot.getR1Button()).onTrue(new InstantCommand(() -> m_drivetrain.NormalArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear    new Trigger(() -> Pilot.getL1Button()).onTrue(new InstantCommand(() -> m_drivetrain.SlowArcadeDriveSpeed())); //Pilot's "B" button shifts to high gear
+    new Trigger(() -> Pilot.getCrossButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "Cross" button shifts to low gear  
+    new Trigger(() -> Pilot.getCircleButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "Circle" button shifts to high gear
+    
+    new Trigger(() -> Pilot.getL1Button()).onTrue(new InstantCommand(() -> m_drivetrain.SlowArcadeDriveSpeed())); 
+    new Trigger(() -> Pilot.getR1Button()).onTrue(new InstantCommand(() -> m_drivetrain.NormalArcadeDriveSpeed())); 
 
     new Trigger(() -> Pilot.getOptionsButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
+
+    //------------------------------------------------------------------------------------------------------
+    //XBOX CONTROLLER ONLY
+
+    // new Trigger(() -> Pilot.getAButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftLowGear())); //Pilot's "A" button shifts to low gear
+    // new Trigger(() -> Pilot.getBButton()).onTrue(new InstantCommand(() -> m_drivetrain.ShiftHighGear())); //Pilot's "B" button shifts to high gear
+
+    // new Trigger(() -> Pilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_drivetrain.SlowArcadeDriveSpeed()));
+    // new Trigger(() -> Pilot.getRightBumper()).onTrue(new InstantCommand(() -> m_drivetrain.NormalArcadeDriveSpeed()));
+
+    // new Trigger(() -> Pilot.getStartButton()).onTrue(new InstantCommand(() -> m_drivetrain.ToggleArcadeDriveSpeed())); //Pilot's "Start" button toggles driver speed (charging pad)
+
+
+//------------------------------------------------------------------------------------------------------
+
 
     //Copilot Controls
     new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
 
     new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
     new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
-
-
 
     new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new ZeroArm());
     new Trigger(() -> CoPilot.getPOV() == 90).onTrue(new MidNodeArm());
