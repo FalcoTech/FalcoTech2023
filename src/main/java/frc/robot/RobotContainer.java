@@ -8,6 +8,8 @@ package frc.robot;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.armpresets.*;
+import frc.robot.commands.autos.DriveOut;
+import frc.robot.commands.autos.FullAutosFol.PlaceConeMidDriveOutFullAuto;
 import frc.robot.commands.resets.*;
 import frc.robot.commands.wristpresets.FullTurnWrist;
 import frc.robot.commands.wristpresets.HalfTurnWrist;
@@ -92,15 +94,15 @@ public class RobotContainer {
 
 
     //Copilot Controls
-    new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
+    // new Trigger(() -> CoPilot.getStartButton()).onTrue(new InstantCommand(() -> m_leds.SwitchHPColor()));
 
     new Trigger(() -> CoPilot.getLeftBumper()).onTrue(new InstantCommand(() -> m_arm.ExtendArm()));
     new Trigger(() -> CoPilot.getRightBumper()).onTrue(new InstantCommand(() -> m_arm.RetractArm())); 
 
-    new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new ZeroArm());
-    new Trigger(() -> CoPilot.getPOV() == 90).onTrue(new MidNodeArm());
-    new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new HighNodeArm());
-    new Trigger(() -> CoPilot.getPOV() == 270).onTrue(new HumanPlayerArm());
+    new Trigger(() -> CoPilot.getPOV() == 180).onTrue(new ZeroArm()); // DOWN
+    new Trigger(() -> CoPilot.getPOV() == 90).onTrue(new MidNodeArm()); // RIGHT
+    new Trigger(() -> CoPilot.getPOV() == 0).onTrue(new HighNodeArm()); // UP
+    new Trigger(() -> CoPilot.getPOV() == 270).onTrue(new HumanPlayerArm()); // LEFT
 
     new Trigger(() -> CoPilot.getXButton()).onTrue(new ZeroWrist());
     new Trigger(() -> CoPilot.getAButton()).onTrue(new HalfTurnWrist());
@@ -111,7 +113,10 @@ public class RobotContainer {
   private void configureSmartdashboard(){
     //Smartdashboard AutoChooser options
     m_autoChooser.setDefaultOption("No Auto Selected", new InstantCommand());
-    m_autoChooser.addOption("New Option", new InstantCommand());
+    m_autoChooser.addOption("Mid Cone + Drive Out", new PlaceConeMidDriveOutFullAuto());
+    m_autoChooser.addOption("Go Blake, Go", new PlaceConeMidDriveOutFullAuto());
+    m_autoChooser.addOption("Drive Out Only", new DriveOut());
+
 
     SmartDashboard.putData("Auto Mode", m_autoChooser); // Add chooser for auto
     

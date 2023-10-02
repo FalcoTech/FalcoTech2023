@@ -77,7 +77,9 @@ public class Arm extends SubsystemBase {
 
 
   public void ExtendArm(){
-    extenderSolenoid.set(Value.kReverse);
+    if (GetArmEncoderDegrees() > 90){
+      extenderSolenoid.set(Value.kReverse);
+    }
   }
   public void RetractArm(){
     extenderSolenoid.set(Value.kForward);

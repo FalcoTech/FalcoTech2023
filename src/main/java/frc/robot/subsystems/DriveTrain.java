@@ -88,7 +88,7 @@ public class DriveTrain extends SubsystemBase {
     
     m_field2d.setRobotPose(GetPose2d());
     compressor.enableDigital();
-    SmartDashboard.putNumber("Pneumatics PSI", compressor.getPressure());
+    // SmartDashboard.putNumber("Pneumatics PSI", compressor.);
 
     SmartDashboard.putNumber("Robot Pitch", GetGyroPitch());
     SmartDashboard.putNumber("Robot Angle", GetGyroYaw());
